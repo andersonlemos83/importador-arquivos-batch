@@ -6,7 +6,6 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +17,6 @@ public class ImportadorArquivosJobFactory {
     private final ImportadorArquivosItemReader importadorArquivosItemReader;
     private final ImportadorArquivosItemWriter importadorArquivosItemWriter;
 
-    @Autowired
     public ImportadorArquivosJobFactory(JobBuilderFactory jobBuilderFactory,
                                         StepBuilderFactory stepBuilderFactory,
                                         ImportadorArquivosJobListener importadorArquivosJobListener,

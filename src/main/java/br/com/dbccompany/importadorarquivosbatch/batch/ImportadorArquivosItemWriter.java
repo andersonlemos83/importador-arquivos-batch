@@ -1,12 +1,15 @@
 package br.com.dbccompany.importadorarquivosbatch.batch;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.DadosImportacao;
+import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
+import br.com.dbccompany.importadorarquivosbatch.repository.RemovedorArquivoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,23 +19,33 @@ public class ImportadorArquivosItemWriter implements ItemWriter<DadosImportacao>
 
     private static final Logger LOG = LoggerFactory.getLogger(ImportadorArquivosItemWriter.class);
 
+    private final GravadorArquivoRepository gravadorArquivoRepository;
+    private final RemovedorArquivoRepository removedorArquivoRepository;
+
+    public ImportadorArquivosItemWriter(GravadorArquivoRepository gravadorArquivoRepository,
+                                        RemovedorArquivoRepository removedorArquivoRepository) {
+        this.removedorArquivoRepository = removedorArquivoRepository;
+        this.gravadorArquivoRepository = gravadorArquivoRepository;
+    }
+
     @Override
     public void write(List<? extends DadosImportacao> dadosImportacoes) {
-        List<String> dados = consolidarDados(dadosImportacoes);
-        for (String dado : dados) {
-            processarDados(dado);
+        List<Path> arquivos = obterArquivos(dadosImportacoes);
+        for (Path arquivo : arquivos) {
+            processarDados(arquivo);
         }
     }
 
-    private List<String> consolidarDados(List<? extends DadosImportacao> dadosImportacoes) {
-        List<String> xmls = new ArrayList<>();
+    private List<Path> obterArquivos(List<? extends DadosImportacao> dadosImportacoes) {
+        List<Path> arquivos = new ArrayList<>();
         for (DadosImportacao dadosImportacao : dadosImportacoes) {
-            xmls.addAll(dadosImportacao.getDados());
+            arquivos.addAll(dadosImportacao.getArquivos());
         }
-        return xmls;
+        return arquivos;
     }
 
-    private void processarDados(String dado) {
-        LOG.info("Escrevendo: " + dado);
+    private void processarDados(Path arquivo) {
+        gravadorArquivoRepository.gravar(arquivo);
+        removedorArquivoRepository.remover(arquivo);
     }
 }

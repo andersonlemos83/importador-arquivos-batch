@@ -1,17 +1,17 @@
 package br.com.dbccompany.importadorarquivosbatch.domain;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public class DadosImportacao {
 
-    private final List<String> dados;
+    private final List<Path> arquivos;
 
-    public DadosImportacao(List<String> dados) {
-
-        this.dados = dados;
+    public DadosImportacao(List<Path> arquivos) {
+        this.arquivos = arquivos;
     }
 
-    public List<String> getDados() {
-        return dados;
+    public List<Path> getArquivos() {
+        return arquivos;
     }
 }
