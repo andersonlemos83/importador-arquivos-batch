@@ -1,6 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.batch;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.DadosImportacao;
+import br.com.dbccompany.importadorarquivosbatch.domain.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.repository.RemovedorArquivoRepository;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 @Transactional
-public class ImportadorArquivosItemWriter implements ItemWriter<DadosImportacao> {
+public class ImportadorArquivosItemWriter implements ItemWriter<DadosProcessamento> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ImportadorArquivosItemWriter.class);
 
@@ -29,17 +29,17 @@ public class ImportadorArquivosItemWriter implements ItemWriter<DadosImportacao>
     }
 
     @Override
-    public void write(List<? extends DadosImportacao> dadosImportacoes) {
-        List<Path> arquivos = obterArquivos(dadosImportacoes);
+    public void write(List<? extends DadosProcessamento> dadosProcessamentos) {
+        List<Path> arquivos = obterArquivos(dadosProcessamentos);
         for (Path arquivo : arquivos) {
             processarDados(arquivo);
         }
     }
 
-    private List<Path> obterArquivos(List<? extends DadosImportacao> dadosImportacoes) {
+    private List<Path> obterArquivos(List<? extends DadosProcessamento> dadosProcessamentos) {
         List<Path> arquivos = new ArrayList<>();
-        for (DadosImportacao dadosImportacao : dadosImportacoes) {
-            arquivos.addAll(dadosImportacao.getArquivos());
+        for (DadosProcessamento dadosProcessamento : dadosProcessamentos) {
+            arquivos.addAll(dadosProcessamento.getArquivosProcessados());
         }
         return arquivos;
     }

@@ -1,6 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.batch;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.DadosImportacao;
+import br.com.dbccompany.importadorarquivosbatch.domain.DadosLeitura;
 import br.com.dbccompany.importadorarquivosbatch.repository.LeitorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
 import org.slf4j.Logger;
@@ -8,11 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.Path;
-import java.util.List;
-
 @Component
-public class ImportadorArquivosItemReader implements ItemReader<DadosImportacao> {
+public class ImportadorArquivosItemReader implements ItemReader<DadosLeitura> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ImportadorArquivosItemReader.class);
 
@@ -23,13 +20,9 @@ public class ImportadorArquivosItemReader implements ItemReader<DadosImportacao>
     }
 
     @Override
-    public DadosImportacao read() {
+    public DadosLeitura read() {
         try {
-            List<Path> arquivos = leitorArquivoRepository.lerArquivosNaoImportados();
-            if (arquivos.isEmpty()) {
-                return null;
-            }
-            return new DadosImportacao(arquivos);
+            return leitorArquivoRepository.lerArquivoNaoImportado();
         } catch (InformacaoException excecao) {
             LOG.info(excecao.getMessage());
             return null;

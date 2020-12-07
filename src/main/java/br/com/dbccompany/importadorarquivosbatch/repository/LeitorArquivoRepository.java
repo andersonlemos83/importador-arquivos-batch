@@ -1,10 +1,9 @@
 package br.com.dbccompany.importadorarquivosbatch.repository;
 
-import java.nio.file.Path;
-import java.util.List;
+import br.com.dbccompany.importadorarquivosbatch.domain.DadosLeitura;
 
 public interface LeitorArquivoRepository {
 
-    List<Path> lerArquivosNaoImportados();
+    DadosLeitura lerArquivoNaoImportado();
 
 }
