@@ -1,42 +1,53 @@
-package br.com.dbccompany.importadorarquivosbatch.domain;
+package br.com.dbccompany.importadorarquivosbatch.domain.dados;
 
 import java.nio.file.Path;
 
 public class DadosProcessamento {
 
-    private final Path arquivoPath;
-    private final Long quantidadeClientes;
-    private final Long quantidadeVendedores;
-    private final String idVendaMaisCara;
-    private final String nomePiorVendedor;
-
-    public DadosProcessamento(Path arquivoPath, Long quantidadeClientes, Long quantidadeVendedores,
-                              String idVendaMaisCara, String nomePiorVendedor) {
-        this.arquivoPath = arquivoPath;
-        this.quantidadeClientes = quantidadeClientes;
-        this.quantidadeVendedores = quantidadeVendedores;
-        this.idVendaMaisCara = idVendaMaisCara;
-        this.nomePiorVendedor = nomePiorVendedor;
-    }
+    private Path arquivoPath;
+    private Long quantidadeClientes;
+    private Long quantidadeVendedores;
+    private String idVendaMaisCara;
+    private String nomePiorVendedor;
 
     public Path getArquivoPath() {
         return arquivoPath;
+    }
+
+    public void setArquivoPath(Path arquivoPath) {
+        this.arquivoPath = arquivoPath;
     }
 
     public Long getQuantidadeClientes() {
         return quantidadeClientes;
     }
 
+    public void setQuantidadeClientes(Long quantidadeClientes) {
+        this.quantidadeClientes = quantidadeClientes;
+    }
+
     public Long getQuantidadeVendedores() {
         return quantidadeVendedores;
+    }
+
+    public void setQuantidadeVendedores(Long quantidadeVendedores) {
+        this.quantidadeVendedores = quantidadeVendedores;
     }
 
     public String getIdVendaMaisCara() {
         return idVendaMaisCara;
     }
 
+    public void setIdVendaMaisCara(String idVendaMaisCara) {
+        this.idVendaMaisCara = idVendaMaisCara;
+    }
+
     public String getNomePiorVendedor() {
         return nomePiorVendedor;
+    }
+
+    public void setNomePiorVendedor(String nomePiorVendedor) {
+        this.nomePiorVendedor = nomePiorVendedor;
     }
 
     @Override

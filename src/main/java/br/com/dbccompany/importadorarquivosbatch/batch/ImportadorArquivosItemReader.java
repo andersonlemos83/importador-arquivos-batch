@@ -1,6 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.batch;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.DadosLeitura;
+import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
 import br.com.dbccompany.importadorarquivosbatch.repository.LeitorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class ImportadorArquivosItemReader implements ItemReader<DadosLeitura> {
             LOG.info(excecao.getMessage());
             return null;
         } catch (Exception excecao) {
-            LOG.error("Ocorreu um erro durante a leitura dos arquivos", excecao);
+            LOG.error("Ocorreu um erro durante a leitura do arquivo de entrada", excecao);
             excecao.printStackTrace();
             return null;
         }

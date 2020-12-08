@@ -1,6 +1,7 @@
 package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.DadosLeitura;
+import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
+import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosLeituraBuilder;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.repository.LeitorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.repository.parse.ArquivoParse;
@@ -44,7 +45,10 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
             final Path arquivoPath = obterPrimeiroArquivoDatPorOrdemAlfabetica(arquivosDiretorioEntrada);
             final CSVReader arquivoReader = lerConteudoArquivo(arquivoPath);
             final List<Registro> registros = arquivoParse.parse(arquivoReader.readAll());
-            return new DadosLeitura(arquivoPath, registros);
+            return DadosLeituraBuilder.umDadosLeitura()
+                    .comArquivoPath(arquivoPath)
+                    .comRegistros(registros)
+                    .build();
         } catch (IOException | CsvException excecao) {
             throw new RepositorioException(excecao);
         }

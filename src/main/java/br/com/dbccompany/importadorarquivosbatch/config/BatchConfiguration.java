@@ -28,7 +28,7 @@ public class BatchConfiguration {
         this.importadorArquivosJobFactory = importadorArquivosJobFactory;
     }
 
-//    @Scheduled(cron = "0 0/5 * * * ?", zone = "America/Maceio")
+    //    @Scheduled(cron = "0 0/5 * * * ?", zone = "America/Maceio")
     @Scheduled(fixedDelay = 1000, zone = "America/Maceio")
     public void perform() throws Exception {
         simpleJobLauncher.run(importadorArquivosJobFactory.obterJob(), gerarJobParameters());

@@ -1,8 +1,8 @@
-package br.com.dbccompany.importadorarquivosbatch.service.impl;
+package br.com.dbccompany.importadorarquivosbatch.service.consolidador.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Venda;
-import br.com.dbccompany.importadorarquivosbatch.service.ConsolidadorPiorVendedor;
+import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorPiorVendedor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

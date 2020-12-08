@@ -1,12 +1,11 @@
-package br.com.dbccompany.importadorarquivosbatch.service.impl;
+package br.com.dbccompany.importadorarquivosbatch.service.consolidador.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Venda;
-import br.com.dbccompany.importadorarquivosbatch.service.ConsolidadorVendaMaisCara;
+import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorVendaMaisCara;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Comparator.comparingDouble;
 
@@ -15,16 +14,13 @@ public class ConsolidadorVendaMaisCaraImpl implements ConsolidadorVendaMaisCara 
 
     @Override
     public String consolidar(List<Registro> registros) {
-        final Optional<Venda> vendaOptional = registros
+        return registros
                 .stream()
                 .filter(Registro::ehVenda)
                 .map(registro -> (Venda) registro)
                 .sorted(comparingDouble(Venda::obterTotal).reversed())
-                .findFirst();
-
-        if (!vendaOptional.isPresent()) {
-            return null;
-        }
-        return vendaOptional.get().getIdVenda();
+                .findFirst()
+                .map(Venda::getIdVenda)
+                .orElse(null);
     }
 }

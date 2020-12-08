@@ -1,7 +1,7 @@
 package br.com.dbccompany.importadorarquivosbatch.batch;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.DadosLeitura;
-import br.com.dbccompany.importadorarquivosbatch.domain.DadosProcessamento;
+import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
+import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;

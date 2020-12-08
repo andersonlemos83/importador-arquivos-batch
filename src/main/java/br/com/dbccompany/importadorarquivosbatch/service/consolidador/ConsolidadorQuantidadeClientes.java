@@ -1,10 +1,10 @@
-package br.com.dbccompany.importadorarquivosbatch.service;
+package br.com.dbccompany.importadorarquivosbatch.service.consolidador;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 
 import java.util.List;
 
-public interface ConsolidadorQuantidadeVendedores {
+public interface ConsolidadorQuantidadeClientes {
 
     Long consolidar(List<Registro> registros);
 

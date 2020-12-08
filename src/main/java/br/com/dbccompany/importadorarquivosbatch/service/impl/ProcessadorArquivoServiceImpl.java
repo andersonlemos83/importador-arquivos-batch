@@ -1,8 +1,13 @@
 package br.com.dbccompany.importadorarquivosbatch.service.impl;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.DadosLeitura;
-import br.com.dbccompany.importadorarquivosbatch.domain.DadosProcessamento;
-import br.com.dbccompany.importadorarquivosbatch.service.*;
+import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
+import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
+import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosProcessamentoBuilder;
+import br.com.dbccompany.importadorarquivosbatch.service.ProcessadorArquivoService;
+import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorPiorVendedor;
+import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorQuantidadeClientes;
+import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorQuantidadeVendedores;
+import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorVendaMaisCara;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,10 +30,16 @@ public class ProcessadorArquivoServiceImpl implements ProcessadorArquivoService 
 
     @Override
     public DadosProcessamento processar(DadosLeitura dadosLeitura) {
-        Long quantidadeClientes = consolidadorQuantidadeClientes.consolidar(dadosLeitura.getRegistros());
-        Long quantidadeVendedores = consolidadorQuantidadeVendedores.consolidar(dadosLeitura.getRegistros());
-        String idVendaMaisCara = consolidadorVendaMaisCara.consolidar(dadosLeitura.getRegistros());
-        String nomePiorVendedor = consolidadorPiorVendedor.consolidar(dadosLeitura.getRegistros());
-        return new DadosProcessamento(dadosLeitura.getArquivoPath(), quantidadeClientes, quantidadeVendedores, idVendaMaisCara, nomePiorVendedor);
+        final Long quantidadeClientes = consolidadorQuantidadeClientes.consolidar(dadosLeitura.getRegistros());
+        final Long quantidadeVendedores = consolidadorQuantidadeVendedores.consolidar(dadosLeitura.getRegistros());
+        final String idVendaMaisCara = consolidadorVendaMaisCara.consolidar(dadosLeitura.getRegistros());
+        final String nomePiorVendedor = consolidadorPiorVendedor.consolidar(dadosLeitura.getRegistros());
+        return DadosProcessamentoBuilder.umDadosProcessamento()
+                .comArquivoPath(dadosLeitura.getArquivoPath())
+                .comQuantidadeClientes(quantidadeClientes)
+                .comQuantidadeVendedores(quantidadeVendedores)
+                .comIdVendaMaisCara(idVendaMaisCara)
+                .comNomePiorVendedor(nomePiorVendedor)
+                .build();
     }
 }

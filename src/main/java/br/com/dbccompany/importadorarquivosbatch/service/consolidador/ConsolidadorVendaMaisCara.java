@@ -1,4 +1,4 @@
-package br.com.dbccompany.importadorarquivosbatch.service;
+package br.com.dbccompany.importadorarquivosbatch.service.consolidador;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 
