@@ -30,6 +30,13 @@ public class Item {
         this.preco = preco;
     }
 
+    public Double obterTotal() {
+        if (quantidade == null || preco == null) {
+            return 0d;
+        }
+        return quantidade * preco;
+    }
+
     @Override
     public String toString() {
         return "Item{" +

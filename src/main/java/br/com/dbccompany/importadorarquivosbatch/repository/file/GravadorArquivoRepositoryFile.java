@@ -1,5 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.repository.file;
 
+import br.com.dbccompany.importadorarquivosbatch.domain.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
 import org.springframework.stereotype.Repository;
@@ -21,11 +22,11 @@ public class GravadorArquivoRepositoryFile implements GravadorArquivoRepository 
     }
 
     @Override
-    public void gravar(Path arquivo) {
+    public void gravar(DadosProcessamento dadosProcessamento) {
         try {
-            File file = new File(gerarNomeArquivoSaida(arquivo));
+            File file = new File(gerarNomeArquivoSaida(dadosProcessamento.getArquivoPath()));
             FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(arquivo.getFileName().toString());
+            fileWriter.write(dadosProcessamento.toString());
             fileWriter.close();
         } catch (IOException excecao) {
             throw new RepositorioException(excecao);

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+import static br.com.dbccompany.importadorarquivosbatch.domain.registro.TipoRegistro.*;
+
 @Component
 public class RegistroParseFactoryImpl implements RegistroParseFactory {
 
@@ -17,9 +19,9 @@ public class RegistroParseFactoryImpl implements RegistroParseFactory {
                                     @Qualifier("clienteParse") RegistroParse clienteParse,
                                     @Qualifier("vendaParse") RegistroParse vendaParse) {
         parses = new HashMap<>();
-        parses.put("001", vendedorParse);
-        parses.put("002", clienteParse);
-        parses.put("003", vendaParse);
+        parses.put(VENDEDOR.getId(), vendedorParse);
+        parses.put(CLIENTE.getId(), clienteParse);
+        parses.put(VENDA.getId(), vendaParse);
     }
 
     @Override

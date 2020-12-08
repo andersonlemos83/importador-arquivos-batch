@@ -2,7 +2,7 @@ package br.com.dbccompany.importadorarquivosbatch.batch;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.DadosLeitura;
 import br.com.dbccompany.importadorarquivosbatch.domain.DadosProcessamento;
-import br.com.dbccompany.importadorarquivosbatch.service.ConsolidadorService;
+import br.com.dbccompany.importadorarquivosbatch.service.ProcessadorArquivoService;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,16 +16,16 @@ public class ImportadorArquivosItemProcessor implements ItemProcessor<DadosLeitu
 
     private static final Logger LOG = LoggerFactory.getLogger(ImportadorArquivosItemProcessor.class);
 
-    private final ConsolidadorService consolidadorService;
+    private final ProcessadorArquivoService processadorArquivoService;
 
-    public ImportadorArquivosItemProcessor(ConsolidadorService consolidadorService) {
-        this.consolidadorService = consolidadorService;
+    public ImportadorArquivosItemProcessor(ProcessadorArquivoService processadorArquivoService) {
+        this.processadorArquivoService = processadorArquivoService;
     }
 
     @Override
     public DadosProcessamento process(DadosLeitura dadosLeitura) {
         try {
-            return consolidadorService.consolidar(dadosLeitura);
+            return processadorArquivoService.processar(dadosLeitura);
         } catch (InformacaoException excecao) {
             LOG.info(excecao.getMessage());
             return null;

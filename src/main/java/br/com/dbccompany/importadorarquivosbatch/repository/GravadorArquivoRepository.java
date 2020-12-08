@@ -1,9 +1,9 @@
 package br.com.dbccompany.importadorarquivosbatch.repository;
 
-import java.nio.file.Path;
+import br.com.dbccompany.importadorarquivosbatch.domain.DadosProcessamento;
 
 public interface GravadorArquivoRepository {
 
-    void gravar(Path arquivo);
+    void gravar(DadosProcessamento dadosProcessamento);
 
 }
