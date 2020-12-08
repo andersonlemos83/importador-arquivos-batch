@@ -1,7 +1,9 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.file;
+package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.DadosLeitura;
+import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.repository.LeitorArquivoRepository;
+import br.com.dbccompany.importadorarquivosbatch.repository.parse.ArquivoParse;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
 import com.opencsv.CSVParser;
@@ -17,24 +19,32 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @Repository
 public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
 
-    private final Properties importacaoArquivosProperties;
+    private static final char SEPARADOR_REGISTROS = 'ç';
 
-    public LeitorArquivoRepositoryFile(Properties importacaoArquivosProperties) {
+    private final Properties importacaoArquivosProperties;
+    private final ArquivoParse arquivoParse;
+
+    public LeitorArquivoRepositoryFile(Properties importacaoArquivosProperties,
+                                       ArquivoParse arquivoParse) {
         this.importacaoArquivosProperties = importacaoArquivosProperties;
+        this.arquivoParse = arquivoParse;
     }
 
     @Override
     public DadosLeitura lerArquivoNaoImportado() {
         try (Stream<Path> arquivosDiretorioEntrada = obterArquivosDiretorioEntrada()) {
-            Path arquivoPath = obterPrimeiroArquivoDatPorOrdemAlfabetica(arquivosDiretorioEntrada);
-            CSVReader arquivoReader = lerConteudoArquivo(arquivoPath);
-            return new DadosLeitura(arquivoPath, arquivoReader.readAll());
+            final Path arquivoPath = obterPrimeiroArquivoDatPorOrdemAlfabetica(arquivosDiretorioEntrada);
+            final CSVReader arquivoReader = lerConteudoArquivo(arquivoPath);
+            final List<Registro> registros = arquivoParse.parse(arquivoReader.readAll());
+            return new DadosLeitura(arquivoPath, registros);
         } catch (IOException | CsvException excecao) {
             throw new RepositorioException(excecao);
         }
@@ -50,20 +60,28 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
                 .sorted()
                 .filter(path -> path.toString().endsWith(".dat"))
                 .findFirst()
-                .orElseThrow(() -> new InformacaoException("Não existe nenhum arquivo para importação."));
+                .orElseThrow(gerarInformacaoExceptionSupplier());
+    }
+
+    private Supplier<InformacaoException> gerarInformacaoExceptionSupplier() {
+        return () -> new InformacaoException("Não existe nenhum arquivo para importação.");
     }
 
     private CSVReader lerConteudoArquivo(Path arquivoPath) throws FileNotFoundException {
-        FileReader fileReader = new FileReader(arquivoPath.toString());
-
-        CSVParser csvParser = new CSVParserBuilder()
-                .withSeparator('ç')
-                .withIgnoreQuotations(true)
-                .build();
-
-        return new CSVReaderBuilder(fileReader)
+        return new CSVReaderBuilder(gerarFileReader(arquivoPath))
                 .withSkipLines(0)
-                .withCSVParser(csvParser)
+                .withCSVParser(gerarCSVParserBuilder())
+                .build();
+    }
+
+    private FileReader gerarFileReader(Path arquivoPath) throws FileNotFoundException {
+        return new FileReader(arquivoPath.toString());
+    }
+
+    private CSVParser gerarCSVParserBuilder() {
+        return new CSVParserBuilder()
+                .withSeparator(SEPARADOR_REGISTROS)
+                .withIgnoreQuotations(true)
                 .build();
     }
 }

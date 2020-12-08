@@ -1,7 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.domain.registro;
 
-import static br.com.dbccompany.importadorarquivosbatch.domain.registro.TipoRegistro.VENDEDOR;
-import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 public class Vendedor implements Registro {
 
@@ -43,18 +42,8 @@ public class Vendedor implements Registro {
     }
 
     @Override
-    public Boolean ehCliente() {
-        return FALSE;
-    }
-
-    @Override
     public Boolean ehVendedor() {
-        return VENDEDOR.getId().equalsIgnoreCase(id);
-    }
-
-    @Override
-    public Boolean ehVenda() {
-        return FALSE;
+        return TRUE;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.file;
+package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.repository.RemovedorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;

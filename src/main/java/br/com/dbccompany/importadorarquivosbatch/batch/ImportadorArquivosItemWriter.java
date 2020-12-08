@@ -31,8 +31,8 @@ public class ImportadorArquivosItemWriter implements ItemWriter<DadosProcessamen
     @Override
     public void write(List<? extends DadosProcessamento> dadosProcessamentos) {
         dadosProcessamentos.forEach(dadosProcessamento -> {
-            gravadorArquivoRepository.gravar(dadosProcessamento);
-            removedorArquivoRepository.remover(dadosProcessamento.getArquivoPath());
+//            gravadorArquivoRepository.gravar(dadosProcessamento);
+//            removedorArquivoRepository.remover(dadosProcessamento.getArquivoPath());
         });
     }
 }

@@ -1,14 +1,16 @@
 package br.com.dbccompany.importadorarquivosbatch.domain;
 
+import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
+
 import java.nio.file.Path;
 import java.util.List;
 
 public class DadosLeitura {
 
     private final Path arquivoPath;
-    private final List<String[]> registros;
+    private final List<Registro> registros;
 
-    public DadosLeitura(Path arquivoPath, List<String[]> registros) {
+    public DadosLeitura(Path arquivoPath, List<Registro> registros) {
         this.arquivoPath = arquivoPath;
         this.registros = registros;
     }
@@ -17,7 +19,7 @@ public class DadosLeitura {
         return arquivoPath;
     }
 
-    public List<String[]> getRegistros() {
+    public List<Registro> getRegistros() {
         return registros;
     }
 
@@ -25,6 +27,7 @@ public class DadosLeitura {
     public String toString() {
         return "DadosLeitura{" +
                 "arquivoPath=" + arquivoPath +
+                ", registros=" + registros +
                 '}';
     }
 }

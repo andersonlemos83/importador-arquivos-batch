@@ -1,4 +1,4 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.file;
+package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;

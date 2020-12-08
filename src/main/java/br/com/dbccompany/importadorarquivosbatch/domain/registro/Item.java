@@ -1,6 +1,9 @@
 package br.com.dbccompany.importadorarquivosbatch.domain.registro;
 
-public class Item {
+import static java.lang.Boolean.TRUE;
+import static java.math.BigDecimal.ZERO;
+
+public class Item implements Registro {
 
     private String id;
     private Integer quantidade;
@@ -30,9 +33,14 @@ public class Item {
         this.preco = preco;
     }
 
+    @Override
+    public Boolean ehItem() {
+        return TRUE;
+    }
+
     public Double obterTotal() {
         if (quantidade == null || preco == null) {
-            return 0d;
+            return ZERO.doubleValue();
         }
         return quantidade * preco;
     }

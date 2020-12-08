@@ -1,11 +1,22 @@
 package br.com.dbccompany.importadorarquivosbatch.domain.registro;
 
+import static java.lang.Boolean.FALSE;
+
 public interface Registro {
 
-    Boolean ehCliente();
+    default Boolean ehCliente() {
+        return FALSE;
+    }
 
-    Boolean ehVendedor();
+    default Boolean ehVendedor() {
+        return FALSE;
+    }
 
-    Boolean ehVenda();
+    default Boolean ehVenda() {
+        return FALSE;
+    }
 
+    default Boolean ehItem() {
+        return FALSE;
+    }
 }

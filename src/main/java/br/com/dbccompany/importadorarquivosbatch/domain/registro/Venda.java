@@ -2,8 +2,8 @@ package br.com.dbccompany.importadorarquivosbatch.domain.registro;
 
 import java.util.List;
 
-import static br.com.dbccompany.importadorarquivosbatch.domain.registro.TipoRegistro.VENDA;
-import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static java.math.BigDecimal.ZERO;
 
 public class Venda implements Registro {
 
@@ -45,22 +45,12 @@ public class Venda implements Registro {
     }
 
     @Override
-    public Boolean ehCliente() {
-        return FALSE;
-    }
-
-    @Override
-    public Boolean ehVendedor() {
-        return FALSE;
-    }
-
-    @Override
     public Boolean ehVenda() {
-        return VENDA.getId().equalsIgnoreCase(id);
+        return TRUE;
     }
 
     public Double obterTotal() {
-        return itens.stream().map(Item::obterTotal).reduce(new Double(0), Double::sum);
+        return itens.stream().map(Item::obterTotal).reduce(ZERO.doubleValue(), Double::sum);
     }
 
     @Override
