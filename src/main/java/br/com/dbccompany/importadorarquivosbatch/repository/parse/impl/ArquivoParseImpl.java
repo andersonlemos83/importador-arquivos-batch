@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -29,7 +28,7 @@ public class ArquivoParseImpl implements ArquivoParse {
     private Function<String[], Registro> gerarRegistroParseFunction() {
         return registro -> {
             final RegistroParse registroParse = registroParseFactory.obter(registro);
-            return registroParse.parse(registro);
+            return (Registro) registroParse.parse(registro);
         };
     }
 }

@@ -1,28 +1,26 @@
 package br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.impl;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.QuantidadeAtributosInvalidoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroParseException;
 
-import java.util.Arrays;
-
-public abstract class AbstractRegistroParse implements RegistroParse {
+public abstract class AbstractRegistroParse<T> implements RegistroParse<T> {
 
     protected abstract int obterQuantidadeCampos();
 
-    protected abstract Registro gerarRegistro(String[] registro);
+    protected abstract T gerarRegistro(String[] registro);
 
     protected abstract String obterNome();
 
     @Override
-    public Registro parse(String[] registro) {
+    public T parse(String[] registro) {
         if (registro.length != obterQuantidadeCampos()) {
-            throw new InformacaoException("teste");
+            throw new QuantidadeAtributosInvalidoException(registro, obterNome());
         }
         try {
             return gerarRegistro(registro);
         } catch (Exception excecao) {
-            throw new InformacaoException(Arrays.asList(registro).toString() + obterNome());
+            throw new RegistroParseException(registro, obterNome());
         }
     }
 }

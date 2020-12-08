@@ -4,7 +4,7 @@ import br.com.dbccompany.importadorarquivosbatch.domain.DadosLeitura;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.repository.LeitorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.repository.parse.ArquivoParse;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.NenhumArquivoImportacaoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
@@ -21,12 +21,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @Repository
 public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
 
+    private static final String EXTENSAO_ARQUIVO = ".dat";
     private static final char SEPARADOR_REGISTROS = 'ç';
 
     private final Properties importacaoArquivosProperties;
@@ -58,13 +58,9 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
     private Path obterPrimeiroArquivoDatPorOrdemAlfabetica(Stream<Path> arquivosDiretorioEntrada) {
         return arquivosDiretorioEntrada
                 .sorted()
-                .filter(path -> path.toString().endsWith(".dat"))
+                .filter(path -> path.toString().endsWith(EXTENSAO_ARQUIVO))
                 .findFirst()
-                .orElseThrow(gerarInformacaoExceptionSupplier());
-    }
-
-    private Supplier<InformacaoException> gerarInformacaoExceptionSupplier() {
-        return () -> new InformacaoException("Não existe nenhum arquivo para importação.");
+                .orElseThrow(() -> new NenhumArquivoImportacaoException());
     }
 
     private CSVReader lerConteudoArquivo(Path arquivoPath) throws FileNotFoundException {

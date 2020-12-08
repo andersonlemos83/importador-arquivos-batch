@@ -2,7 +2,7 @@ package br.com.dbccompany.importadorarquivosbatch.repository.parse.factory.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.repository.parse.factory.RegistroParseFactory;
 import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.IdInvalidoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.util.ArrayUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import static br.com.dbccompany.importadorarquivosbatch.domain.registro.TipoRegistro.*;
 
@@ -32,10 +31,6 @@ public class RegistroParseFactoryImpl implements RegistroParseFactory {
     public RegistroParse obter(String[] registro) {
         final String id = ArrayUtil.obterString(registro, 0);
         return Optional.ofNullable(parses.get(id))
-                .orElseThrow(gerarInformacaoExceptionSupplier(id));
-    }
-
-    private Supplier<InformacaoException> gerarInformacaoExceptionSupplier(String id) {
-        return () -> new InformacaoException("O arquivo importado possui um registro com ID inválido: " + id);
+                .orElseThrow(() -> new IdInvalidoException(id));
     }
 }

@@ -1,7 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Item;
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Venda;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendaBuilder;
 import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
@@ -14,7 +13,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Component
-public class VendaParse extends AbstractRegistroParse implements RegistroParse {
+public class VendaParse extends AbstractRegistroParse<Venda> implements RegistroParse<Venda> {
 
     private static final String SEPARADOR_ITENS = ",";
     private static final String SEPARADOR_CAMPOS_ITEM = "-";
@@ -31,7 +30,7 @@ public class VendaParse extends AbstractRegistroParse implements RegistroParse {
     }
 
     @Override
-    protected Registro gerarRegistro(String[] registro) {
+    protected Venda gerarRegistro(String[] registro) {
         return VendaBuilder.umaVenda()
                 .comId(registro[0])
                 .comIdVenda(registro[1])
@@ -42,7 +41,7 @@ public class VendaParse extends AbstractRegistroParse implements RegistroParse {
 
     @Override
     protected String obterNome() {
-        return Venda.class.getName();
+        return Venda.class.getSimpleName();
     }
 
     private List<Item> gerarItens(String token) {

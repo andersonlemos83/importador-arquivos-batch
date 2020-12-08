@@ -1,6 +1,5 @@
 package br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.impl;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Vendedor;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendedorBuilder;
 import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Component;
 import static java.lang.Double.parseDouble;
 
 @Component
-public class VendedorParse extends AbstractRegistroParse implements RegistroParse {
+public class VendedorParse extends AbstractRegistroParse<Vendedor> implements RegistroParse<Vendedor> {
 
     @Override
     protected int obterQuantidadeCampos() {
@@ -17,7 +16,7 @@ public class VendedorParse extends AbstractRegistroParse implements RegistroPars
     }
 
     @Override
-    protected Registro gerarRegistro(String[] registro) {
+    protected Vendedor gerarRegistro(String[] registro) {
         return VendedorBuilder.umVendedor()
                 .comId(registro[0])
                 .comCpf(registro[1])
@@ -28,6 +27,6 @@ public class VendedorParse extends AbstractRegistroParse implements RegistroPars
 
     @Override
     protected String obterNome() {
-        return Vendedor.class.getName();
+        return Vendedor.class.getSimpleName();
     }
 }

@@ -1,10 +1,8 @@
 package br.com.dbccompany.importadorarquivosbatch.shared.util;
 
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.ArquivoOuDiretorioNaoEncontradoException;
 
 import java.io.File;
-
-import static java.text.MessageFormat.format;
 
 public final class ValidadorUtil {
 
@@ -18,8 +16,7 @@ public final class ValidadorUtil {
 
     public static void verificarSeArquivoOuDiretorioExiste(File arquivoOuDiretorio) {
         if (!arquivoOuDiretorio.exists()) {
-            final String mensagem = format("O arquivo ou diretório {0} não foi encontrado.", arquivoOuDiretorio.getAbsoluteFile());
-            throw new InformacaoException(mensagem);
+            throw new ArquivoOuDiretorioNaoEncontradoException(arquivoOuDiretorio.getAbsoluteFile());
         }
     }
 }
