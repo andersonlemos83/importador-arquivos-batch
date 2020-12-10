@@ -4,6 +4,7 @@ import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArq
 import br.com.dbccompany.importadorarquivosbatch.cucumber.funcionalidade.ImportadorArquivosFuncionalidade;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.stepdefs.StepDefs;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.verificador.ImportadorArquivosVerificador;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.E;
@@ -26,6 +27,11 @@ public class ImportarArquivoStepDefs extends StepDefs {
 
     @Before
     public void inicializarContexto() throws Exception {
+        importadorArquivosContexto.limparDiretorios();
+    }
+
+    @After
+    public void finalizarContexto() throws Exception {
         importadorArquivosContexto.limparDiretorios();
     }
 
