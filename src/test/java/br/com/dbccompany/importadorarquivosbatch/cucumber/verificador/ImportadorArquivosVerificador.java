@@ -1,0 +1,33 @@
+package br.com.dbccompany.importadorarquivosbatch.cucumber.verificador;
+
+import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArquivosContexto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@Component
+public class ImportadorArquivosVerificador {
+
+    @Autowired
+    private ImportadorArquivosContexto importadorArquivosContexto;
+
+    public void verificarArquivoSaida(String nomeArquivoSaida) {
+        Boolean existeArquivoSaida = importadorArquivosContexto.existeArquivoSaida(nomeArquivoSaida);
+        assertTrue("Não existe arquivo de saída: " + nomeArquivoSaida, existeArquivoSaida);
+    }
+
+    public void verificarConteudoArquivoSaida(String nomeArquivoSaida, String conteudoArquivoSaida) throws IOException {
+        String conteudoArquivoSaidaRetornado = importadorArquivosContexto.obterConteudoArquivoSaida(nomeArquivoSaida);
+        assertEquals(conteudoArquivoSaidaRetornado, conteudoArquivoSaida);
+    }
+
+    public void verificarArquivoEntrada(String nomeArquivoEntrada) {
+        Boolean existeArquivoEntrada = importadorArquivosContexto.existeArquivoEntrada(nomeArquivoEntrada);
+        assertFalse("Existe arquivo de entrada: " + nomeArquivoEntrada, existeArquivoEntrada);
+    }
+}
