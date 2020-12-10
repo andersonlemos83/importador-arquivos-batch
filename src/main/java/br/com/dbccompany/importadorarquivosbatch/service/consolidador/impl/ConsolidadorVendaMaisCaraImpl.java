@@ -21,6 +21,6 @@ public class ConsolidadorVendaMaisCaraImpl implements ConsolidadorVendaMaisCara 
                 .sorted(comparingDouble(Venda::obterTotal).reversed())
                 .findFirst()
                 .map(Venda::getIdVenda)
-                .orElse(null);
+                .orElse("");
     }
 }

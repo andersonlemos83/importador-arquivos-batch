@@ -48,6 +48,6 @@ public class ConsolidadorPiorVendedorImpl implements ConsolidadorPiorVendedor {
         return vendedoresOrdenados.stream()
                 .findFirst()
                 .map(Map.Entry::getKey)
-                .orElse(null);
+                .orElse("");
     }
 }

@@ -1,1 +1,1 @@
-# importador-arquivos-batch
+[![Build Status](https://travis-ci.org/andersonlemos83/importador-arquivos-batch.svg?branch=main)](https://travis-ci.org/andersonlemos83/importador-arquivos-batch)
