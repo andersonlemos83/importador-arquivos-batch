@@ -22,8 +22,8 @@ public class ImportadorArquivosConfig {
 
     @PostConstruct
     public void init() {
-        verificarSeArquivoOuDiretorioExiste(diretorioEntrada);
-        verificarSeArquivoOuDiretorioExiste(diretorioSaida);
+//        verificarSeArquivoOuDiretorioExiste(diretorioEntrada);
+//        verificarSeArquivoOuDiretorioExiste(diretorioSaida);
     }
 
     @Bean

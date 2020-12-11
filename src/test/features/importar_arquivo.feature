@@ -9,7 +9,9 @@ Funcionalidade: Importar Arquivo
     E deveria gravar dentro do arquivo de saida o conteudo consolidado "<Conteudo Arquivo Saida>"
     E deveria excluir o arquivo "<Nome Arquivo Entrada>" do diretorio de entrada
     Exemplos:
-      | Cenario                       | Nome Arquivo Entrada          | Nome Arquivo Saida                 | Conteudo Arquivo Saida |
-      | Template DBC                  | sucesso-dbc.dat               | sucesso-dbc.done.dat               | 2ç2ç10çPaulo           |
-      | Arquivo com apenas 1 vendedor | sucesso-apenas-1-vendedor.dat | sucesso-apenas-1-vendedor.done.dat | 0ç1çç                  |
-      | Arquivo com apenas 1 cliente  | sucesso-apenas-1-cliente.dat  | sucesso-apenas-1-cliente.done.dat  | 1ç0çç                  |
+      | Cenario                                           | Nome Arquivo Entrada                           | Nome Arquivo Saida                                  | Conteudo Arquivo Saida |
+      | Arquivo template DBC                              | sucesso-dbc.dat                                | sucesso-dbc.done.dat                                | 2ç2ç10çPaulo           |
+      | Arquivo com apenas 1 vendedor                     | sucesso-apenas-1-vendedor.dat                  | sucesso-apenas-1-vendedor.done.dat                  | 0ç1ççPedro             |
+      | Arquivo com apenas 1 cliente                      | sucesso-apenas-1-cliente.dat                   | sucesso-apenas-1-cliente.done.dat                   | 1ç0çç                  |
+      | Arquivo com apenas 1 venda                        | sucesso-apenas-1-venda.dat                     | sucesso-apenas-1-venda.done.dat                     | 0ç0ç10çPedro           |
+      | Arquivo com 10 vendedores, 5 clientes e 20 vendas | sucesso-10-vendedores-5-clientes-20-vendas.dat | sucesso-10-vendedores-5-clientes-20-vendas.done.dat | 5ç10ç01çLaura Pausini  |
