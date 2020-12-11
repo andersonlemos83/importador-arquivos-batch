@@ -12,8 +12,6 @@ import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-
 public class ImportarArquivoStepDefs extends StepDefs {
 
     @Autowired
@@ -26,17 +24,17 @@ public class ImportarArquivoStepDefs extends StepDefs {
     private ImportadorArquivosVerificador importadorArquivosVerificador;
 
     @Before
-    public void inicializarContexto() throws Exception {
-        importadorArquivosContexto.limparDiretorios();
+    public void inicializarContexto() {
+        importadorArquivosContexto.criarDiretorios();
     }
 
     @After
-    public void finalizarContexto() throws Exception {
-        importadorArquivosContexto.limparDiretorios();
+    public void finalizarContexto() {
+        importadorArquivosContexto.excluirDiretorios();
     }
 
     @Dado("^que exista o arquivo \"([^\"]*)\" no diretorio de entrada$")
-    public void queExistaOhArquivoEsperadoNoDiretorioDeEntrada(String nomeArquivoEntrada) throws IOException {
+    public void queExistaOhArquivoEsperadoNoDiretorioDeEntrada(String nomeArquivoEntrada) {
         importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(nomeArquivoEntrada);
     }
 
@@ -46,7 +44,7 @@ public class ImportarArquivoStepDefs extends StepDefs {
     }
 
     @Entao("^deveria criar o arquivo \"([^\"]*)\" no diretorio de saida$")
-    public void deveriaCriarOhArquivoEsperadoNoDiretorioDeSaida(String nomeArquivoSaida) throws Exception {
+    public void deveriaCriarOhArquivoEsperadoNoDiretorioDeSaida(String nomeArquivoSaida) {
         this.nomeArquivoSaida = nomeArquivoSaida;
         importadorArquivosVerificador.verificarArquivoSaida(nomeArquivoSaida);
     }
@@ -57,7 +55,7 @@ public class ImportarArquivoStepDefs extends StepDefs {
     }
 
     @E("^deveria excluir o arquivo \"([^\"]*)\" do diretorio de entrada$")
-    public void deveriaExcluirOhArquivoEsperadoDoDiretorioDeEntrada(String nomeArquivoEntrada) throws Exception {
+    public void deveriaExcluirOhArquivoEsperadoDoDiretorioDeEntrada(String nomeArquivoEntrada) {
         importadorArquivosVerificador.verificarArquivoEntrada(nomeArquivoEntrada);
     }
 }

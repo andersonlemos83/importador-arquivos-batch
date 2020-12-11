@@ -5,10 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Properties;
-
-import static br.com.dbccompany.importadorarquivosbatch.shared.util.ValidadorUtil.verificarSeArquivoOuDiretorioExiste;
 
 @Configuration
 @Component
@@ -19,12 +16,6 @@ public class ImportadorArquivosConfig {
 
     @Value("${importador-arquivos.data.out}")
     private String diretorioSaida;
-
-    @PostConstruct
-    public void init() {
-//        verificarSeArquivoOuDiretorioExiste(diretorioEntrada);
-//        verificarSeArquivoOuDiretorioExiste(diretorioSaida);
-    }
 
     @Bean
     public Properties importacaoArquivosProperties() {

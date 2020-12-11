@@ -1,19 +1,26 @@
 package br.com.dbccompany.importadorarquivosbatch.cucumber.contexto;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
+import static java.text.MessageFormat.format;
+import static java.util.Comparator.reverseOrder;
 
 @Component
 public class ImportadorArquivosContexto {
+
+    @Value("${importador-arquivos.data.root}")
+    private String diretorioRoot;
 
     @Value("${importador-arquivos.data.in}")
     private String diretorioEntrada;
@@ -21,33 +28,12 @@ public class ImportadorArquivosContexto {
     @Value("${importador-arquivos.data.out}")
     private String diretorioSaida;
 
-    @Value("${importador-arquivos.data.test}")
-    private String diretorioTest;
-
-    public void limparDiretorios() throws IOException {
-        for (String diretorio : Arrays.asList(diretorioEntrada, diretorioSaida)) {
-            limparDiretorio(diretorio);
-        }
+    public void criarDiretorios() {
+        Arrays.asList(diretorioEntrada, diretorioSaida).forEach(this::criarDiretorio);
     }
 
-    public void criarArquivoNoDiretorioDeEntrada(String nomeArquivoEntrada) throws IOException {
-        final Path arquivoOrigemPath = Paths.get(diretorioTest + "/" + nomeArquivoEntrada);
-        final Path arquivoDestinoPath = Paths.get(diretorioEntrada + "/" + nomeArquivoEntrada);
-        Files.copy(arquivoOrigemPath, arquivoDestinoPath);
-    }
-
-    private void limparDiretorio(String diretorio) throws IOException {
-        final List<Path> arquivosPath = obterTodosArquivosDiretorio(diretorio);
-        for (Path arquivoPath : arquivosPath) {
-            Files.deleteIfExists(arquivoPath);
-        }
-    }
-
-    private List<Path> obterTodosArquivosDiretorio(String diretorio) throws IOException {
-        final Path diretorioPath = Paths.get(diretorio);
-        return Files.walk(diretorioPath)
-                .filter(path -> path.compareTo(diretorioPath) != 0)
-                .collect(toList());
+    public void excluirDiretorios() {
+        excluirDiretorioRecursivamente(diretorioRoot);
     }
 
     public Boolean existeArquivoSaida(String nomeArquivoSaida) {
@@ -66,5 +52,45 @@ public class ImportadorArquivosContexto {
         return registros.toString()
                 .replaceAll("\\[", "")
                 .replaceAll("]", "");
+    }
+
+    private void criarDiretorio(String caminho) {
+        String[] diretorios = caminho.split("/");
+        String diretorioCompleto = "";
+        for (int i = 0; i < diretorios.length; i++) {
+            if (i == 0 && (".".equalsIgnoreCase(diretorios[i]) || diretorios[i].contains(":"))) {
+                diretorioCompleto = diretorios[i];
+            } else {
+                diretorioCompleto = format("{0}/{1}", diretorioCompleto, diretorios[i]);
+                File pasta = new File(diretorioCompleto);
+                if (!pasta.exists()) {
+                    pasta.mkdir();
+                }
+            }
+        }
+    }
+
+    public void criarArquivoNoDiretorioDeEntrada(String nomeArquivoEntrada) {
+        try {
+            final Path arquivoOrigemPath = gerarPathResource("data/" + nomeArquivoEntrada);
+            final Path arquivoDestinoPath = Paths.get(diretorioEntrada + "/" + nomeArquivoEntrada);
+            Files.copy(arquivoOrigemPath, arquivoDestinoPath);
+        } catch (Exception excecao) {
+            throw new RuntimeException("Erro ao criar arquivo no diretório de entrada: " + nomeArquivoEntrada, excecao);
+        }
+    }
+
+    private Path gerarPathResource(String nomeResource) throws IOException {
+        return Paths.get(new DefaultResourceLoader().getResource(nomeResource).getURI());
+    }
+
+    private void excluirDiretorioRecursivamente(String diretorio) {
+        try (Stream<Path> arquivosPath = Files.walk(Paths.get(diretorio))) {
+            arquivosPath.sorted(reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (Exception excecao) {
+            throw new RuntimeException("Erro ao excluir diretório: " + diretorio, excecao);
+        }
     }
 }
