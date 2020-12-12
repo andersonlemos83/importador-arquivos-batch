@@ -1,8 +1,8 @@
 package br.com.dbccompany.importadorarquivosbatch.batch;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
+import br.com.dbccompany.importadorarquivosbatch.repository.ExcluidorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
-import br.com.dbccompany.importadorarquivosbatch.repository.RemovedorArquivoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
@@ -20,11 +20,11 @@ public class ImportadorArquivosItemWriter implements ItemWriter<DadosProcessamen
     private static final Logger LOG = LoggerFactory.getLogger(ImportadorArquivosItemWriter.class);
 
     private final GravadorArquivoRepository gravadorArquivoRepository;
-    private final RemovedorArquivoRepository removedorArquivoRepository;
+    private final ExcluidorArquivoRepository excluidorArquivoRepository;
 
     public ImportadorArquivosItemWriter(GravadorArquivoRepository gravadorArquivoRepository,
-                                        RemovedorArquivoRepository removedorArquivoRepository) {
-        this.removedorArquivoRepository = removedorArquivoRepository;
+                                        ExcluidorArquivoRepository excluidorArquivoRepository) {
+        this.excluidorArquivoRepository = excluidorArquivoRepository;
         this.gravadorArquivoRepository = gravadorArquivoRepository;
     }
 
@@ -33,7 +33,7 @@ public class ImportadorArquivosItemWriter implements ItemWriter<DadosProcessamen
         try {
             dadosProcessamentos.forEach(dadosProcessamento -> {
                 gravadorArquivoRepository.gravar(dadosProcessamento);
-                removedorArquivoRepository.remover(dadosProcessamento.getArquivoPath());
+                excluidorArquivoRepository.excluir(dadosProcessamento.getArquivoPath());
             });
         } catch (Exception excecao) {
             String mensagem = gerarMensagem(dadosProcessamentos);

@@ -50,7 +50,7 @@ public class ImportarArquivoStepDefs extends StepDefs {
     }
 
     @E("^deveria gravar dentro do arquivo de saida o conteudo consolidado \"([^\"]*)\"$")
-    public void deveriaGravarDentroDoArquivoDeSaidaOhConteudoConsolidado(String conteudoArquivoSaida) throws Exception {
+    public void deveriaGravarDentroDoArquivoDeSaidaOhConteudoConsolidado(String conteudoArquivoSaida) {
         importadorArquivosVerificador.verificarConteudoArquivoSaida(nomeArquivoSaida, conteudoArquivoSaida);
     }
 

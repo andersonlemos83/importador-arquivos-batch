@@ -4,8 +4,6 @@ import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArq
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,7 +19,7 @@ public class ImportadorArquivosVerificador {
         assertTrue("Não existe arquivo de saída: " + nomeArquivoSaida, existeArquivoSaida);
     }
 
-    public void verificarConteudoArquivoSaida(String nomeArquivoSaida, String conteudoArquivoSaida) throws IOException {
+    public void verificarConteudoArquivoSaida(String nomeArquivoSaida, String conteudoArquivoSaida) {
         String conteudoArquivoSaidaRetornado = importadorArquivosContexto.obterConteudoArquivoSaida(nomeArquivoSaida);
         assertEquals(conteudoArquivoSaidaRetornado, conteudoArquivoSaida);
     }

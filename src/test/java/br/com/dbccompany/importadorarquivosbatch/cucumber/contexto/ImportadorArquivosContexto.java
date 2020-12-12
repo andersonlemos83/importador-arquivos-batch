@@ -46,12 +46,16 @@ public class ImportadorArquivosContexto {
         return Files.exists(arquivoEntrada);
     }
 
-    public String obterConteudoArquivoSaida(String nomeArquivoSaida) throws IOException {
-        final Path arquivoSaida = Paths.get(diretorioSaida + "/" + nomeArquivoSaida);
-        final List<String> registros = Files.readAllLines(arquivoSaida);
-        return registros.toString()
-                .replaceAll("\\[", "")
-                .replaceAll("]", "");
+    public String obterConteudoArquivoSaida(String nomeArquivoSaida) {
+        try {
+            final Path arquivoSaida = Paths.get(diretorioSaida + "/" + nomeArquivoSaida);
+            final List<String> registros = Files.readAllLines(arquivoSaida);
+            return registros.toString()
+                    .replaceAll("\\[", "")
+                    .replaceAll("]", "");
+        } catch (Exception excecao) {
+            throw new RuntimeException("Erro ao obter o conteúdo do arquivos de saída: " + nomeArquivoSaida, excecao);
+        }
     }
 
     private void criarDiretorio(String caminho) {
@@ -85,6 +89,9 @@ public class ImportadorArquivosContexto {
     }
 
     private void excluirDiretorioRecursivamente(String diretorio) {
+        if (!new File(diretorio).exists()) {
+            return;
+        }
         try (Stream<Path> arquivosPath = Files.walk(Paths.get(diretorio))) {
             arquivosPath.sorted(reverseOrder())
                     .map(Path::toFile)

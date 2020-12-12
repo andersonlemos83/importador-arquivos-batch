@@ -9,8 +9,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         AllDomainTests.class,
-        AllRepositoryTests.class,
-        AllServiceTests.class
+        AllServiceTests.class,
+        AllRepositoryTests.class
 })
 public class UnitTests {
 }

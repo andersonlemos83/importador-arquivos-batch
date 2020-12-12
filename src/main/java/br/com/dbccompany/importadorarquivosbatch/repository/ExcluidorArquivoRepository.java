@@ -2,8 +2,8 @@ package br.com.dbccompany.importadorarquivosbatch.repository;
 
 import java.nio.file.Path;
 
-public interface RemovedorArquivoRepository {
+public interface ExcluidorArquivoRepository {
 
-    void remover(Path arquivo);
+    void excluir(Path arquivo);
 
 }
