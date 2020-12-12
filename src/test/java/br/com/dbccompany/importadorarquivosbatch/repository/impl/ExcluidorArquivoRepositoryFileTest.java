@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_SUCESSO_DBC_DAT;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ImportadorArquivosBatchApplication.class)
@@ -29,9 +29,6 @@ public class ExcluidorArquivoRepositoryFileTest {
     @Autowired
     private ImportadorArquivosVerificador importadorArquivosVerificador;
 
-    private String nomeArquivoEntrada = "sucesso-dbc.dat";
-    private Path arquivoEntradaPath = Paths.get("./data/in/sucesso-dbc.dat");
-
     @Before
     public void inicializarContexto() {
         importadorArquivosContexto.criarDiretorios();
@@ -44,13 +41,13 @@ public class ExcluidorArquivoRepositoryFileTest {
 
     @Test
     public void aoExcluirDadoQueExistaArquivoDeEntradaDeveriaExcluirOhArquivoDeEntrada() {
-        importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(nomeArquivoEntrada);
-        excluidorArquivoRepository.excluir(arquivoEntradaPath);
-        importadorArquivosVerificador.verificarArquivoEntrada(nomeArquivoEntrada);
+        importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_DAT);
+        excluidorArquivoRepository.excluir(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
+        importadorArquivosVerificador.verificarArquivoEntrada(ARQUIVO_SUCESSO_DBC_DAT);
     }
 
     @Test(expected = RepositorioException.class)
     public void aoExcluirDadoQueNaoExistaArquivoDeEntradaDeveriaLancarUmaRepositorioException() {
-        excluidorArquivoRepository.excluir(arquivoEntradaPath);
+        excluidorArquivoRepository.excluir(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
     }
 }

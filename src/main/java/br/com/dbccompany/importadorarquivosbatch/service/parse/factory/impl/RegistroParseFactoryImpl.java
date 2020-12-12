@@ -1,7 +1,7 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.parse.factory.impl;
+package br.com.dbccompany.importadorarquivosbatch.service.parse.factory.impl;
 
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.factory.RegistroParseFactory;
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
+import br.com.dbccompany.importadorarquivosbatch.service.parse.factory.RegistroParseFactory;
+import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.IdInvalidoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.util.ArrayUtil;
 import org.springframework.beans.factory.annotation.Qualifier;

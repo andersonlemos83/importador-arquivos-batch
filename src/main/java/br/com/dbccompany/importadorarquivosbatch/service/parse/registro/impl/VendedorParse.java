@@ -1,8 +1,8 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.impl;
+package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Vendedor;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendedorBuilder;
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
+import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import org.springframework.stereotype.Component;
 
 import static java.lang.Double.parseDouble;

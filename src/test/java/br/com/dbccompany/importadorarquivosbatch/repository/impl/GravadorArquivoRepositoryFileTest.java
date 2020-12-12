@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static br.com.dbccompany.importadorarquivosbatch.fixture.DadosProcessamentoFixture.umDadosProcessamentoSucessoDbc;
+import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_SUCESSO_DBC_DONE_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.CONTEUDO_ARQUIVO_SUCESSO_DBC_DONE_DAT;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ImportadorArquivosBatchApplication.class)
@@ -27,8 +29,6 @@ public class GravadorArquivoRepositoryFileTest {
     @Autowired
     private ImportadorArquivosVerificador importadorArquivosVerificador;
 
-    private String nomeArquivoSaida = "sucesso-dbc.done.dat";
-
     @After
     public void finalizarContexto() {
         importadorArquivosContexto.excluirDiretorios();
@@ -38,8 +38,8 @@ public class GravadorArquivoRepositoryFileTest {
     public void aoGravarDadoQueExistaDiretorioDeSaidaDeveriaGravarOhNomeIhConteudoEsperados() {
         importadorArquivosContexto.criarDiretorios();
         gravadorArquivoRepository.gravar(umDadosProcessamentoSucessoDbc());
-        importadorArquivosVerificador.verificarArquivoSaida(nomeArquivoSaida);
-        importadorArquivosVerificador.verificarConteudoArquivoSaida(nomeArquivoSaida, "2ç2ç10çPaulo");
+        importadorArquivosVerificador.verificarArquivoSaida(ARQUIVO_SUCESSO_DBC_DONE_DAT);
+        importadorArquivosVerificador.verificarConteudoArquivoSaida(ARQUIVO_SUCESSO_DBC_DONE_DAT, CONTEUDO_ARQUIVO_SUCESSO_DBC_DONE_DAT);
     }
 
     @Test(expected = RepositorioException.class)

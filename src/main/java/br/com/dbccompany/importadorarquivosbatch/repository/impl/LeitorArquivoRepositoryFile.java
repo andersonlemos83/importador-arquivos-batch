@@ -1,10 +1,7 @@
 package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
-import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosLeituraBuilder;
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
+import br.com.dbccompany.importadorarquivosbatch.domain.Arquivo;
 import br.com.dbccompany.importadorarquivosbatch.repository.LeitorArquivoRepository;
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.ArquivoParse;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.NenhumArquivoImportacaoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
 import com.opencsv.CSVParser;
@@ -20,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Properties;
 import java.util.stream.Stream;
 
@@ -31,24 +27,17 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
     private static final char SEPARADOR_REGISTROS = 'ç';
 
     private final Properties importacaoArquivosProperties;
-    private final ArquivoParse arquivoParse;
 
-    public LeitorArquivoRepositoryFile(Properties importacaoArquivosProperties,
-                                       ArquivoParse arquivoParse) {
+    public LeitorArquivoRepositoryFile(Properties importacaoArquivosProperties) {
         this.importacaoArquivosProperties = importacaoArquivosProperties;
-        this.arquivoParse = arquivoParse;
     }
 
     @Override
-    public DadosLeitura lerArquivoNaoImportado() {
+    public Arquivo lerArquivoNaoImportado() {
         try (Stream<Path> arquivosDiretorioEntrada = obterArquivosDiretorioEntrada()) {
             final Path arquivoPath = obterPrimeiroArquivoDatPorOrdemAlfabetica(arquivosDiretorioEntrada);
             final CSVReader arquivoReader = lerConteudoArquivo(arquivoPath);
-            final List<Registro> registros = arquivoParse.parse(arquivoReader.readAll());
-            return DadosLeituraBuilder.umDadosLeitura()
-                    .comArquivoPath(arquivoPath)
-                    .comRegistros(registros)
-                    .build();
+            return new Arquivo(arquivoPath, arquivoReader.readAll());
         } catch (IOException | CsvException excecao) {
             throw new RepositorioException(excecao);
         }

@@ -1,6 +1,6 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.impl;
+package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
+import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.QuantidadeAtributosInvalidoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroParseException;
 

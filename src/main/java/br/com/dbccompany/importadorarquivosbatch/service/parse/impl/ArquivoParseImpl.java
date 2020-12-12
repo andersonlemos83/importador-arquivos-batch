@@ -1,9 +1,9 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.parse.impl;
+package br.com.dbccompany.importadorarquivosbatch.service.parse.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.ArquivoParse;
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.factory.RegistroParseFactory;
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
+import br.com.dbccompany.importadorarquivosbatch.service.parse.ArquivoParse;
+import br.com.dbccompany.importadorarquivosbatch.service.parse.factory.RegistroParseFactory;
+import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,7 +22,9 @@ public class ArquivoParseImpl implements ArquivoParse {
 
     @Override
     public List<Registro> parse(List<String[]> registrosArray) {
-        return registrosArray.stream().map(gerarRegistroParseFunction()).collect(toList());
+        return registrosArray.stream()
+                .map(gerarRegistroParseFunction())
+                .collect(toList());
     }
 
     private Function<String[], Registro> gerarRegistroParseFunction() {

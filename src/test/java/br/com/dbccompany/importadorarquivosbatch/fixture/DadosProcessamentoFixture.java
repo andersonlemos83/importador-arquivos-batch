@@ -3,7 +3,7 @@ package br.com.dbccompany.importadorarquivosbatch.fixture;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosProcessamentoBuilder;
 
-import java.nio.file.Paths;
+import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
 
 public final class DadosProcessamentoFixture {
 
@@ -12,7 +12,7 @@ public final class DadosProcessamentoFixture {
 
     public static DadosProcessamento umDadosProcessamentoSucessoDbc() {
         return DadosProcessamentoBuilder.umDadosProcessamento()
-                .comArquivoPath(Paths.get("sucesso-dbc.dat"))
+                .comArquivoPath(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT)
                 .comQuantidadeClientes(2l)
                 .comQuantidadeVendedores(2l)
                 .comIdVendaMaisCara("10")

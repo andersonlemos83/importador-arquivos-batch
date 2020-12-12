@@ -1,4 +1,4 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.parse;
+package br.com.dbccompany.importadorarquivosbatch.service.parse;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 

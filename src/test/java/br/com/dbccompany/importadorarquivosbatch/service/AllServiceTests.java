@@ -4,12 +4,14 @@ import br.com.dbccompany.importadorarquivosbatch.service.consolidador.impl.Conso
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.impl.ConsolidadorQuantidadeClientesImplTest;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.impl.ConsolidadorQuantidadeVendedoresImplTest;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.impl.ConsolidadorVendaMaisCaraImplTest;
+import br.com.dbccompany.importadorarquivosbatch.service.impl.LeitorArquivoServiceImplTest;
 import br.com.dbccompany.importadorarquivosbatch.service.impl.ProcessadorArquivoServiceImplTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        LeitorArquivoServiceImplTest.class,
         ProcessadorArquivoServiceImplTest.class,
         ConsolidadorQuantidadeClientesImplTest.class,
         ConsolidadorQuantidadeVendedoresImplTest.class,

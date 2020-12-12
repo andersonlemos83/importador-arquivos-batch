@@ -1,9 +1,9 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.impl;
+package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Item;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Venda;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendaBuilder;
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
+import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 

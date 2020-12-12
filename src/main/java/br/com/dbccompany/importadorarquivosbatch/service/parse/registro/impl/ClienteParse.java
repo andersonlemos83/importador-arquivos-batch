@@ -1,8 +1,8 @@
-package br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.impl;
+package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Cliente;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.ClienteBuilder;
-import br.com.dbccompany.importadorarquivosbatch.repository.parse.registro.RegistroParse;
+import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import org.springframework.stereotype.Component;
 
 @Component

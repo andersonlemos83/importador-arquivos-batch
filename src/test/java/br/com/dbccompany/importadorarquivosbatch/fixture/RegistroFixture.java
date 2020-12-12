@@ -6,6 +6,7 @@ import br.com.dbccompany.importadorarquivosbatch.domain.registro.Venda;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Vendedor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class RegistroFixture {
@@ -60,6 +61,16 @@ public final class RegistroFixture {
         registros.add(VendaFixture.umaVenda04());
         registros.add(VendaFixture.umaVenda06());
         return registros;
+    }
+
+    public static List<String[]> umaListaRegistrosArraySucessoDbc() {
+        String[] vendedorPedro = new String[]{"001", "1234567891234", "Pedro", "50000"};
+        String[] vendedorPaulo = new String[]{"001", "3245678865434", "Paulo", "40000.99"};
+        String[] clienteJose = new String[]{"002", "2345675434544345", "Jose da Silva", "Rural"};
+        String[] clienteEduaro = new String[]{"002", "2345675433444345", "Eduardo Pereira", "Rural"};
+        String[] venda10 = new String[]{"003", "10", "[1-10-100,2-30-2.50,3-40-3.10]", "Pedro"};
+        String[] venda08 = new String[]{"003", "08", "[1-34-10,2-33-1.50,3-40-0.10]", "Paulo"};
+        return Arrays.asList(vendedorPedro, vendedorPaulo, clienteJose, clienteEduaro, venda10, venda08);
     }
 
     private static List<Vendedor> obterDezVendedores() {
