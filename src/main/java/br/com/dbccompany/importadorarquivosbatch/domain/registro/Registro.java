@@ -16,7 +16,4 @@ public interface Registro {
         return FALSE;
     }
 
-    default Boolean ehItem() {
-        return FALSE;
-    }
 }
