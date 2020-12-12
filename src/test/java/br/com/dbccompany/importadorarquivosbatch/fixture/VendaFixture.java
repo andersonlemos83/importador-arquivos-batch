@@ -201,4 +201,14 @@ public final class VendaFixture {
                 .comNomeVendedor("Cyndi Lauper")
                 .build();
     }
+
+    public static Venda umaVenda10Pedro() {
+        return VendaBuilder.umaVenda()
+                .comId("003")
+                .comIdVenda("10")
+                .comItens(asList(umItemId1Quantidade10Preco100(), umItemId2Quantidade30Preco2v50(),
+                        umItemI3Quantidade40Preco3v10()))
+                .comNomeVendedor("Pedro")
+                .build();
+    }
 }

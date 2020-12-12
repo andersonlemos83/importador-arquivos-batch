@@ -299,4 +299,20 @@ public final class ItemFixture {
                 .comPreco(1d)
                 .build();
     }
+
+    public static Item umItemId2Quantidade30Preco2v50() {
+        return ItemBuilder.umItem()
+                .comId("2")
+                .comQuantidade(30)
+                .comPreco(2.50d)
+                .build();
+    }
+
+    public static Item umItemI3Quantidade40Preco3v10() {
+        return ItemBuilder.umItem()
+                .comId("3")
+                .comQuantidade(40)
+                .comPreco(3.10d)
+                .build();
+    }
 }

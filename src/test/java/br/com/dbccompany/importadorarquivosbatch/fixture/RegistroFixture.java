@@ -73,6 +73,64 @@ public final class RegistroFixture {
         return Arrays.asList(vendedorPedro, vendedorPaulo, clienteJose, clienteEduaro, venda10, venda08);
     }
 
+    public static List<String[]> umaListaRegistrosArrayComUmRegistro() {
+        String[] vendedorPedro = new String[]{"001", "1234567891234", "Pedro", "50000"};
+        List<String[]> registros = new ArrayList<>();
+        registros.add(vendedorPedro);
+        return registros;
+    }
+
+    public static List<String[]> umaListaRegistrosArrayComTresRegistros() {
+        String[] vendedorPedro = new String[]{"001", "1234567891234", "Pedro", "50000"};
+        String[] vendedorPaulo = new String[]{"001", "3245678865434", "Paulo", "40000.99"};
+        String[] venda08 = new String[]{"003", "08", "[1-34-10,2-33-1.50,3-40-0.10]", "Paulo"};
+        return Arrays.asList(vendedorPedro, vendedorPaulo, venda08);
+    }
+
+    public static String[] umaRegistroArrayOi() {
+        return new String[]{"002", "29013251000192", "Oi", "Telefonia"};
+    }
+
+    public static String[] umaRegistroArrayOiComQuantidadeInvalida() {
+        return new String[]{"002", "29013251000192", "Oi"};
+    }
+
+    public static String[] umaRegistroArrayPedro() {
+        return new String[]{"001", "1234567891234", "Pedro", "50000"};
+    }
+
+    public static String[] umaRegistroArrayPedroComQuantidadeInvalida() {
+        return new String[]{"001", "1234567891234", "Pedro"};
+    }
+
+    public static String[] umaRegistroArrayPedroComDadosInvalidos() {
+        return new String[]{"001", "1234567891234", "Pedro", "Inválido"};
+    }
+
+    public static String[] umaRegistroArrayVenda10() {
+        return new String[]{"003", "10", "[1-10-100,2-30-2.50,3-40-3.10]", "Pedro"};
+    }
+
+    public static String[] umaRegistroArrayVenda10ComQuantidadeInvalida() {
+        return new String[]{"003", "10", "[1-10-100,2-30-2.50,3-40-3.10]"};
+    }
+
+    public static String[] umaRegistroArrayVenda10ComDadosInvalidos() {
+        return new String[]{"003", "10", "[1-10-100,2-30-2.50,3-40-Inválido]", "Pedro"};
+    }
+
+    public static String[] umaRegistroArrayItensVenda10() {
+        return new String[]{"1", "10", "100"};
+    }
+
+    public static String[] umaRegistroArrayItensVenda10ComQuantidadeInvalida() {
+        return new String[]{"1", "10"};
+    }
+
+    public static String[] umaRegistroArrayItensVenda10ComDadosInvalidos() {
+        return new String[]{"1", "10", "Inválido"};
+    }
+
     private static List<Vendedor> obterDezVendedores() {
         List<Vendedor> vendedores = new ArrayList<>();
         vendedores.add(VendedorFixture.umVendedorMortenHarket());

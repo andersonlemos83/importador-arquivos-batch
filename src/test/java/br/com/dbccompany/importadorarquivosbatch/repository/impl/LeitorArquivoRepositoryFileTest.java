@@ -59,7 +59,7 @@ public class LeitorArquivoRepositoryFileTest {
             importadorArquivosContexto.criarDiretorios();
             importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_TXT);
             leitorArquivoRepository.lerArquivoNaoImportado();
-            fail("Deveria lançar uma excecção...");
+            fail("Deveria lançar uma exceção...");
         } catch (NenhumArquivoImportacaoException excecao) {
             assertEquals("Não existe nenhum arquivo para importação.", excecao.getMessage());
         }
