@@ -3,7 +3,6 @@ package br.com.dbccompany.importadorarquivosbatch.batch;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.service.ProcessadorArquivoService;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
@@ -26,9 +25,6 @@ public class ImportadorArquivosItemProcessor implements ItemProcessor<DadosLeitu
     public DadosProcessamento process(DadosLeitura dadosLeitura) {
         try {
             return processadorArquivoService.processar(dadosLeitura);
-        } catch (InformacaoException excecao) {
-            LOG.info(excecao.getMessage());
-            return null;
         } catch (Exception excecao) {
             String mensagem = gerarMensagem(dadosLeitura);
             LOG.error(mensagem, excecao);

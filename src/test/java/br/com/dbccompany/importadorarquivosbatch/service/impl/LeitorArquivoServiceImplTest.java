@@ -11,13 +11,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
+import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,7 +33,6 @@ public class LeitorArquivoServiceImplTest {
     private ArquivoParse arquivoParseMock;
 
     private Path arquivoEntradaPathEsperado;
-    private List<String[]> registrosArray;
     private Arquivo arquivo;
     private List<Registro> registrosEsperados;
 
@@ -41,15 +41,14 @@ public class LeitorArquivoServiceImplTest {
         leitorArquivoService = new LeitorArquivoServiceImpl(leitorArquivoRepositoryMock, arquivoParseMock);
 
         arquivoEntradaPathEsperado = ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
-        registrosArray = new ArrayList<>();
-        arquivo = new Arquivo(arquivoEntradaPathEsperado, registrosArray);
+        arquivo = new Arquivo(arquivoEntradaPathEsperado, asList());
         registrosEsperados = new ArrayList<>();
     }
 
     @Test
     public void aoLerArquivoNaoImportadoDeveriaRetonarOhDadosLeituraEsperado() {
         Mockito.when(leitorArquivoRepositoryMock.lerArquivoNaoImportado()).thenReturn(arquivo);
-        Mockito.when(arquivoParseMock.parse(registrosArray)).thenReturn(registrosEsperados);
+        Mockito.when(arquivoParseMock.parse(arquivo)).thenReturn(registrosEsperados);
 
         final DadosLeitura dadosLeitura = leitorArquivoService.lerArquivoNaoImportado();
 

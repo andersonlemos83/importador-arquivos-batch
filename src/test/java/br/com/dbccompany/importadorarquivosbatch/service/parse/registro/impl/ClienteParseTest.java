@@ -6,7 +6,7 @@ import br.com.dbccompany.importadorarquivosbatch.shared.excecao.QuantidadeAtribu
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static br.com.dbccompany.importadorarquivosbatch.fixture.RegistroFixture.umaRegistroArrayOi;
 import static br.com.dbccompany.importadorarquivosbatch.fixture.RegistroFixture.umaRegistroArrayOiComQuantidadeInvalida;

@@ -17,11 +17,15 @@ public class ImportadorArquivosConfig {
     @Value("${importador-arquivos.data.out}")
     private String diretorioSaida;
 
+    @Value("${importador-arquivos.data.invalid}")
+    private String diretorioInvalido;
+
     @Bean
     public Properties importacaoArquivosProperties() {
         Properties properties = new Properties();
         properties.setProperty("diretorioEntrada", diretorioEntrada);
         properties.setProperty("diretorioSaida", diretorioSaida);
+        properties.setProperty("diretorioInvalido", diretorioInvalido);
         return properties;
     }
 }

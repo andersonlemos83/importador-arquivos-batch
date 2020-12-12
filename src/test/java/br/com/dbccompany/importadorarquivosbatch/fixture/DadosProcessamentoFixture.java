@@ -10,6 +10,10 @@ public final class DadosProcessamentoFixture {
     private DadosProcessamentoFixture() {
     }
 
+    public static DadosProcessamento umDadosProcessamentoQualquer() {
+        return umDadosProcessamentoSucessoDbc();
+    }
+
     public static DadosProcessamento umDadosProcessamentoSucessoDbc() {
         return DadosProcessamentoBuilder.umDadosProcessamento()
                 .comArquivoPath(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT)

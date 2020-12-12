@@ -7,7 +7,7 @@ import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroParseExc
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static br.com.dbccompany.importadorarquivosbatch.fixture.RegistroFixture.*;
 import static br.com.dbccompany.importadorarquivosbatch.fixture.VendaFixture.umaVenda10Pedro;

@@ -26,7 +26,7 @@ public class LeitorArquivoServiceImpl implements LeitorArquivoService {
     @Override
     public DadosLeitura lerArquivoNaoImportado() {
         final Arquivo arquivo = leitorArquivoRepository.lerArquivoNaoImportado();
-        final List<Registro> registros = arquivoParse.parse(arquivo.getRegistrosArray());
+        final List<Registro> registros = arquivoParse.parse(arquivo);
         return DadosLeituraBuilder.umDadosLeitura()
                 .comArquivoPath(arquivo.getArquivoPath())
                 .comRegistros(registros)

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import static java.text.MessageFormat.format;
 
-public class QuantidadeAtributosInvalidoException extends InformacaoException {
+public class QuantidadeAtributosInvalidoException extends ArquivoInvalidoException {
 
     private static final String PADRAO_MENSAGEM = "A quantidade de atributos do registro {0} é incompatível com os dados de {1}.";
 

@@ -7,14 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static java.text.MessageFormat.format;
 
 @Component
-@Transactional
 public class ImportadorArquivosItemWriter implements ItemWriter<DadosProcessamento> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ImportadorArquivosItemWriter.class);
@@ -31,10 +29,10 @@ public class ImportadorArquivosItemWriter implements ItemWriter<DadosProcessamen
     @Override
     public void write(List<? extends DadosProcessamento> dadosProcessamentos) {
         try {
-            dadosProcessamentos.forEach(dadosProcessamento -> {
-                gravadorArquivoRepository.gravar(dadosProcessamento);
-                excluidorArquivoRepository.excluir(dadosProcessamento.getArquivoPath());
-            });
+//            dadosProcessamentos.forEach(dadosProcessamento -> {
+                gravadorArquivoRepository.gravar(dadosProcessamentos.get(0));
+//                excluidorArquivoRepository.excluir(dadosProcessamento.getArquivoPath());
+//            });
         } catch (Exception excecao) {
             String mensagem = gerarMensagem(dadosProcessamentos);
             LOG.error(mensagem, excecao);
