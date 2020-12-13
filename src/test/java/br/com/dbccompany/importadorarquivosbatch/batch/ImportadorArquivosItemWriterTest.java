@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static br.com.dbccompany.importadorarquivosbatch.fixture.DadosProcessamentoFixture.umDadosProcessamentoQualquer;
 import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
 import static java.util.Arrays.asList;
+import static org.mockito.ArgumentMatchers.same;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ImportadorArquivosItemWriterTest {
@@ -32,8 +33,9 @@ public class ImportadorArquivosItemWriterTest {
 
     @Test
     public void aoChamarWriteDadoQueSejaComSucessoDeveriaRealizarGravacaoDoConsolidadoIhRemocaoDoArquivoDeEntrada() {
-//        importadorArquivosItemWriter.write(asList(umDadosProcessamentoQualquer()));
-//        Mockito.verify(gravadorArquivoRepositoryMock).gravar(Mockito.same(umDadosProcessamentoQualquer()));
-//        Mockito.verify(excluidorArquivoRepositoryMock).excluir(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
+        final DadosProcessamento dadosProcessamento = umDadosProcessamentoQualquer();
+        importadorArquivosItemWriter.write(asList(dadosProcessamento));
+        Mockito.verify(gravadorArquivoRepositoryMock).gravar(same(dadosProcessamento));
+        Mockito.verify(excluidorArquivoRepositoryMock).excluir(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
     }
 }
