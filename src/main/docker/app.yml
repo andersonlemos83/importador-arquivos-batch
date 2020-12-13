@@ -1,0 +1,10 @@
+version: '2'
+services:
+  importador-arquivos-batch-app:
+    container_name: importador-arquivos-batch
+    image: importador-arquivos-batch:0.0.1-SNAPSHOT
+    environment:
+      TZ: America/Maceio
+      _JAVA_OPTIONS: -Xms128m -Xmx256m
+    volumes:
+    - /home/castgroup/data:/home/castgroup/data
