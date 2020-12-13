@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class DadosLeituraBuilder {
 
-    private DadosLeitura dadosLeitura = new DadosLeitura();
+    private final DadosLeitura dadosLeitura = new DadosLeitura();
 
     public static DadosLeituraBuilder umDadosLeitura() {
         return new DadosLeituraBuilder();

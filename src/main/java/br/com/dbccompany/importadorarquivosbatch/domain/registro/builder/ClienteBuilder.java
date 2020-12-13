@@ -4,7 +4,7 @@ import br.com.dbccompany.importadorarquivosbatch.domain.registro.Cliente;
 
 public final class ClienteBuilder {
 
-    private Cliente cliente = new Cliente();
+    private final Cliente cliente = new Cliente();
 
     public static ClienteBuilder umCliente() {
         return new ClienteBuilder();

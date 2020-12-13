@@ -4,7 +4,7 @@ import br.com.dbccompany.importadorarquivosbatch.domain.registro.Vendedor;
 
 public final class VendedorBuilder {
 
-    private Vendedor vendedor = new Vendedor();
+    private final Vendedor vendedor = new Vendedor();
 
     public static VendedorBuilder umVendedor() {
         return new VendedorBuilder();

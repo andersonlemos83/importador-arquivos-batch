@@ -53,7 +53,7 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
                 .sorted()
                 .filter(path -> path.toString().endsWith(EXTENSAO_ARQUIVO))
                 .findFirst()
-                .orElseThrow(() -> new NenhumArquivoImportacaoException());
+                .orElseThrow(NenhumArquivoImportacaoException::new);
     }
 
     private CSVReader lerConteudoArquivo(Path arquivoPath) throws FileNotFoundException {

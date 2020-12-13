@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 public final class DadosProcessamentoBuilder {
 
-    private DadosProcessamento dadosProcessamento = new DadosProcessamento();
+    private final DadosProcessamento dadosProcessamento = new DadosProcessamento();
 
     public static DadosProcessamentoBuilder umDadosProcessamento() {
         return new DadosProcessamentoBuilder();

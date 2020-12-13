@@ -4,7 +4,7 @@ import br.com.dbccompany.importadorarquivosbatch.domain.registro.Item;
 
 public final class ItemBuilder {
 
-    private Item item = new Item();
+    private final Item item = new Item();
 
     public static ItemBuilder umItem() {
         return new ItemBuilder();

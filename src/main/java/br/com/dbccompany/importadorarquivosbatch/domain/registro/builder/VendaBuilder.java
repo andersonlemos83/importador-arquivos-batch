@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class VendaBuilder {
 
-    private Venda venda = new Venda();
+    private final Venda venda = new Venda();
 
     public static VendaBuilder umaVenda() {
         return new VendaBuilder();
