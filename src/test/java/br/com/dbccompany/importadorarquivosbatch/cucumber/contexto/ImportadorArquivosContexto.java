@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.text.MessageFormat.format;
 import static java.util.Comparator.reverseOrder;
 
@@ -86,7 +87,7 @@ public class ImportadorArquivosContexto {
         try {
             final Path arquivoOrigemPath = gerarPathResource("data/" + nomeArquivoEntrada);
             final Path arquivoDestinoPath = Paths.get(diretorioEntrada + "/" + nomeArquivoEntrada);
-            Files.copy(arquivoOrigemPath, arquivoDestinoPath);
+            Files.copy(arquivoOrigemPath, arquivoDestinoPath, REPLACE_EXISTING);
         } catch (Exception excecao) {
             throw new RuntimeException("Erro ao criar arquivo no diretório de entrada: " + nomeArquivoEntrada, excecao);
         }

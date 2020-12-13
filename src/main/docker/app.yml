@@ -7,4 +7,4 @@ services:
       TZ: America/Maceio
       _JAVA_OPTIONS: -Xms128m -Xmx256m
     volumes:
-    - /data:/data
+    - DIGITAR_CAMINHO_DATA:/data

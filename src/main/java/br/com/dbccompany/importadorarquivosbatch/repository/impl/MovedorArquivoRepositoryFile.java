@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Properties;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 @Repository
 public class MovedorArquivoRepositoryFile implements MovedorArquivoRepository {
 
@@ -23,7 +25,7 @@ public class MovedorArquivoRepositoryFile implements MovedorArquivoRepository {
     public void moverParaInvalido(Path arquivo) {
         try {
             final Path arquivoPathDestino = gerarArquivoPathDestino(arquivo);
-            Files.move(arquivo, arquivoPathDestino);
+            Files.move(arquivo, arquivoPathDestino, REPLACE_EXISTING);
         } catch (Exception excecao) {
             throw new RepositorioException(excecao);
         }
