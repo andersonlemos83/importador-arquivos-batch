@@ -2,7 +2,7 @@ package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Cliente;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.QuantidadeAtributosInvalidoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroComLayoutInvalidoException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,18 +32,18 @@ public class ClienteParseTest {
         assertEquals("Telefonia", cliente.getAreaNegocio());
     }
 
-    @Test(expected = QuantidadeAtributosInvalidoException.class)
-    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaQuantidadeAtributosInvalidoException() {
+    @Test(expected = RegistroComLayoutInvalidoException.class)
+    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaRegistroComLayoutInvalidoException() {
         registroParse.parse(umaRegistroArrayOiComQuantidadeInvalida());
     }
 
     @Test
-    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaExcecaoComAhMensagemQuantidadeAtributosInvalidos() {
+    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaExcecaoComAhMensagemRegistroIncompativelComLayout() {
         try {
             registroParse.parse(umaRegistroArrayOiComQuantidadeInvalida());
             fail("Deveria lançar uma exceção...");
-        } catch (QuantidadeAtributosInvalidoException excecao) {
-            assertEquals("A quantidade de atributos do registro [002, 29013251000192, Oi] é incompatível com os dados de Cliente.", excecao.getMessage());
+        } catch (RegistroComLayoutInvalidoException excecao) {
+            assertEquals("O arquivo possui um registro, [002, 29013251000192, Oi], incompatível com o layout Cliente.", excecao.getMessage());
         }
     }
 }

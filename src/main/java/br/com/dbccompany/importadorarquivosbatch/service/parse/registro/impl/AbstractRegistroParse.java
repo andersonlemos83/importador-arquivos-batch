@@ -1,8 +1,8 @@
 package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.QuantidadeAtributosInvalidoException;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroParseException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroComLayoutInvalidoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroComTipoDadoInvalidoException;
 
 public abstract class AbstractRegistroParse<T> implements RegistroParse<T> {
 
@@ -15,12 +15,12 @@ public abstract class AbstractRegistroParse<T> implements RegistroParse<T> {
     @Override
     public T parse(String[] registro) {
         if (registro.length != obterQuantidadeCampos()) {
-            throw new QuantidadeAtributosInvalidoException(registro, obterNome());
+            throw new RegistroComLayoutInvalidoException(registro, obterNome());
         }
         try {
             return gerarRegistro(registro);
         } catch (Exception excecao) {
-            throw new RegistroParseException(registro, obterNome());
+            throw new RegistroComTipoDadoInvalidoException(registro, obterNome());
         }
     }
 }

@@ -2,8 +2,8 @@ package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Vendedor;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.QuantidadeAtributosInvalidoException;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroParseException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroComLayoutInvalidoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroComTipoDadoInvalidoException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,33 +32,33 @@ public class VendedorParseTest {
         assertEquals(Double.valueOf("50000"), vendedor.getSalario());
     }
 
-    @Test(expected = QuantidadeAtributosInvalidoException.class)
-    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaQuantidadeAtributosInvalidoException() {
+    @Test(expected = RegistroComLayoutInvalidoException.class)
+    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaRegistroComLayoutInvalidoException() {
         registroParse.parse(umaRegistroArrayPedroComQuantidadeInvalida());
     }
 
     @Test
-    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaExcecaoComAhMensagemQuantidadeAtributosInvalidos() {
+    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaExcecaoComAhMensagemRegistroIncompativelComLayout() {
         try {
             registroParse.parse(umaRegistroArrayPedroComQuantidadeInvalida());
             fail("Deveria lançar uma exceção...");
-        } catch (QuantidadeAtributosInvalidoException excecao) {
-            assertEquals("A quantidade de atributos do registro [001, 1234567891234, Pedro] é incompatível com os dados de Vendedor.", excecao.getMessage());
+        } catch (RegistroComLayoutInvalidoException excecao) {
+            assertEquals("O arquivo possui um registro, [001, 1234567891234, Pedro], incompatível com o layout Vendedor.", excecao.getMessage());
         }
     }
 
-    @Test(expected = RegistroParseException.class)
-    public void aoFazerParseDadoQueRegistroTenhaDadosInvalidosDeveriaRetornarLancarUmaRegistroParseException() {
+    @Test(expected = RegistroComTipoDadoInvalidoException.class)
+    public void aoFazerParseDadoQueRegistroTenhaDadosInvalidosDeveriaRetornarLancarUmaRegistroComTipoDadoInvalidoException() {
         registroParse.parse(umaRegistroArrayPedroComDadosInvalidos());
     }
 
     @Test
-    public void aoFazerParseDadoQueRegistroTenhaDadosInvalidosDeveriaRetornarLancarUmaExcecaoComAhMensagemOcorreuUmErroInesperado() {
+    public void aoFazerParseDadoQueRegistroTenhaDadosInvalidosDeveriaRetornarLancarUmaExcecaoComAhMensagemRegistroComDaodsIncompativeis() {
         try {
             registroParse.parse(umaRegistroArrayPedroComDadosInvalidos());
             fail("Deveria lançar uma exceção...");
-        } catch (RegistroParseException excecao) {
-            assertEquals("Ocorreu um erro inesperado durante o parse do registro [001, 1234567891234, Pedro, Inválido] para Vendedor.", excecao.getMessage());
+        } catch (RegistroComTipoDadoInvalidoException excecao) {
+            assertEquals("O arquivo possui um registro, [001, 1234567891234, Pedro, Inválido], com dados incompatíveis com o layout Vendedor.", excecao.getMessage());
         }
     }
 }

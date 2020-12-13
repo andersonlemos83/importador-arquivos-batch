@@ -6,7 +6,7 @@ import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.Cli
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.ItemParse;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.VendaParse;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.VendedorParse;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.IdInvalidoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroSemLayoutDefinidoException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,18 +50,18 @@ public class RegistroParseFactoryImplTest {
         assertTrue("Deveria retornar um VendaParse", registroParse instanceof VendaParse);
     }
 
-    @Test(expected = IdInvalidoException.class)
-    public void aoObterDadoQueSejaInformadoUmRegistroComIdInvalidoDeveriaLancarUmaIdInvalidoException() {
+    @Test(expected = RegistroSemLayoutDefinidoException.class)
+    public void aoObterDadoQueSejaInformadoUmRegistroComIdInvalidoDeveriaLancarUmaRegistroSemLayoutDefinidoException() {
         registroParseFactory.obter(new String[]{});
     }
 
     @Test
-    public void aoObterDadoQueSejaInformadoUmRegistroComIdInvalidoDeveriaLancarUmaExcecaoComAhMensagemIdInvalido() {
+    public void aoObterDadoQueSejaInformadoUmRegistroComIdInvalidoDeveriaLancarUmaExcecaoComAhMensagemRegistroSemLayoutDefinido() {
         try {
             registroParseFactory.obter(new String[]{"004"});
             fail("Deveria lançar uma exceção...");
-        } catch (IdInvalidoException excecao) {
-            assertEquals("O arquivo importado possui um registro com ID inválido: 004", excecao.getMessage());
+        } catch (RegistroSemLayoutDefinidoException excecao) {
+            assertEquals("O arquivo possui um registro sem layout definido: 004", excecao.getMessage());
         }
     }
 }

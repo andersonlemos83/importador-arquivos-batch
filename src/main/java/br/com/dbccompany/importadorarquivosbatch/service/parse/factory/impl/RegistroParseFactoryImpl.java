@@ -2,7 +2,7 @@ package br.com.dbccompany.importadorarquivosbatch.service.parse.factory.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.service.parse.factory.RegistroParseFactory;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
-import br.com.dbccompany.importadorarquivosbatch.shared.excecao.IdInvalidoException;
+import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroSemLayoutDefinidoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.util.ArrayUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -31,6 +31,6 @@ public class RegistroParseFactoryImpl implements RegistroParseFactory {
     public RegistroParse obter(String[] registro) {
         final String id = ArrayUtil.obterString(registro, 0);
         return Optional.ofNullable(parses.get(id))
-                .orElseThrow(() -> new IdInvalidoException(id));
+                .orElseThrow(() -> new RegistroSemLayoutDefinidoException(id));
     }
 }
