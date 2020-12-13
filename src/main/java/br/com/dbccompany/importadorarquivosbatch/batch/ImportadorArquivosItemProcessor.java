@@ -24,7 +24,9 @@ public class ImportadorArquivosItemProcessor implements ItemProcessor<DadosLeitu
     @Override
     public DadosProcessamento process(DadosLeitura dadosLeitura) {
         try {
-            return processadorArquivoService.processar(dadosLeitura);
+            final DadosProcessamento dadosProcessamento = processadorArquivoService.processar(dadosLeitura);
+            LOG.info("Arquivo processado: " + dadosLeitura.getArquivoPath());
+            return dadosProcessamento;
         } catch (Exception excecao) {
             String mensagem = gerarMensagem(dadosLeitura);
             LOG.error(mensagem, excecao);

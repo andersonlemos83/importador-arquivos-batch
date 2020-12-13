@@ -7,4 +7,4 @@ services:
       TZ: America/Maceio
       _JAVA_OPTIONS: -Xms128m -Xmx256m
     volumes:
-    - /home/castgroup/data:/home/castgroup/data
+    - /data:/data

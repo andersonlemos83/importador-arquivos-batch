@@ -27,7 +27,9 @@ public class ImportadorArquivosItemReader implements ItemReader<DadosLeitura> {
     @Override
     public DadosLeitura read() {
         try {
-            return leitorArquivoService.lerArquivoNaoImportado();
+            final DadosLeitura dadosLeitura = leitorArquivoService.lerArquivoNaoImportado();
+            LOG.info("Arquivo lido: " + dadosLeitura.getArquivoPath());
+            return dadosLeitura;
         } catch (InformacaoException excecao) {
             LOG.info(excecao.getMessage());
             return null;

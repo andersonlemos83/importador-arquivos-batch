@@ -32,6 +32,7 @@ public class ImportadorArquivosItemWriter implements ItemWriter<DadosProcessamen
             dadosProcessamentos.forEach(dadosProcessamento -> {
                 gravadorArquivoRepository.gravar(dadosProcessamento);
                 excluidorArquivoRepository.excluir(dadosProcessamento.getArquivoPath());
+                LOG.info("Arquivo gravado: " + dadosProcessamento.getArquivoPath());
             });
         } catch (Exception excecao) {
             String mensagem = gerarMensagem(dadosProcessamentos);
