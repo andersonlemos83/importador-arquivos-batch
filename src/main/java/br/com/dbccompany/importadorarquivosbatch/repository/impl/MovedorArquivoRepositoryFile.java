@@ -4,6 +4,7 @@ import br.com.dbccompany.importadorarquivosbatch.repository.MovedorArquivoReposi
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,7 +27,7 @@ public class MovedorArquivoRepositoryFile implements MovedorArquivoRepository {
         try {
             final Path arquivoPathDestino = gerarArquivoPathDestino(arquivo);
             Files.move(arquivo, arquivoPathDestino, REPLACE_EXISTING);
-        } catch (Exception excecao) {
+        } catch (IOException excecao) {
             throw new RepositorioException(excecao);
         }
     }

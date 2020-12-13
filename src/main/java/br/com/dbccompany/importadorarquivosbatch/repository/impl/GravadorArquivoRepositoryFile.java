@@ -5,12 +5,14 @@ import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepos
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.text.MessageFormat.format;
 
 @Repository
@@ -19,7 +21,7 @@ public class GravadorArquivoRepositoryFile implements GravadorArquivoRepository 
     private static final String SEPARADOR_NOME_EXTENSAO = "\\.";
 
     private static final String PADRAO_NOME_ARQUIVO_SAIDA = "{0}/{1}.done.{2}";
-    private static final String PADRAO_DADOS_REGISTRO = "{0}ç{1}ç{2}ç{3}";
+    private static final String PADRAO_DADOS_SAIDA = "{0}ç{1}ç{2}ç{3}";
 
     private final Properties importacaoArquivosProperties;
 
@@ -30,10 +32,9 @@ public class GravadorArquivoRepositoryFile implements GravadorArquivoRepository 
     @Override
     public void gravar(DadosProcessamento dadosProcessamento) {
         try {
-            final File arquivoSaida = new File(gerarNomeArquivoSaida(dadosProcessamento.getArquivoPath()));
-            final FileWriter arquivoFileWriter = new FileWriter(arquivoSaida);
-            arquivoFileWriter.write(gerar(dadosProcessamento));
-            arquivoFileWriter.close();
+            final String nomeArquivoSaida = gerarNomeArquivoSaida(dadosProcessamento.getArquivoPath());
+            final byte[] conteudo = gerarConteudo(dadosProcessamento);
+            Files.write(Paths.get(nomeArquivoSaida), conteudo, CREATE, TRUNCATE_EXISTING);
         } catch (IOException excecao) {
             throw new RepositorioException(excecao);
         }
@@ -48,8 +49,8 @@ public class GravadorArquivoRepositoryFile implements GravadorArquivoRepository 
         return importacaoArquivosProperties.getProperty("diretorioSaida");
     }
 
-    private String gerar(DadosProcessamento dadosProcessamento) {
-        return format(PADRAO_DADOS_REGISTRO, gerarParametros(dadosProcessamento));
+    private byte[] gerarConteudo(DadosProcessamento dadosProcessamento) {
+        return format(PADRAO_DADOS_SAIDA, gerarParametros(dadosProcessamento)).getBytes();
     }
 
     private Object[] gerarParametros(DadosProcessamento dadosProcessamento) {
