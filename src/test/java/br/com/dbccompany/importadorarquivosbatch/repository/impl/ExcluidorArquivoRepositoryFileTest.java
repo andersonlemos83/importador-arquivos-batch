@@ -43,7 +43,7 @@ public class ExcluidorArquivoRepositoryFileTest {
     public void aoExcluirDadoQueExistaArquivoDeEntradaDeveriaExcluirOhArquivoDeEntrada() {
         importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_DAT);
         excluidorArquivoRepository.excluir(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
-        importadorArquivosVerificador.verificarArquivoEntrada(ARQUIVO_SUCESSO_DBC_DAT);
+        importadorArquivosVerificador.verificarSeNaoExisteArquivoEntrada(ARQUIVO_SUCESSO_DBC_DAT);
     }
 
     @Test(expected = RepositorioException.class)

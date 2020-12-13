@@ -3,7 +3,7 @@ package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 import br.com.dbccompany.importadorarquivosbatch.ImportadorArquivosBatchApplication;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArquivosContexto;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.verificador.ImportadorArquivosVerificador;
-import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
+import br.com.dbccompany.importadorarquivosbatch.repository.MovedorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
 import org.junit.After;
 import org.junit.Test;
@@ -12,19 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static br.com.dbccompany.importadorarquivosbatch.fixture.DadosProcessamentoFixture.umDadosProcessamentoSucessoDbc;
-import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_SUCESSO_DBC_DONE_DAT;
-import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.CONTEUDO_ARQUIVO_SUCESSO_DBC_DONE_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_SUCESSO_DBC_DAT;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ImportadorArquivosBatchApplication.class)
-public class GravadorArquivoRepositoryFileTest {
+public class MovedorArquivoRepositoryFileTest {
 
     @Autowired
     private ImportadorArquivosContexto importadorArquivosContexto;
 
     @Autowired
-    private GravadorArquivoRepository gravadorArquivoRepository;
+    private MovedorArquivoRepository movedorArquivoRepository;
 
     @Autowired
     private ImportadorArquivosVerificador importadorArquivosVerificador;
@@ -35,15 +34,15 @@ public class GravadorArquivoRepositoryFileTest {
     }
 
     @Test
-    public void aoGravarDadoQueExistaDiretorioDeSaidaDeveriaGravarOhNomeIhConteudoEsperados() {
+    public void aoMoverParaInvalidoDadoQueExistaArquivoDeEntradaDeveriaMoverOhArquivoDeEntradaParaInvalido() {
         importadorArquivosContexto.criarDiretorios();
-        gravadorArquivoRepository.gravar(umDadosProcessamentoSucessoDbc());
-        importadorArquivosVerificador.verificarSeExisteArquivoSaida(ARQUIVO_SUCESSO_DBC_DONE_DAT);
-        importadorArquivosVerificador.verificarConteudoArquivoSaida(ARQUIVO_SUCESSO_DBC_DONE_DAT, CONTEUDO_ARQUIVO_SUCESSO_DBC_DONE_DAT);
+        importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_DAT);
+        movedorArquivoRepository.moverParaInvalido(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
+        importadorArquivosVerificador.verificarSeExisteArquivoInvalido(ARQUIVO_SUCESSO_DBC_DAT);
     }
 
     @Test(expected = RepositorioException.class)
-    public void aoGravarDadoQueNaoExistaDiretorioDeSaidaDeveriaLancarUmaRepositorioException() {
-        gravadorArquivoRepository.gravar(umDadosProcessamentoSucessoDbc());
+    public void aoMoverParaInvalidoDadoQueNaoExistaArquivoDeEntradaDeveriaLancarUmaRepositorioException() {
+        movedorArquivoRepository.moverParaInvalido(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
     }
 }

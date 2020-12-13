@@ -46,7 +46,7 @@ public class ImportarArquivoStepDefs extends StepDefs {
     @Entao("^deveria criar o arquivo \"([^\"]*)\" no diretorio de saida$")
     public void deveriaCriarOhArquivoEsperadoNoDiretorioDeSaida(String nomeArquivoSaida) {
         this.nomeArquivoSaida = nomeArquivoSaida;
-        importadorArquivosVerificador.verificarArquivoSaida(nomeArquivoSaida);
+        importadorArquivosVerificador.verificarSeExisteArquivoSaida(nomeArquivoSaida);
     }
 
     @E("^deveria gravar dentro do arquivo de saida o conteudo consolidado \"([^\"]*)\"$")
@@ -56,6 +56,11 @@ public class ImportarArquivoStepDefs extends StepDefs {
 
     @E("^deveria excluir o arquivo \"([^\"]*)\" do diretorio de entrada$")
     public void deveriaExcluirOhArquivoEsperadoDoDiretorioDeEntrada(String nomeArquivoEntrada) {
-        importadorArquivosVerificador.verificarArquivoEntrada(nomeArquivoEntrada);
+        importadorArquivosVerificador.verificarSeNaoExisteArquivoEntrada(nomeArquivoEntrada);
+    }
+
+    @Entao("^deveria criar o arquivo \"([^\"]*)\" no diretorio de invalido$")
+    public void deveriaCriarOhArquivoEsperadoNoDiretorioDeInvalido(String nomeArquivoInvalido) {
+        importadorArquivosVerificador.verificarSeExisteArquivoInvalido(nomeArquivoInvalido);
     }
 }

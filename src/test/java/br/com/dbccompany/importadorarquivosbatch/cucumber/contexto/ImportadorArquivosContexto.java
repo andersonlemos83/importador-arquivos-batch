@@ -28,8 +28,11 @@ public class ImportadorArquivosContexto {
     @Value("${importador-arquivos.data.out}")
     private String diretorioSaida;
 
+    @Value("${importador-arquivos.data.invalid}")
+    private String diretorioInvalido;
+
     public void criarDiretorios() {
-        Arrays.asList(diretorioEntrada, diretorioSaida).forEach(this::criarDiretorio);
+        Arrays.asList(diretorioEntrada, diretorioSaida, diretorioInvalido).forEach(this::criarDiretorio);
     }
 
     public void excluirDiretorios() {
@@ -39,11 +42,6 @@ public class ImportadorArquivosContexto {
     public Boolean existeArquivoSaida(String nomeArquivoSaida) {
         final Path arquivoSaida = Paths.get(diretorioSaida + "/" + nomeArquivoSaida);
         return Files.exists(arquivoSaida);
-    }
-
-    public Boolean existeArquivoEntrada(String nomeArquivoEntrada) {
-        final Path arquivoEntrada = Paths.get(diretorioEntrada + "/" + nomeArquivoEntrada);
-        return Files.exists(arquivoEntrada);
     }
 
     public String obterConteudoArquivoSaida(String nomeArquivoSaida) {
@@ -56,6 +54,16 @@ public class ImportadorArquivosContexto {
         } catch (Exception excecao) {
             throw new RuntimeException("Erro ao obter o conteúdo do arquivos de saída: " + nomeArquivoSaida, excecao);
         }
+    }
+
+    public Boolean existeArquivoEntrada(String nomeArquivoEntrada) {
+        final Path arquivoEntrada = Paths.get(diretorioEntrada + "/" + nomeArquivoEntrada);
+        return Files.exists(arquivoEntrada);
+    }
+
+    public Boolean existeArquivoInvalido(String nomeArquivoInvalido) {
+        final Path arquivoEntrada = Paths.get(diretorioInvalido + "/" + nomeArquivoInvalido);
+        return Files.exists(arquivoEntrada);
     }
 
     private void criarDiretorio(String caminho) {

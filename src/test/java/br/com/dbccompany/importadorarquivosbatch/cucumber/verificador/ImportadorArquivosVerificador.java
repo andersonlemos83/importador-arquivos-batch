@@ -14,7 +14,7 @@ public class ImportadorArquivosVerificador {
     @Autowired
     private ImportadorArquivosContexto importadorArquivosContexto;
 
-    public void verificarArquivoSaida(String nomeArquivoSaida) {
+    public void verificarSeExisteArquivoSaida(String nomeArquivoSaida) {
         Boolean existeArquivoSaida = importadorArquivosContexto.existeArquivoSaida(nomeArquivoSaida);
         assertTrue("Não existe arquivo de saída: " + nomeArquivoSaida, existeArquivoSaida);
     }
@@ -24,8 +24,13 @@ public class ImportadorArquivosVerificador {
         assertEquals(conteudoArquivoSaidaRetornado, conteudoArquivoSaida);
     }
 
-    public void verificarArquivoEntrada(String nomeArquivoEntrada) {
+    public void verificarSeNaoExisteArquivoEntrada(String nomeArquivoEntrada) {
         Boolean existeArquivoEntrada = importadorArquivosContexto.existeArquivoEntrada(nomeArquivoEntrada);
         assertFalse("Existe arquivo de entrada: " + nomeArquivoEntrada, existeArquivoEntrada);
+    }
+
+    public void verificarSeExisteArquivoInvalido(String nomeArquivoInvalido) {
+        Boolean existeArquivoInvalido = importadorArquivosContexto.existeArquivoInvalido(nomeArquivoInvalido);
+        assertTrue("Não existe arquivo inválido: " + nomeArquivoInvalido, existeArquivoInvalido);
     }
 }
