@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/andersonlemos83/importador-arquivos-batch.svg?branch=main)](https://travis-ci.org/andersonlemos83/importador-arquivos-batch)
+[![Build Status](https://travis-ci.org/andersonlemos83/importador-arquivos-batch.svg?branch=main)](https://travis-ci.org/andersonlemos83/importador-arquivos-batch) [![codecov](https://codecov.io/gh/andersonlemos83/importador-arquivos-batch/branch/main/graph/badge.svg?token=0X9WNC9TOY)](https://codecov.io/gh/andersonlemos83/importador-arquivos-batch)
