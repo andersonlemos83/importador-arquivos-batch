@@ -19,7 +19,8 @@ Consiste em um sistema de análise de dados que realiza leitura de arquivos ".da
 **4. Informações técnicas**
 - Linguagem Java 8
 - Ecossistema do Spring Boot 2.3.6
-- Testes com JUnit, Mockto e Cucumber
+- Gerenciamento de dependências com o Maven 3.3.9
+- Testes com JUnit, Mockito e Cucumber
 - Conteinerização da aplicação com Docker
 - Integração Contínua com Travis CI
 - Análise de cobertura de testes com Codecov
@@ -31,7 +32,36 @@ Com o intuito de organizar melhor os testes do projeto, foram agrupados os teste
 - UnitTests: Esta suite agrupa todos os testes de unidade do projeto. Ela atingiu **93%** de linha cobertas segundo coverage.
 - AllTests: Esta suite agrupa todos os testes implementados. Consiste na união do CucumberTest com UnitTests. Ela atingiu **97%** de linha cobertas segundo coverage.
 
-**6. Pré-requisitos**
+**6. Como usar**
+
+1. Configurar o ambiente de desenvolvimento com:
+- Java 8
+- Maven 3.3.9
+- Docker
+
+2. Criar os diretórios:
+- %HOMEPATH%/data/in
+- %HOMEPATH%/data/out
+- %HOMEPATH%/data/invalid
+
+OBS: Caso seja necessário, existem arquivos de teste localizados em /src/test/resources/data
+
+3. Substituir o texto DIGITAR_CAMINHO_DATA por %HOMEPATH%/data no arquivo localizado em /src/main/docker/app.yml  
+
+4. Executar clean install do projeto:
+```
+./mvnw clean install -DskipTests=true
+```
+
+5. Comando iniciar:
+``` 
+docker-compose -f /src/main/docker/app.yml up
+```
+
+6. Comando parar: 
+``` 
+docker-compose -f /src/main/docker/app.yml stop
+```
 
 
 **10. That's all folks!**
