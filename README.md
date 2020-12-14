@@ -34,38 +34,35 @@ Com o intuito de organizar melhor os testes do projeto, foram agrupados os teste
 
 **6. Como usar**
 
-    1. Configurar o ambiente de desenvolvimento com:
-        - Java 8
-        - Maven 3.3.9
-        - Docker
+1. Configurar o ambiente de desenvolvimento com:
+    - Java 8
+    - Maven 3.3.9
+    - Docker
 
-    2. Criar os diretórios:
-        - %HOMEPATH%/data/in
-        - %HOMEPATH%/data/out
-        - %HOMEPATH%/data/invalid
+2. Criar os diretórios:
+    - %HOMEPATH%/data/in
+    - %HOMEPATH%/data/out
+    - %HOMEPATH%/data/invalid
 
-        OBS: Caso seja necessário, existem arquivos de teste localizados em /src/test/resources/data
+    OBS.: Caso seja necessário, existem arquivos de teste localizados em <em>/src/test/resources/data</em>
 
-    3. Substituir o texto DIGITAR_CAMINHO_DATA por %HOMEPATH%/data no arquivo localizado em /src/main/docker/app.yml  
+3. Substituir o texto DIGITAR_CAMINHO_DATA por %HOMEPATH%/data no arquivo localizado em <em>/src/main/docker/app.yml</em>  
 
-    4. Executar clean install do projeto:
-        ```
-        ./mvnw clean install -DskipTests=true
-        ```
+4. Executar clean install do projeto:
+    ```
+    ./mvnw clean install -DskipTests=true
+    ```
 
-    5. Inicializar container:
-        ``` 
-        docker-compose -f /src/main/docker/app.yml up
-        ```
+5. Inicializar container:
+    ``` 
+    docker-compose -f /src/main/docker/app.yml up
+    ```
 
-    6. Paralizar container: 
-        ``` 
-        docker-compose -f /src/main/docker/app.yml stop
-        ```
+6. Paralizar container: 
+    ``` 
+    docker-compose -f /src/main/docker/app.yml stop
+    ```
         
-**7. Trabalhos futuros**
-
-
-**8. That's all folks!**
+**7. That's all folks!**
 
 Caro avaliador, obrigado pela oportunidade.
