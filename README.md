@@ -55,12 +55,12 @@ Com o intuito de organizar melhor os testes do projeto, foram agrupados os teste
 
 5. Inicializar container:
     ``` 
-    docker-compose -f /src/main/docker/app.yml up
+    docker-compose -f src/main/docker/app.yml up
     ```
 
 6. Paralizar container: 
     ``` 
-    docker-compose -f /src/main/docker/app.yml stop
+    docker-compose -f src/main/docker/app.yml stop
     ```
         
 **7. That's all folks!**
