@@ -12,7 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static br.com.dbccompany.importadorarquivosbatch.fixture.DadosProcessamentoFixture.umDadosProcessamentoQualquer;
 import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
-import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.mockito.ArgumentMatchers.same;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,7 +34,7 @@ public class ImportadorArquivosItemWriterTest {
     @Test
     public void aoChamarWriteDadoQueSejaComSucessoDeveriaRealizarGravacaoDoConsolidadoIhRemocaoDoArquivoDeEntrada() {
         final DadosProcessamento dadosProcessamento = umDadosProcessamentoQualquer();
-        importadorArquivosItemWriter.write(asList(dadosProcessamento));
+        importadorArquivosItemWriter.write(singletonList(dadosProcessamento));
         Mockito.verify(gravadorArquivoRepositoryMock).gravar(same(dadosProcessamento));
         Mockito.verify(excluidorArquivoRepositoryMock).excluir(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
     }

@@ -17,8 +17,8 @@ public final class DadosProcessamentoFixture {
     public static DadosProcessamento umDadosProcessamentoSucessoDbc() {
         return DadosProcessamentoBuilder.umDadosProcessamento()
                 .comArquivoPath(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT)
-                .comQuantidadeClientes(2l)
-                .comQuantidadeVendedores(2l)
+                .comQuantidadeClientes(2L)
+                .comQuantidadeVendedores(2L)
                 .comIdVendaMaisCara("10")
                 .comNomePiorVendedor("Paulo")
                 .build();

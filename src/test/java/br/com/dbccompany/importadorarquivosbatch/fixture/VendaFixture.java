@@ -5,6 +5,7 @@ import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendaBu
 
 import static br.com.dbccompany.importadorarquivosbatch.fixture.ItemFixture.*;
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 public final class VendaFixture {
 
@@ -19,7 +20,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("01")
-                .comItens(asList(umItemId1Quantidade8Preco1000()))
+                .comItens(singletonList(umItemId1Quantidade8Preco1000()))
                 .comNomeVendedor("Morten Harket")
                 .build();
     }
@@ -28,7 +29,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("02")
-                .comItens(asList(umItemId1Quantidade2Preco1000()))
+                .comItens(singletonList(umItemId1Quantidade2Preco1000()))
                 .comNomeVendedor("Morten Harket")
                 .build();
     }
@@ -47,7 +48,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("04")
-                .comItens(asList(umItemId1Quantidade1Preco4000()))
+                .comItens(singletonList(umItemId1Quantidade1Preco4000()))
                 .comNomeVendedor("Bryan Adams")
                 .build();
     }
@@ -56,7 +57,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("05")
-                .comItens(asList(umItemId1Quantidade1Preco8000()))
+                .comItens(singletonList(umItemId1Quantidade1Preco8000()))
                 .comNomeVendedor("Agnetha Fältskog")
                 .build();
     }
@@ -76,7 +77,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("07")
-                .comItens(asList(umItemId1Quantidade10Preco200()))
+                .comItens(singletonList(umItemId1Quantidade10Preco200()))
                 .comNomeVendedor("Simon Le Bon")
                 .build();
     }
@@ -85,7 +86,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("08")
-                .comItens(asList(umItemId1Quantidade10Preco200()))
+                .comItens(singletonList(umItemId1Quantidade10Preco200()))
                 .comNomeVendedor("Simon Le Bon")
                 .build();
     }
@@ -94,7 +95,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("09")
-                .comItens(asList(umItemId1Quantidade10Preco100()))
+                .comItens(singletonList(umItemId1Quantidade10Preco100()))
                 .comNomeVendedor("Simon Le Bon")
                 .build();
     }
@@ -103,7 +104,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("10")
-                .comItens(asList(umItemId1Quantidade10Preco100()))
+                .comItens(singletonList(umItemId1Quantidade10Preco100()))
                 .comNomeVendedor("Simon Le Bon")
                 .build();
     }
@@ -131,7 +132,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("13")
-                .comItens(asList(umItemId1Quantidade1000Preco1()))
+                .comItens(singletonList(umItemId1Quantidade1000Preco1()))
                 .comNomeVendedor("Russell Hitchcock")
                 .build();
     }
@@ -140,7 +141,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("14")
-                .comItens(asList(umItemId1Quantidade1000Preco1()))
+                .comItens(singletonList(umItemId1Quantidade1000Preco1()))
                 .comNomeVendedor("Russell Hitchcock")
                 .build();
     }
@@ -161,7 +162,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("16")
-                .comItens(asList(umItemId1Quantidade4Preco250()))
+                .comItens(singletonList(umItemId1Quantidade4Preco250()))
                 .comNomeVendedor("Cyndi Lauper")
                 .build();
     }
@@ -170,7 +171,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("17")
-                .comItens(asList(umItemId1Quantidade6Preco100()))
+                .comItens(singletonList(umItemId1Quantidade6Preco100()))
                 .comNomeVendedor("Cyndi Lauper")
                 .build();
     }
@@ -179,7 +180,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("18")
-                .comItens(asList(umItemId1Quantidade1Preco200()))
+                .comItens(singletonList(umItemId1Quantidade1Preco200()))
                 .comNomeVendedor("Cyndi Lauper")
                 .build();
     }
@@ -188,7 +189,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("19")
-                .comItens(asList(umItemId1Quantidade10Preco10()))
+                .comItens(singletonList(umItemId1Quantidade10Preco10()))
                 .comNomeVendedor("Cyndi Lauper")
                 .build();
     }
@@ -197,7 +198,7 @@ public final class VendaFixture {
         return VendaBuilder.umaVenda()
                 .comId("003")
                 .comIdVenda("20")
-                .comItens(asList(umItemId1Quantidade100Preco1()))
+                .comItens(singletonList(umItemId1Quantidade100Preco1()))
                 .comNomeVendedor("Cyndi Lauper")
                 .build();
     }

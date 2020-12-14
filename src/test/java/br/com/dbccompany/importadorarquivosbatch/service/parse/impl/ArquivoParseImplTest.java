@@ -17,7 +17,7 @@ import java.util.List;
 
 import static br.com.dbccompany.importadorarquivosbatch.fixture.ArquivoFixture.*;
 import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
-import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -61,14 +61,14 @@ public class ArquivoParseImplTest {
     public void aoFazerParseComSucessoDeveriaRetornarOsRegistrosEsperados() {
         configurarMocksComSucesso();
         final List<Registro> registrosRetornados = arquivoParse.parse(umArquivoQualquer());
-        assertEquals(asList(registro), registrosRetornados);
+        assertEquals(singletonList(registro), registrosRetornados);
     }
 
     @Test(expected = ArquivoInvalidoException.class)
     public void aoFazerParseComFalhaDeveriaLancarUmaArquivoInvalidoException() {
         configurarMocksComFalha();
         final List<Registro> registrosRetornados = arquivoParse.parse(umArquivoQualquer());
-        assertEquals(asList(registro), registrosRetornados);
+        assertEquals(singletonList(registro), registrosRetornados);
     }
 
     @Test

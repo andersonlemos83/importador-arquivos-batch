@@ -19,17 +19,9 @@ public class RegistroParseFactoryImplTest {
 
     private RegistroParseFactory registroParseFactory;
 
-    private RegistroParse vendedorParse;
-    private RegistroParse clienteParse;
-    private RegistroParse vendaParse;
-
     @Before
     public void inicializarContexto() {
-        vendedorParse = new VendedorParse();
-        clienteParse = new ClienteParse();
-        vendaParse = new VendaParse(new ItemParse());
-
-        registroParseFactory = new RegistroParseFactoryImpl(vendedorParse, clienteParse, vendaParse);
+        registroParseFactory = new RegistroParseFactoryImpl(new VendedorParse(), new ClienteParse(), new VendaParse(new ItemParse()));
     }
 
     @Test

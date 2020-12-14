@@ -26,6 +26,6 @@ public class ConsolidadorQuantidadeClientesImplTest {
     public void aoConsolidarDadoQueListaDeRegistrosPossua10Vendedores5Clientes20VendasDeveriaRetornar5() {
         final List<Registro> registros = RegistroFixture.umaListaDeRegistrosCom10Vendedores5Clientes20Vendas();
         final Long quantidadeClientes = consolidadorQuantidadeClientes.consolidar(registros);
-        assertEquals(5l, quantidadeClientes);
+        assertEquals(5L, quantidadeClientes);
     }
 }

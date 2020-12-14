@@ -18,8 +18,7 @@ public class ConsolidadorVendaMaisCaraImpl implements ConsolidadorVendaMaisCara 
                 .stream()
                 .filter(Registro::ehVenda)
                 .map(registro -> (Venda) registro)
-                .sorted(comparingDouble(Venda::obterTotal).reversed())
-                .findFirst()
+                .max(comparingDouble(Venda::obterTotal))
                 .map(Venda::getIdVenda)
                 .orElse("");
     }

@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(JUnit4.class)
@@ -26,7 +26,7 @@ public class VendaTest {
 
     @Test
     public void aoChamarObterTotalDadoQueNaoPossuNenhumItemDeveriaRetornarZero() {
-        final Venda venda = VendaBuilder.umaVenda().comItens(asList()).build();
+        final Venda venda = VendaBuilder.umaVenda().comItens(emptyList()).build();
         assertEquals(0d, venda.obterTotal());
     }
 }

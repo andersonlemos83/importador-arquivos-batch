@@ -5,7 +5,7 @@ import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.ItemBui
 
 public final class ItemFixture {
 
-    public ItemFixture() {
+    private ItemFixture() {
     }
 
     public static Item umItemQualquer() {

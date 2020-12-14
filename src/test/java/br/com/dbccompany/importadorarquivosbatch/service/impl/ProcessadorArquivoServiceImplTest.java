@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -42,20 +42,20 @@ public class ProcessadorArquivoServiceImplTest {
         processadorArquivoService = new ProcessadorArquivoServiceImpl(consolidadorQuantidadeClientesMock,
                 consolidadorQuantidadeVendedoresMock, consolidadorVendaMaisCaraMock, consolidadorPiorVendedorMock);
 
-        dadosLeitura = DadosLeituraBuilder.umDadosLeitura().comRegistros(asList()).build();
+        dadosLeitura = DadosLeituraBuilder.umDadosLeitura().comRegistros(emptyList()).build();
     }
 
     @Test
     public void aoProcessarDeveriaRetonarOhDadosProcessamentoEsperado() {
-        Mockito.when(consolidadorQuantidadeClientesMock.consolidar(dadosLeitura.getRegistros())).thenReturn(1l);
-        Mockito.when(consolidadorQuantidadeVendedoresMock.consolidar(dadosLeitura.getRegistros())).thenReturn(2l);
+        Mockito.when(consolidadorQuantidadeClientesMock.consolidar(dadosLeitura.getRegistros())).thenReturn(1L);
+        Mockito.when(consolidadorQuantidadeVendedoresMock.consolidar(dadosLeitura.getRegistros())).thenReturn(2L);
         Mockito.when(consolidadorVendaMaisCaraMock.consolidar(dadosLeitura.getRegistros())).thenReturn("10");
         Mockito.when(consolidadorPiorVendedorMock.consolidar(dadosLeitura.getRegistros())).thenReturn("Paulo");
 
         final DadosProcessamento dadosProcessamento = processadorArquivoService.processar(dadosLeitura);
 
-        assertEquals(1l, dadosProcessamento.getQuantidadeClientes());
-        assertEquals(2l, dadosProcessamento.getQuantidadeVendedores());
+        assertEquals(1L, dadosProcessamento.getQuantidadeClientes());
+        assertEquals(2L, dadosProcessamento.getQuantidadeVendedores());
         assertEquals("10", dadosProcessamento.getIdVendaMaisCara());
         assertEquals("Paulo", dadosProcessamento.getNomePiorVendedor());
     }
