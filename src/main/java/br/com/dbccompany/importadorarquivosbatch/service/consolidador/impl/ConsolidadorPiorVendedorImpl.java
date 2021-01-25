@@ -7,15 +7,13 @@ import br.com.dbccompany.importadorarquivosbatch.service.consolidador.Consolidad
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
 
 import static java.util.Comparator.comparingDouble;
 import static java.util.Comparator.naturalOrder;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 @Component
 public class ConsolidadorPiorVendedorImpl implements ConsolidadorPiorVendedor {
@@ -80,8 +78,8 @@ public class ConsolidadorPiorVendedorImpl implements ConsolidadorPiorVendedor {
                 .collect(toList());
     }
 
-    private Collector<Venda, ?, LinkedHashMap<String, Double>> gerarMapVendedoresIhTotalEmVendas() {
-        return toMap(Venda::getNomeVendedor, Venda::obterTotal, (totalAtual, totalNovo) -> totalAtual + totalNovo, LinkedHashMap::new);
+    private Collector<Venda, ?, Map<String, Double>> gerarMapVendedoresIhTotalEmVendas() {
+        return groupingBy(Venda::getNomeVendedor, summingDouble(Venda::obterTotal));
     }
 
     private String obterPiorVendedor(List<String> nomesVendedoresOrdenados) {
