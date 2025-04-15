@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-@Configuration
 @Component
-public class ImportadorArquivosConfig {
+@Configuration
+public class ImportadorArquivosConfiguration {
 
     @Value("${importador-arquivos.data.in}")
     private String diretorioEntrada;

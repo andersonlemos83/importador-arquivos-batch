@@ -2,6 +2,7 @@ package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.repository.MovedorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -14,13 +15,10 @@ import java.util.Properties;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Repository
+@AllArgsConstructor
 public class MovedorArquivoRepositoryFile implements MovedorArquivoRepository {
 
     private final Properties importacaoArquivosProperties;
-
-    public MovedorArquivoRepositoryFile(Properties importacaoArquivosProperties) {
-        this.importacaoArquivosProperties = importacaoArquivosProperties;
-    }
 
     @Override
     public void moverParaInvalido(Path arquivo) {

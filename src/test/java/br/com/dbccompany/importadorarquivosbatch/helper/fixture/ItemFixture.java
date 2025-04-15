@@ -1,4 +1,4 @@
-package br.com.dbccompany.importadorarquivosbatch.fixture;
+package br.com.dbccompany.importadorarquivosbatch.helper.fixture;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Item;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.ItemBuilder;

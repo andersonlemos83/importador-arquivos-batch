@@ -3,6 +3,7 @@ package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.text.MessageFormat.format;
 
 @Repository
+@AllArgsConstructor
 public class GravadorArquivoRepositoryFile implements GravadorArquivoRepository {
 
     private static final String SEPARADOR_NOME_EXTENSAO = "\\.";
@@ -24,10 +26,6 @@ public class GravadorArquivoRepositoryFile implements GravadorArquivoRepository 
     private static final String PADRAO_DADOS_SAIDA = "{0}ç{1}ç{2}ç{3}";
 
     private final Properties importacaoArquivosProperties;
-
-    public GravadorArquivoRepositoryFile(Properties importacaoArquivosProperties) {
-        this.importacaoArquivosProperties = importacaoArquivosProperties;
-    }
 
     @Override
     public void gravar(DadosProcessamento dadosProcessamento) {

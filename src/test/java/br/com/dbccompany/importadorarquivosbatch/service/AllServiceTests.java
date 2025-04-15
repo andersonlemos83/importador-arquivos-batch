@@ -12,11 +12,12 @@ import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.Cli
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.ItemParseTest;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.VendaParseTest;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.VendedorParseTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+import org.junit.platform.suite.api.SuiteDisplayName;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
         LeitorArquivoServiceImplTest.class,
         ArquivoParseImplTest.class,
         RegistroParseFactoryImplTest.class,
@@ -30,5 +31,8 @@ import org.junit.runners.Suite;
         ConsolidadorVendaMaisCaraImplTest.class,
         ConsolidadorPiorVendedorImplTest.class
 })
+@SuppressWarnings("squid:S2187")
+@SuiteDisplayName("Suite that gathers all unit tests of the Service package")
 public class AllServiceTests {
+
 }

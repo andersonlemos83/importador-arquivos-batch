@@ -14,26 +14,27 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static java.text.MessageFormat.format;
-import static java.util.Comparator.reverseOrder;
 
 @Component
 public class ImportadorArquivosContexto {
 
-    @Value("${importador-arquivos.data.root}")
     private String diretorioRoot;
-
-    @Value("${importador-arquivos.data.in}")
     private String diretorioEntrada;
-
-    @Value("${importador-arquivos.data.out}")
     private String diretorioSaida;
-
-    @Value("${importador-arquivos.data.invalid}")
     private String diretorioInvalido;
 
+    public ImportadorArquivosContexto(@Value("${importador-arquivos.data.root}") String diretorioRoot,
+                                      @Value("${importador-arquivos.data.in}") String diretorioEntrada,
+                                      @Value("${importador-arquivos.data.out}") String diretorioSaida,
+                                      @Value("${importador-arquivos.data.invalid}") String diretorioInvalido) {
+        this.diretorioRoot = diretorioRoot;
+        this.diretorioEntrada = diretorioEntrada;
+        this.diretorioSaida = diretorioSaida;
+        this.diretorioInvalido = diretorioInvalido;
+    }
+
     public void criarDiretorios() {
-        Arrays.asList(diretorioEntrada, diretorioSaida, diretorioInvalido).forEach(this::criarDiretorio);
+        Arrays.asList(diretorioRoot, diretorioEntrada, diretorioSaida, diretorioInvalido).forEach(this::criarDiretorio);
     }
 
     public void excluirDiretorios() {
@@ -68,18 +69,11 @@ public class ImportadorArquivosContexto {
     }
 
     private void criarDiretorio(String caminho) {
-        String[] diretorios = caminho.split("/");
-        String diretorioCompleto = "";
-        for (int i = 0; i < diretorios.length; i++) {
-            if (i == 0 && (".".equalsIgnoreCase(diretorios[i]) || diretorios[i].contains(":"))) {
-                diretorioCompleto = diretorios[i];
-            } else {
-                diretorioCompleto = format("{0}/{1}", diretorioCompleto, diretorios[i]);
-                File pasta = new File(diretorioCompleto);
-                if (!pasta.exists()) {
-                    pasta.mkdir();
-                }
-            }
+        try {
+            Path diretorioPath = Paths.get(caminho);
+            Files.createDirectories(diretorioPath);
+        } catch (Exception excecao) {
+            throw new RuntimeException("Erro ao criar diretório: " + caminho, excecao);
         }
     }
 
@@ -98,13 +92,14 @@ public class ImportadorArquivosContexto {
     }
 
     private void excluirDiretorioRecursivamente(String diretorio) {
-        if (!new File(diretorio).exists()) {
+        final Path path = Paths.get(diretorio);
+
+        if (!Files.exists(path)) {
             return;
         }
-        try (Stream<Path> arquivosPath = Files.walk(Paths.get(diretorio))) {
-            arquivosPath.sorted(reverseOrder())
-                    .map(Path::toFile)
-                    .forEach(File::delete);
+
+        try (Stream<Path> arquivosPath = Files.walk(path)) {
+            arquivosPath.map(Path::toFile).forEach(File::delete);
         } catch (Exception excecao) {
             throw new RuntimeException("Erro ao excluir diretório: " + diretorio, excecao);
         }

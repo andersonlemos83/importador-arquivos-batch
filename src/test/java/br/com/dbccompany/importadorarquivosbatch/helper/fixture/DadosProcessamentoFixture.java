@@ -1,9 +1,9 @@
-package br.com.dbccompany.importadorarquivosbatch.fixture;
+package br.com.dbccompany.importadorarquivosbatch.helper.fixture;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosProcessamentoBuilder;
 
-import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
 
 public final class DadosProcessamentoFixture {
 

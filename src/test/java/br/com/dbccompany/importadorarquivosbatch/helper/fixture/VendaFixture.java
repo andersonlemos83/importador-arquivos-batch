@@ -1,9 +1,9 @@
-package br.com.dbccompany.importadorarquivosbatch.fixture;
+package br.com.dbccompany.importadorarquivosbatch.helper.fixture;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Venda;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendaBuilder;
 
-import static br.com.dbccompany.importadorarquivosbatch.fixture.ItemFixture.*;
+import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.ItemFixture.*;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 

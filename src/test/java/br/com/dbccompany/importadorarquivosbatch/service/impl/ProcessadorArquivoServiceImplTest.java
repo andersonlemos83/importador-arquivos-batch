@@ -3,25 +3,26 @@ package br.com.dbccompany.importadorarquivosbatch.service.impl;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosLeituraBuilder;
-import br.com.dbccompany.importadorarquivosbatch.service.ProcessadorArquivoService;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorPiorVendedor;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorQuantidadeClientes;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorQuantidadeVendedores;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorVendaMaisCara;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+@ExtendWith(SpringExtension.class)
 public class ProcessadorArquivoServiceImplTest {
 
-    private ProcessadorArquivoService processadorArquivoService;
+    @InjectMocks
+    private ProcessadorArquivoServiceImpl processadorArquivoService;
 
     @Mock
     private ConsolidadorQuantidadeClientes consolidadorQuantidadeClientesMock;
@@ -35,24 +36,16 @@ public class ProcessadorArquivoServiceImplTest {
     @Mock
     private ConsolidadorPiorVendedor consolidadorPiorVendedorMock;
 
-    private DadosLeitura dadosLeitura;
-
-    @Before
-    public void inicializarContexto() {
-        processadorArquivoService = new ProcessadorArquivoServiceImpl(consolidadorQuantidadeClientesMock,
-                consolidadorQuantidadeVendedoresMock, consolidadorVendaMaisCaraMock, consolidadorPiorVendedorMock);
-
-        dadosLeitura = DadosLeituraBuilder.umDadosLeitura().comRegistros(emptyList()).build();
-    }
-
     @Test
     public void aoProcessarDeveriaRetonarOhDadosProcessamentoEsperado() {
+        DadosLeitura dadosLeitura = DadosLeituraBuilder.umDadosLeitura().comRegistros(emptyList()).build();
+
         Mockito.when(consolidadorQuantidadeClientesMock.consolidar(dadosLeitura.getRegistros())).thenReturn(1L);
         Mockito.when(consolidadorQuantidadeVendedoresMock.consolidar(dadosLeitura.getRegistros())).thenReturn(2L);
         Mockito.when(consolidadorVendaMaisCaraMock.consolidar(dadosLeitura.getRegistros())).thenReturn("10");
         Mockito.when(consolidadorPiorVendedorMock.consolidar(dadosLeitura.getRegistros())).thenReturn("Paulo");
 
-        final DadosProcessamento dadosProcessamento = processadorArquivoService.processar(dadosLeitura);
+        DadosProcessamento dadosProcessamento = processadorArquivoService.processar(dadosLeitura);
 
         assertEquals(1L, dadosProcessamento.getQuantidadeClientes());
         assertEquals(2L, dadosProcessamento.getQuantidadeVendedores());

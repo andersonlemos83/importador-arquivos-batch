@@ -9,6 +9,7 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileNotFoundException;
@@ -17,10 +18,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
 import java.util.stream.Stream;
 
 @Repository
+@AllArgsConstructor
 public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
 
     private static final String EXTENSAO_ARQUIVO = ".dat";
@@ -28,16 +31,12 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
 
     private final Properties importacaoArquivosProperties;
 
-    public LeitorArquivoRepositoryFile(Properties importacaoArquivosProperties) {
-        this.importacaoArquivosProperties = importacaoArquivosProperties;
-    }
-
     @Override
     public Arquivo lerArquivoNaoImportado() {
         try (Stream<Path> arquivosDiretorioEntrada = obterArquivosDiretorioEntrada()) {
             final Path arquivoPath = obterPrimeiroArquivoDatPorOrdemAlfabetica(arquivosDiretorioEntrada);
-            final CSVReader arquivoReader = lerConteudoArquivo(arquivoPath);
-            return new Arquivo(arquivoPath, arquivoReader.readAll());
+            final List<String[]> conteudoArquivo = lerConteudoArquivo(arquivoPath);
+            return new Arquivo(arquivoPath, conteudoArquivo);
         } catch (IOException | CsvException excecao) {
             throw new RepositorioException(excecao);
         }
@@ -56,11 +55,10 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
                 .orElseThrow(NenhumArquivoImportacaoException::new);
     }
 
-    private CSVReader lerConteudoArquivo(Path arquivoPath) throws FileNotFoundException {
-        return new CSVReaderBuilder(gerarFileReader(arquivoPath))
-                .withSkipLines(0)
-                .withCSVParser(gerarCSVParserBuilder())
-                .build();
+    private List<String[]> lerConteudoArquivo(Path arquivoPath) throws IOException, CsvException {
+        try (CSVReader csvReader = new CSVReaderBuilder(gerarFileReader(arquivoPath)).withSkipLines(0).withCSVParser(gerarCSVParserBuilder()).build()) {
+            return csvReader.readAll();
+        }
     }
 
     private FileReader gerarFileReader(Path arquivoPath) throws FileNotFoundException {

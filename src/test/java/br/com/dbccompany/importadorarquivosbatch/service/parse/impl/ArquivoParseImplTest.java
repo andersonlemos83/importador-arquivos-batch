@@ -1,32 +1,33 @@
 package br.com.dbccompany.importadorarquivosbatch.service.parse.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
-import br.com.dbccompany.importadorarquivosbatch.fixture.VendaFixture;
-import br.com.dbccompany.importadorarquivosbatch.service.parse.ArquivoParse;
+import br.com.dbccompany.importadorarquivosbatch.helper.fixture.VendaFixture;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.factory.RegistroParseFactory;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.ArquivoInvalidoException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static br.com.dbccompany.importadorarquivosbatch.fixture.ArquivoFixture.*;
-import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.ArquivoFixture.*;
+import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeast;
 
-@RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+@ExtendWith(SpringExtension.class)
 public class ArquivoParseImplTest {
 
-    private ArquivoParse arquivoParse;
+    @InjectMocks
+    private ArquivoParseImpl arquivoParse;
 
     @Mock
     private RegistroParseFactory registroParseFactoryMock;
@@ -34,61 +35,44 @@ public class ArquivoParseImplTest {
     @Mock
     private RegistroParse registroParseMock;
 
-    private Registro registro;
-
-    @Before
-    public void inicializarContexto() {
-        arquivoParse = new ArquivoParseImpl(registroParseFactoryMock);
-
-        registro = VendaFixture.umaVendaQualquer();
-    }
-
     @Test
     public void aoFazerParseComSucessoDadoQueSejaInformadoApenasUmRegistroDeveriaRealizarParseDeApenasUmRegistro() {
-        configurarMocksComSucesso();
+        Registro registro = VendaFixture.umaVendaQualquer();
+        configurarMocksComSucesso(registro);
         arquivoParse.parse(umArquivoComUmRegistro());
         Mockito.verify(registroParseMock, atLeast(1)).parse(any(String[].class));
     }
 
     @Test
     public void aoFazerParseComSucessoDadoQueSejaInformadoTresRegistrosDeveriaRealizarParseTresRegistros() {
-        configurarMocksComSucesso();
+        Registro registro = VendaFixture.umaVendaQualquer();
+        configurarMocksComSucesso(registro);
         arquivoParse.parse(umArquivoComTresRegistros());
         Mockito.verify(registroParseMock, atLeast(3)).parse(any(String[].class));
     }
 
     @Test
     public void aoFazerParseComSucessoDeveriaRetornarOsRegistrosEsperados() {
-        configurarMocksComSucesso();
-        final List<Registro> registrosRetornados = arquivoParse.parse(umArquivoQualquer());
-        assertEquals(singletonList(registro), registrosRetornados);
-    }
-
-    @Test(expected = ArquivoInvalidoException.class)
-    public void aoFazerParseComFalhaDeveriaLancarUmaArquivoInvalidoException() {
-        configurarMocksComFalha();
-        final List<Registro> registrosRetornados = arquivoParse.parse(umArquivoQualquer());
+        Registro registro = VendaFixture.umaVendaQualquer();
+        configurarMocksComSucesso(registro);
+        List<Registro> registrosRetornados = arquivoParse.parse(umArquivoQualquer());
         assertEquals(singletonList(registro), registrosRetornados);
     }
 
     @Test
-    public void aoFazerParseComFalhaDeveriaSetarNaExcecaoOhArquivoPathEsperado() {
-        try {
-            configurarMocksComFalha();
-            arquivoParse.parse(umArquivoQualquer());
-            fail("Deveria lançar uma exceção...");
-        } catch (ArquivoInvalidoException excecao) {
-            assertEquals(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT, excecao.getArquivoPath());
-        }
+    public void aoFazerParseComFalhaDeveriaLancarUmaArquivoInvalidoExceptionComOhArquivoPathEsperado() {
+        String mensagemEsperada = "Erro de teste";
+        Mockito.when(registroParseFactoryMock.obter(any(String[].class))).thenReturn(registroParseMock);
+        Mockito.when(registroParseMock.parse(any(String[].class))).thenThrow(new ArquivoInvalidoException(mensagemEsperada));
+
+        ArquivoInvalidoException thrown = assertThrows(ArquivoInvalidoException.class, () -> arquivoParse.parse(umArquivoQualquer()));
+
+        assertEquals(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT, thrown.getArquivoPath());
+        assertEquals(mensagemEsperada, thrown.getMessage());
     }
 
-    private void configurarMocksComSucesso() {
+    private void configurarMocksComSucesso(Registro registro) {
         Mockito.when(registroParseFactoryMock.obter(any(String[].class))).thenReturn(registroParseMock);
         Mockito.when(registroParseMock.parse(any(String[].class))).thenReturn(registro);
-    }
-
-    private void configurarMocksComFalha() {
-        Mockito.when(registroParseFactoryMock.obter(any(String[].class))).thenReturn(registroParseMock);
-        Mockito.when(registroParseMock.parse(any(String[].class))).thenThrow(new ArquivoInvalidoException("Erro de teste"));
     }
 }

@@ -1,15 +1,16 @@
 package br.com.dbccompany.importadorarquivosbatch.domain.registro;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendaBuilder;
-import br.com.dbccompany.importadorarquivosbatch.fixture.VendaFixture;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import br.com.dbccompany.importadorarquivosbatch.helper.fixture.VendaFixture;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(JUnit4.class)
+@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+@ExtendWith(SpringExtension.class)
 public class VendaTest {
 
     @Test

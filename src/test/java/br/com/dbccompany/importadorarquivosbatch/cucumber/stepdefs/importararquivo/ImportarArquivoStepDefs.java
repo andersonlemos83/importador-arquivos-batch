@@ -4,34 +4,18 @@ import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArq
 import br.com.dbccompany.importadorarquivosbatch.cucumber.funcionalidade.ImportadorArquivosFuncionalidade;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.stepdefs.StepDefs;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.verificador.ImportadorArquivosVerificador;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.api.java.pt.Dado;
-import cucumber.api.java.pt.E;
-import cucumber.api.java.pt.Entao;
-import cucumber.api.java.pt.Quando;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.cucumber.java.pt.Dado;
+import io.cucumber.java.pt.E;
+import io.cucumber.java.pt.Entao;
+import io.cucumber.java.pt.Quando;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class ImportarArquivoStepDefs extends StepDefs {
 
-    @Autowired
-    private ImportadorArquivosContexto importadorArquivosContexto;
-
-    @Autowired
-    private ImportadorArquivosFuncionalidade importadorArquivosFuncionalidade;
-
-    @Autowired
-    private ImportadorArquivosVerificador importadorArquivosVerificador;
-
-    @Before
-    public void inicializarContexto() {
-        importadorArquivosContexto.criarDiretorios();
-    }
-
-    @After
-    public void finalizarContexto() {
-        importadorArquivosContexto.excluirDiretorios();
-    }
+    private final ImportadorArquivosContexto importadorArquivosContexto;
+    private final ImportadorArquivosFuncionalidade importadorArquivosFuncionalidade;
+    private final ImportadorArquivosVerificador importadorArquivosVerificador;
 
     @Dado("^que exista o arquivo \"([^\"]*)\" no diretorio de entrada$")
     public void queExistaOhArquivoEsperadoNoDiretorioDeEntrada(String nomeArquivoEntrada) {

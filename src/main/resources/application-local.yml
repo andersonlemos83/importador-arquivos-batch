@@ -1,0 +1,30 @@
+logging:
+  level:
+    br.com.dbccompany.importadorarquivosbatch: DEBUG
+    org.springframework:
+      ampq: TRACE
+      boot.context: INFO
+      ws.client: TRACE
+      ws.soap: TRACE
+      web: WARN
+
+server:
+  port: 8585
+
+management:
+  server:
+    port: 9595
+
+spring:
+  datasource:
+    username: sa
+    password: sa
+  jpa:
+    show-sql: true
+
+importador-arquivos:
+  cron: 0 * * * * ?
+  data:
+    in: /data/in
+    out: /data/out
+    invalid: /data/invalid

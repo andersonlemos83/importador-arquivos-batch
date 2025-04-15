@@ -1,7 +1,7 @@
 package br.com.dbccompany.importadorarquivosbatch.cucumber.verificador;
 
 import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArquivosContexto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import static org.junit.Assert.assertFalse;
@@ -9,10 +9,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Component
+@AllArgsConstructor
 public class ImportadorArquivosVerificador {
 
-    @Autowired
-    private ImportadorArquivosContexto importadorArquivosContexto;
+    private final ImportadorArquivosContexto importadorArquivosContexto;
 
     public void verificarSeExisteArquivoSaida(String nomeArquivoSaida) {
         Boolean existeArquivoSaida = importadorArquivosContexto.existeArquivoSaida(nomeArquivoSaida);

@@ -8,25 +8,17 @@ import br.com.dbccompany.importadorarquivosbatch.service.consolidador.Consolidad
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorQuantidadeClientes;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorQuantidadeVendedores;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorVendaMaisCara;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ProcessadorArquivoServiceImpl implements ProcessadorArquivoService {
 
     private final ConsolidadorQuantidadeClientes consolidadorQuantidadeClientes;
     private final ConsolidadorQuantidadeVendedores consolidadorQuantidadeVendedores;
     private final ConsolidadorVendaMaisCara consolidadorVendaMaisCara;
     private final ConsolidadorPiorVendedor consolidadorPiorVendedor;
-
-    public ProcessadorArquivoServiceImpl(ConsolidadorQuantidadeClientes consolidadorQuantidadeClientes,
-                                         ConsolidadorQuantidadeVendedores consolidadorQuantidadeVendedores,
-                                         ConsolidadorVendaMaisCara consolidadorVendaMaisCara,
-                                         ConsolidadorPiorVendedor consolidadorPiorVendedor) {
-        this.consolidadorQuantidadeClientes = consolidadorQuantidadeClientes;
-        this.consolidadorQuantidadeVendedores = consolidadorQuantidadeVendedores;
-        this.consolidadorVendaMaisCara = consolidadorVendaMaisCara;
-        this.consolidadorPiorVendedor = consolidadorPiorVendedor;
-    }
 
     @Override
     public DadosProcessamento processar(DadosLeitura dadosLeitura) {

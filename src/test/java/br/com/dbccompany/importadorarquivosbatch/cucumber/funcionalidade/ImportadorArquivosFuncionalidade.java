@@ -1,16 +1,16 @@
 package br.com.dbccompany.importadorarquivosbatch.cucumber.funcionalidade;
 
-import br.com.dbccompany.importadorarquivosbatch.config.BatchConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.dbccompany.importadorarquivosbatch.batch.ImportadorArquivosScheduler;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class ImportadorArquivosFuncionalidade {
 
-    @Autowired
-    private BatchConfiguration batchConfiguration;
+    private final ImportadorArquivosScheduler importadorArquivosScheduler;
 
     public void executarImportacao() throws Exception {
-        batchConfiguration.perform();
+        importadorArquivosScheduler.perform();
     }
 }

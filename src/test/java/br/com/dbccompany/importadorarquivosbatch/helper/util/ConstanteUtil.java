@@ -1,11 +1,11 @@
-package br.com.dbccompany.importadorarquivosbatch.util;
+package br.com.dbccompany.importadorarquivosbatch.helper.util;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public final class ConstanteTesteUtil {
+public final class ConstanteUtil {
 
-    private ConstanteTesteUtil() {
+    private ConstanteUtil() {
     }
 
     public static final String ARQUIVO_SUCESSO_DBC_DAT = "sucesso-dbc.dat";

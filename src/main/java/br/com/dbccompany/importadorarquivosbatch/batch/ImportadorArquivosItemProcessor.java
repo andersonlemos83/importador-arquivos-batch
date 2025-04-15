@@ -3,33 +3,29 @@ package br.com.dbccompany.importadorarquivosbatch.batch;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.service.ProcessadorArquivoService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
 import static java.text.MessageFormat.format;
 
+@Log4j2
 @Component
+@AllArgsConstructor
 public class ImportadorArquivosItemProcessor implements ItemProcessor<DadosLeitura, DadosProcessamento> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImportadorArquivosItemProcessor.class);
-
     private final ProcessadorArquivoService processadorArquivoService;
-
-    public ImportadorArquivosItemProcessor(ProcessadorArquivoService processadorArquivoService) {
-        this.processadorArquivoService = processadorArquivoService;
-    }
 
     @Override
     public DadosProcessamento process(DadosLeitura dadosLeitura) {
         try {
             final DadosProcessamento dadosProcessamento = processadorArquivoService.processar(dadosLeitura);
-            LOG.info("Arquivo processado: " + dadosLeitura.getArquivoPath());
+            log.info("Arquivo processado: " + dadosLeitura.getArquivoPath());
             return dadosProcessamento;
         } catch (Exception excecao) {
             String mensagem = gerarMensagem(dadosLeitura);
-            LOG.error(mensagem, excecao);
+            log.error(mensagem, excecao);
             excecao.printStackTrace();
             return null;
         }

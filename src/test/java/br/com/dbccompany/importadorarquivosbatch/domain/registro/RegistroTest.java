@@ -1,16 +1,17 @@
 package br.com.dbccompany.importadorarquivosbatch.domain.registro;
 
-import br.com.dbccompany.importadorarquivosbatch.fixture.ClienteFixture;
-import br.com.dbccompany.importadorarquivosbatch.fixture.VendaFixture;
-import br.com.dbccompany.importadorarquivosbatch.fixture.VendedorFixture;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import br.com.dbccompany.importadorarquivosbatch.helper.fixture.ClienteFixture;
+import br.com.dbccompany.importadorarquivosbatch.helper.fixture.VendaFixture;
+import br.com.dbccompany.importadorarquivosbatch.helper.fixture.VendedorFixture;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-@RunWith(JUnit4.class)
+@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+@ExtendWith(SpringExtension.class)
 public class RegistroTest {
 
     @Test

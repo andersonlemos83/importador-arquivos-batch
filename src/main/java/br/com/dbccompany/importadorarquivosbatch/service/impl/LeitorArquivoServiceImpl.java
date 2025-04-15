@@ -7,21 +7,17 @@ import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.repository.LeitorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.service.LeitorArquivoService;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.ArquivoParse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class LeitorArquivoServiceImpl implements LeitorArquivoService {
 
     private final LeitorArquivoRepository leitorArquivoRepository;
     private final ArquivoParse arquivoParse;
-
-    public LeitorArquivoServiceImpl(LeitorArquivoRepository leitorArquivoRepository,
-                                    ArquivoParse arquivoParse) {
-        this.leitorArquivoRepository = leitorArquivoRepository;
-        this.arquivoParse = arquivoParse;
-    }
 
     @Override
     public DadosLeitura lerArquivoNaoImportado() {

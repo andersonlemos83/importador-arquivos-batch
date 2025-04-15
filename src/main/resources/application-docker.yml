@@ -1,0 +1,26 @@
+logging:
+  level:
+    br.com.dbccompany.importadorarquivosbatch: TRACE
+    org.springframework: INFO
+    com.zaxxer.hikari: INFO
+
+server:
+  port: 8080
+
+management:
+  server:
+    port: 9090
+
+spring:
+  datasource:
+    username: ${USERNAME_H2}
+    password: ${PASSWORD_H2}
+  jpa:
+    show-sql: false
+
+importador-arquivos:
+  cron: ${CRON}
+  data:
+    in: ${DATA_IN}
+    out: ${DATA_OUT}
+    invalid: ${DATA_INVALID}
