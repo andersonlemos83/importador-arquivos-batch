@@ -3,7 +3,6 @@ package br.com.dbccompany.importadorarquivosbatch.domain.dados;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import lombok.*;
 
-import java.io.Serializable;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class DadosLeitura implements Serializable {
+public class DadosLeitura {
 
     private Path arquivoPath;
     private List<Registro> registros;

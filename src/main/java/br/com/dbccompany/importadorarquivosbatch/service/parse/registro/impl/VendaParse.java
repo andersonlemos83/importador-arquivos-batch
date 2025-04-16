@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @Component
 public class VendaParse extends AbstractRegistroParse<Venda> implements RegistroParse<Venda> {
 
@@ -48,7 +46,7 @@ public class VendaParse extends AbstractRegistroParse<Venda> implements Registro
                 .stream()
                 .map(itemToken -> itemToken.split(SEPARADOR_CAMPOS_ITEM))
                 .map(itemRegistro -> (Item) itemParse.parse(itemRegistro))
-                .collect(toList());
+                .toList();
     }
 
     private List<String> obterItensToken(String tokenItem) {

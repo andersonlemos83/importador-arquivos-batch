@@ -35,8 +35,8 @@ public class ClienteParseTest {
 
     @Test
     public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaRegistroComLayoutInvalidoException() {
-        RegistroComLayoutInvalidoException thrown = assertThrows(RegistroComLayoutInvalidoException.class,
-                () -> registroParse.parse(umaRegistroArrayOiComQuantidadeInvalida()));
+        String[] registro = umaRegistroArrayOiComQuantidadeInvalida();
+        RegistroComLayoutInvalidoException thrown = assertThrows(RegistroComLayoutInvalidoException.class, () -> registroParse.parse(registro));
         assertEquals("O arquivo possui um registro, [002, 29013251000192, Oi], incompatível com o layout Cliente.", thrown.getMessage());
     }
 }

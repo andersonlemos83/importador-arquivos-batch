@@ -36,15 +36,15 @@ public class ConsolidadorPiorVendedorImpl implements ConsolidadorPiorVendedor {
     private List<Vendedor> filtrarVendedores(List<Registro> registros) {
         return registros.stream()
                 .filter(Registro::ehVendedor)
-                .map(registro -> (Vendedor) registro)
-                .collect(toList());
+                .map(Vendedor.class::cast)
+                .toList();
     }
 
     private List<Venda> filtrarVendas(List<Registro> registros) {
         return registros.stream()
                 .filter(Registro::ehVenda)
-                .map(registro -> (Venda) registro)
-                .collect(toList());
+                .map(Venda.class::cast)
+                .toList();
     }
 
     private List<String> obterNomesVendedoresOrdenadosPeloPiorDesempenho(List<Vendedor> vendedoresQueNaoVenderam, List<Venda> vendas) {
@@ -57,7 +57,7 @@ public class ConsolidadorPiorVendedorImpl implements ConsolidadorPiorVendedor {
     private List<Vendedor> obterVendedoresQueNaoVenderam(List<Vendedor> vendedores, List<Venda> vendas) {
         return vendedores.stream()
                 .filter(vendedor -> this.verificarQuemNaoVendeu(vendas, vendedor))
-                .collect(toList());
+                .toList();
     }
 
     private boolean verificarQuemNaoVendeu(List<Venda> vendas, Vendedor vendedor) {
@@ -71,7 +71,7 @@ public class ConsolidadorPiorVendedorImpl implements ConsolidadorPiorVendedor {
         return vendedoresQueNaoVenderam.stream()
                 .sorted(comparingDouble(Vendedor::getSalario).reversed())
                 .map(Vendedor::getNome)
-                .collect(toList());
+                .toList();
     }
 
     private List<String> obterNomesVendedoresQueVenderamOrdenadosPeloPiorDesempenho(List<Venda> vendas) {
@@ -81,7 +81,7 @@ public class ConsolidadorPiorVendedorImpl implements ConsolidadorPiorVendedor {
                 .stream()
                 .sorted(Map.Entry.comparingByValue(naturalOrder()))
                 .map(Map.Entry::getKey)
-                .collect(toList());
+                .toList();
     }
 
     private Collector<Venda, ?, Map<String, Double>> gerarMapVendedoresIhTotalEmVendas() {

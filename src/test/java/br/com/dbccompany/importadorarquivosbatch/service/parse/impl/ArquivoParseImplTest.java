@@ -1,5 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.service.parse.impl;
 
+import br.com.dbccompany.importadorarquivosbatch.domain.Arquivo;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.helper.fixture.VendaFixture;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.factory.RegistroParseFactory;
@@ -65,7 +66,8 @@ public class ArquivoParseImplTest {
         Mockito.when(registroParseFactoryMock.obter(any(String[].class))).thenReturn(registroParseMock);
         Mockito.when(registroParseMock.parse(any(String[].class))).thenThrow(new ArquivoInvalidoException(mensagemEsperada));
 
-        ArquivoInvalidoException thrown = assertThrows(ArquivoInvalidoException.class, () -> arquivoParse.parse(umArquivoQualquer()));
+        Arquivo arquivo = umArquivoQualquer();
+        ArquivoInvalidoException thrown = assertThrows(ArquivoInvalidoException.class, () -> arquivoParse.parse(arquivo));
 
         assertEquals(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT, thrown.getArquivoPath());
         assertEquals(mensagemEsperada, thrown.getMessage());

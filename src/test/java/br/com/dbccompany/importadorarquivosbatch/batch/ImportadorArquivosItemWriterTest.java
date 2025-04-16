@@ -15,6 +15,7 @@ import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.DadosProc
 import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
 import static java.util.Collections.singletonList;
 import static org.mockito.ArgumentMatchers.same;
+import static org.mockito.Mockito.doThrow;
 
 @SuppressWarnings("java:S5786") // Public required for JUnit test suite
 @ExtendWith(SpringExtension.class)
@@ -35,5 +36,14 @@ public class ImportadorArquivosItemWriterTest {
         importadorArquivosItemWriter.write(new Chunk<>(singletonList(dadosProcessamento)));
         Mockito.verify(gravadorArquivoRepositoryMock).gravar(same(dadosProcessamento));
         Mockito.verify(excluidorArquivoRepositoryMock).excluir(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
+    }
+
+    @Test
+    public void aoChamarWriteDadoQueSejaLancadoUmaRuntimeExceptionDeveriaLogarOhErro() {
+        DadosProcessamento dadosProcessamento = umDadosProcessamentoQualquer();
+        doThrow(new RuntimeException("Erro de teste!")).when(gravadorArquivoRepositoryMock).gravar(same(dadosProcessamento));
+        importadorArquivosItemWriter.write(new Chunk<>(singletonList(dadosProcessamento)));
+        Mockito.verify(gravadorArquivoRepositoryMock).gravar(same(dadosProcessamento));
+        Mockito.verifyNoInteractions(excluidorArquivoRepositoryMock);
     }
 }

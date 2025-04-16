@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapperUtil.generateJson;
-import static java.util.stream.Collectors.toList;
 
 @Log4j2
 @Component
@@ -29,7 +28,7 @@ public class ArquivoParseImpl implements ArquivoParse {
             final List<String[]> registrosArray = arquivo.getRegistrosArray();
             final List<Registro> registros = registrosArray.stream()
                     .map(this::gerarRegistroParse)
-                    .collect(toList());
+                    .toList();
             log.debug("Saindo de ArquivoParseImpl: {}", generateJson(registros));
             return registros;
         } catch (ArquivoInvalidoException excecao) {
