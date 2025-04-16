@@ -10,7 +10,6 @@ services:
         -XX:InitialRAMPercentage=50.0
         -XX:MaxRAMPercentage=75.0
         -XX:MaxDirectMemorySize=256M
-        -XshowSettings:vm
         -XX:+UseParallelGC
         -XX:GCTimeRatio=19
         -XX:+UseCompressedOops

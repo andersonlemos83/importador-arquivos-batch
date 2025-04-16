@@ -1,4 +1,12 @@
-[![Build Status](https://travis-ci.org/andersonlemos83/importador-arquivos-batch.svg?branch=main)](https://travis-ci.org/andersonlemos83/importador-arquivos-batch) [![codecov](https://codecov.io/gh/andersonlemos83/importador-arquivos-batch/branch/main/graph/badge.svg?token=0X9WNC9TOY)](https://codecov.io/gh/andersonlemos83/importador-arquivos-batch)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=andersonlemos83_importador-arquivos-batch&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=andersonlemos83_importador-arquivos-batch)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=andersonlemos83_importador-arquivos-batch&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=andersonlemos83_importador-arquivos-batch)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=andersonlemos83_importador-arquivos-batch&metric=coverage)](https://sonarcloud.io/summary/new_code?id=andersonlemos83_importador-arquivos-batch)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=andersonlemos83_importador-arquivos-batch&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=andersonlemos83_importador-arquivos-batch)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=andersonlemos83_importador-arquivos-batch&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=andersonlemos83_importador-arquivos-batch)
+
+![GitHub Created At](https://img.shields.io/github/created-at/andersonlemos83/importador-arquivos-batch)
+![Build Status](https://github.com/andersonlemos83/importador-arquivos-batch/actions/workflows/github-ci.yaml/badge.svg)
+![Docker Image Version](https://img.shields.io/docker/v/andersonlemos83/api-importador-arquivos-batch?sort=semver&label=api-importador-arquivos-batch)
 
 # Sobre o projeto Importação Arquivo Batch
 
