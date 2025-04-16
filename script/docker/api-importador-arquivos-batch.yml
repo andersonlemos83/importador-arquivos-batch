@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  api-importador-arquivos-batch:
+    container_name: api-importador-arquivos-batch
+    image: andersonlemos83/api-importador-arquivos-batch:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: "docker"
+      JAVA_TOOL_OPTIONS: >
+        -XX:+UseContainerSupport
+        -XX:InitialRAMPercentage=50.0
+        -XX:MaxRAMPercentage=75.0
+        -XX:MaxDirectMemorySize=256M
+        -XshowSettings:vm
+        -XX:+UseParallelGC
+        -XX:GCTimeRatio=19
+        -XX:+UseCompressedOops
+        -XX:+ExitOnOutOfMemoryError
+      TZ: "America/Maceio"
+      USERNAME_H2: "sa"
+      PASSWORD_H2: "sa"
+      CRON: "0 * * * * ?"
+      DATA_IN: /var/lib/app/data/in
+      DATA_OUT: /var/lib/app/data/out
+      DATA_INVALID: /var/lib/app/data/invalid
+    ports:
+      - 8585:8080
+    volumes:
+      - "/c/Users/DEV:/var/lib/app"

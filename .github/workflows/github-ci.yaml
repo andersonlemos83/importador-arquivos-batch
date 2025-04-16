@@ -1,0 +1,57 @@
+name: CI/CD importador-arquivos-batch
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  tests-and-sonar:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up JDK 21 for x64
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          architecture: x64
+          cache: maven
+      - name: Unit And Acceptance Tests
+        run: mvn -U -B -V clean test -DargLine="-Xms512M -Xmx2G -Xss4M" --quiet
+      - name: Sonar
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -U -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization="andersonlemos83" -Dsonar.projectKey=andersonlemos83_importador-arquivos-batch -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN -DargLine="-Xms512M -Xmx2G -Xss4M" --quiet
+
+  build-and-push:
+    needs: tests-and-sonar
+    name: Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up JDK 21 for x64
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          architecture: x64
+          cache: maven
+      - name: Login on Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+      - name: Build Docker Image
+        run: mvn -U -B package -Pdocker-build -Dmaven.test.skip=true -DargLine="-Xms512M -Xmx2G -Xss4M"
+      - name: Push to Docker Hub
+        run: docker image ls --format "{{.Repository}}:{{.Tag}}" | grep "${{ secrets.DOCKER_HUB_USERNAME }}" | xargs -L1 docker push
+      - name: Logout on Docker Hub
+        run: docker logout
