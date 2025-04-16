@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.DadosProcessamentoFixture.umDadosProcessamentoSucessoDbc;
 import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_DONE_DAT;
 import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.CONTEUDO_ARQUIVO_SUCESSO_DBC_DONE_DAT;
+import static java.io.File.separator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -61,7 +62,7 @@ public class GravadorArquivoRepositoryFileTest {
 
     @Test
     public void aoGravarDadoQueNaoExistaDiretorioDeSaidaDeveriaLancarUmaRepositorioException() {
-        String mensagemEsperada = "java.nio.file.NoSuchFileException: " + Paths.get(diretorioSaida) + "\\" + ARQUIVO_SUCESSO_DBC_DONE_DAT;
+        String mensagemEsperada = "java.nio.file.NoSuchFileException: " + Paths.get(diretorioSaida) + separator + ARQUIVO_SUCESSO_DBC_DONE_DAT;
         RepositorioException thrown = assertThrows(RepositorioException.class, () -> gravadorArquivoRepository.gravar(umDadosProcessamentoSucessoDbc()));
         assertEquals(mensagemEsperada, thrown.getMessage());
     }

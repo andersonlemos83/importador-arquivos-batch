@@ -10,6 +10,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileNotFoundException;
@@ -22,6 +23,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Stream;
 
+import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapperUtil.generateJson;
+
+@Log4j2
 @Repository
 @AllArgsConstructor
 public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
@@ -33,11 +37,15 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
 
     @Override
     public Arquivo lerArquivoNaoImportado() {
+        log.debug("Entrando em LeitorArquivoRepositoryFile");
         try (Stream<Path> arquivosDiretorioEntrada = obterArquivosDiretorioEntrada()) {
             final Path arquivoPath = obterPrimeiroArquivoDatPorOrdemAlfabetica(arquivosDiretorioEntrada);
             final List<String[]> conteudoArquivo = lerConteudoArquivo(arquivoPath);
-            return new Arquivo(arquivoPath, conteudoArquivo);
+            final Arquivo arquivo = new Arquivo(arquivoPath, conteudoArquivo);
+            log.debug("Saindo de LeitorArquivoRepositoryFile: {}", generateJson(arquivo));
+            return arquivo;
         } catch (IOException | CsvException excecao) {
+            log.error("Ocorreu um erro durante leitura do arquivo: {}", excecao.getMessage(), excecao);
             throw new RepositorioException(excecao);
         }
     }

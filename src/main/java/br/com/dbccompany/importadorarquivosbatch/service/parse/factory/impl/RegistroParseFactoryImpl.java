@@ -4,6 +4,7 @@ import br.com.dbccompany.importadorarquivosbatch.service.parse.factory.RegistroP
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroSemLayoutDefinidoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.util.ArrayUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import static br.com.dbccompany.importadorarquivosbatch.domain.registro.TipoRegistro.*;
+import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapperUtil.generateJson;
 
+@Log4j2
 @Component
 public class RegistroParseFactoryImpl implements RegistroParseFactory {
 
@@ -29,8 +32,11 @@ public class RegistroParseFactoryImpl implements RegistroParseFactory {
 
     @Override
     public RegistroParse obter(String[] registro) {
+        log.debug("Entrando em RegistroParseFactoryImpl: {}", generateJson(registro));
         final String id = ArrayUtil.obterString(registro, 0);
-        return Optional.ofNullable(parses.get(id))
+        final RegistroParse registroParse = Optional.ofNullable(parses.get(id))
                 .orElseThrow(() -> new RegistroSemLayoutDefinidoException(id));
+        log.debug("Saindo de RegistroParseFactoryImpl: {}", generateJson(registroParse));
+        return registroParse;
     }
 }

@@ -8,7 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
-import static java.text.MessageFormat.format;
+import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapperUtil.generateJson;
 
 @Log4j2
 @Component
@@ -20,18 +20,13 @@ public class ImportadorArquivosItemProcessor implements ItemProcessor<DadosLeitu
     @Override
     public DadosProcessamento process(DadosLeitura dadosLeitura) {
         try {
+            log.info("Entrando em ImportadorArquivosItemProcessor: {}", generateJson(dadosLeitura));
             final DadosProcessamento dadosProcessamento = processadorArquivoService.processar(dadosLeitura);
-            log.info("Arquivo processado: " + dadosLeitura.getArquivoPath());
+            log.info("Saindo de ImportadorArquivosItemProcessor: {}", generateJson(dadosProcessamento));
             return dadosProcessamento;
         } catch (Exception excecao) {
-            String mensagem = gerarMensagem(dadosLeitura);
-            log.error(mensagem, excecao);
-            excecao.printStackTrace();
+            log.error("Ocorreu um erro durante o processamento do arquivo: {}", generateJson(dadosLeitura), excecao);
             return null;
         }
-    }
-
-    private String gerarMensagem(DadosLeitura dadosLeitura) {
-        return format("Ocorreu um erro durante o processamento do arquivo: {0}", dadosLeitura.toString());
     }
 }
