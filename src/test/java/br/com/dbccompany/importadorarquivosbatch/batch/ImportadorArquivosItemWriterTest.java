@@ -3,21 +3,24 @@ package br.com.dbccompany.importadorarquivosbatch.batch;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.repository.ExcluidorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.batch.item.Chunk;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static br.com.dbccompany.importadorarquivosbatch.fixture.DadosProcessamentoFixture.umDadosProcessamentoQualquer;
-import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.DadosProcessamentoFixture.umDadosProcessamentoQualquer;
+import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
 import static java.util.Collections.singletonList;
 import static org.mockito.ArgumentMatchers.same;
 
-@RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+@ExtendWith(SpringExtension.class)
 public class ImportadorArquivosItemWriterTest {
 
+    @InjectMocks
     private ImportadorArquivosItemWriter importadorArquivosItemWriter;
 
     @Mock
@@ -26,15 +29,10 @@ public class ImportadorArquivosItemWriterTest {
     @Mock
     private ExcluidorArquivoRepository excluidorArquivoRepositoryMock;
 
-    @Before
-    public void inicializarContexto() {
-        importadorArquivosItemWriter = new ImportadorArquivosItemWriter(gravadorArquivoRepositoryMock, excluidorArquivoRepositoryMock);
-    }
-
     @Test
     public void aoChamarWriteDadoQueSejaComSucessoDeveriaRealizarGravacaoDoConsolidadoIhRemocaoDoArquivoDeEntrada() {
-        final DadosProcessamento dadosProcessamento = umDadosProcessamentoQualquer();
-        importadorArquivosItemWriter.write(singletonList(dadosProcessamento));
+        DadosProcessamento dadosProcessamento = umDadosProcessamentoQualquer();
+        importadorArquivosItemWriter.write(new Chunk<>(singletonList(dadosProcessamento)));
         Mockito.verify(gravadorArquivoRepositoryMock).gravar(same(dadosProcessamento));
         Mockito.verify(excluidorArquivoRepositoryMock).excluir(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
     }

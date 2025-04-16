@@ -4,6 +4,7 @@ import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Venda;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Vendedor;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorPiorVendedor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,20 +12,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
 
+import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapperUtil.generateJson;
 import static java.util.Comparator.comparingDouble;
 import static java.util.Comparator.naturalOrder;
 import static java.util.stream.Collectors.*;
 
+@Log4j2
 @Component
 public class ConsolidadorPiorVendedorImpl implements ConsolidadorPiorVendedor {
 
     @Override
     public String consolidar(List<Registro> registros) {
+        log.debug("Entrando em ConsolidadorPiorVendedorImpl: {}", generateJson(registros));
         final List<Vendedor> vendedores = filtrarVendedores(registros);
         final List<Venda> vendas = filtrarVendas(registros);
         final List<Vendedor> vendedoresQueNaoVenderam = obterVendedoresQueNaoVenderam(vendedores, vendas);
         final List<String> nomesVendedoresOrdenados = obterNomesVendedoresOrdenadosPeloPiorDesempenho(vendedoresQueNaoVenderam, vendas);
-        return obterPiorVendedor(nomesVendedoresOrdenados);
+        final String piorVendedor = obterPiorVendedor(nomesVendedoresOrdenados);
+        log.debug("Saindo de ConsolidadorPiorVendedorImpl: {}", generateJson(piorVendedor));
+        return piorVendedor;
     }
 
     private List<Vendedor> filtrarVendedores(List<Registro> registros) {

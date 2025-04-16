@@ -9,6 +9,8 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileNotFoundException;
@@ -17,10 +19,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
 import java.util.stream.Stream;
 
+import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapperUtil.generateJson;
+
+@Log4j2
 @Repository
+@AllArgsConstructor
 public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
 
     private static final String EXTENSAO_ARQUIVO = ".dat";
@@ -28,17 +35,17 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
 
     private final Properties importacaoArquivosProperties;
 
-    public LeitorArquivoRepositoryFile(Properties importacaoArquivosProperties) {
-        this.importacaoArquivosProperties = importacaoArquivosProperties;
-    }
-
     @Override
     public Arquivo lerArquivoNaoImportado() {
+        log.debug("Entrando em LeitorArquivoRepositoryFile");
         try (Stream<Path> arquivosDiretorioEntrada = obterArquivosDiretorioEntrada()) {
             final Path arquivoPath = obterPrimeiroArquivoDatPorOrdemAlfabetica(arquivosDiretorioEntrada);
-            final CSVReader arquivoReader = lerConteudoArquivo(arquivoPath);
-            return new Arquivo(arquivoPath, arquivoReader.readAll());
+            final List<String[]> conteudoArquivo = lerConteudoArquivo(arquivoPath);
+            final Arquivo arquivo = new Arquivo(arquivoPath, conteudoArquivo);
+            log.debug("Saindo de LeitorArquivoRepositoryFile: {}", generateJson(arquivo));
+            return arquivo;
         } catch (IOException | CsvException excecao) {
+            log.error("Ocorreu um erro durante leitura do arquivo: {}", excecao.getMessage(), excecao);
             throw new RepositorioException(excecao);
         }
     }
@@ -56,11 +63,10 @@ public class LeitorArquivoRepositoryFile implements LeitorArquivoRepository {
                 .orElseThrow(NenhumArquivoImportacaoException::new);
     }
 
-    private CSVReader lerConteudoArquivo(Path arquivoPath) throws FileNotFoundException {
-        return new CSVReaderBuilder(gerarFileReader(arquivoPath))
-                .withSkipLines(0)
-                .withCSVParser(gerarCSVParserBuilder())
-                .build();
+    private List<String[]> lerConteudoArquivo(Path arquivoPath) throws IOException, CsvException {
+        try (CSVReader csvReader = new CSVReaderBuilder(gerarFileReader(arquivoPath)).withSkipLines(0).withCSVParser(gerarCSVParserBuilder()).build()) {
+            return csvReader.readAll();
+        }
     }
 
     private FileReader gerarFileReader(Path arquivoPath) throws FileNotFoundException {

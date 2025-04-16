@@ -2,7 +2,6 @@ package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Item;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Venda;
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendaBuilder;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -31,11 +30,11 @@ public class VendaParse extends AbstractRegistroParse<Venda> implements Registro
 
     @Override
     protected Venda gerarRegistro(String[] registro) {
-        return VendaBuilder.umaVenda()
-                .comId(registro[0])
-                .comIdVenda(registro[1])
-                .comItens(gerarItens(registro[2]))
-                .comNomeVendedor(registro[3])
+        return Venda.builder()
+                .id(registro[0])
+                .idVenda(registro[1])
+                .itens(gerarItens(registro[2]))
+                .nomeVendedor(registro[3])
                 .build();
     }
 

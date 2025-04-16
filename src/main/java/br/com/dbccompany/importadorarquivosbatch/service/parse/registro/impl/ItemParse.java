@@ -1,7 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Item;
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.ItemBuilder;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +17,10 @@ public class ItemParse extends AbstractRegistroParse<Item> implements RegistroPa
 
     @Override
     protected Item gerarRegistro(String[] registro) {
-        return ItemBuilder.umItem()
-                .comId(registro[0])
-                .comQuantidade(parseInt(registro[1]))
-                .comPreco(parseDouble(registro[2]))
+        return Item.builder()
+                .id(registro[0])
+                .quantidade(parseInt(registro[1]))
+                .preco(parseDouble(registro[2]))
                 .build();
     }
 

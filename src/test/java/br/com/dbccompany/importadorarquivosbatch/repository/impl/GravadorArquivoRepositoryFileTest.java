@@ -1,23 +1,33 @@
 package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 
-import br.com.dbccompany.importadorarquivosbatch.ImportadorArquivosBatchApplication;
+import br.com.dbccompany.importadorarquivosbatch.config.ImportadorArquivosConfiguration;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArquivosContexto;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.verificador.ImportadorArquivosVerificador;
 import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static br.com.dbccompany.importadorarquivosbatch.fixture.DadosProcessamentoFixture.umDadosProcessamentoSucessoDbc;
-import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.ARQUIVO_SUCESSO_DBC_DONE_DAT;
-import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.CONTEUDO_ARQUIVO_SUCESSO_DBC_DONE_DAT;
+import java.nio.file.Paths;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ImportadorArquivosBatchApplication.class)
+import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.DadosProcessamentoFixture.umDadosProcessamentoSucessoDbc;
+import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_DONE_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.CONTEUDO_ARQUIVO_SUCESSO_DBC_DONE_DAT;
+import static java.io.File.separator;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+@ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = {ImportadorArquivosContexto.class, GravadorArquivoRepositoryFile.class, ImportadorArquivosVerificador.class, ImportadorArquivosConfiguration.class})
 public class GravadorArquivoRepositoryFileTest {
 
     @Autowired
@@ -29,7 +39,15 @@ public class GravadorArquivoRepositoryFileTest {
     @Autowired
     private ImportadorArquivosVerificador importadorArquivosVerificador;
 
-    @After
+    @Value("${importador-arquivos.data.out}")
+    private String diretorioSaida;
+
+    @BeforeEach
+    public void inicializarContexto() {
+        importadorArquivosContexto.excluirDiretorios();
+    }
+
+    @AfterEach
     public void finalizarContexto() {
         importadorArquivosContexto.excluirDiretorios();
     }
@@ -42,8 +60,10 @@ public class GravadorArquivoRepositoryFileTest {
         importadorArquivosVerificador.verificarConteudoArquivoSaida(ARQUIVO_SUCESSO_DBC_DONE_DAT, CONTEUDO_ARQUIVO_SUCESSO_DBC_DONE_DAT);
     }
 
-    @Test(expected = RepositorioException.class)
+    @Test
     public void aoGravarDadoQueNaoExistaDiretorioDeSaidaDeveriaLancarUmaRepositorioException() {
-        gravadorArquivoRepository.gravar(umDadosProcessamentoSucessoDbc());
+        String mensagemEsperada = "java.nio.file.NoSuchFileException: " + Paths.get(diretorioSaida) + separator + ARQUIVO_SUCESSO_DBC_DONE_DAT;
+        RepositorioException thrown = assertThrows(RepositorioException.class, () -> gravadorArquivoRepository.gravar(umDadosProcessamentoSucessoDbc()));
+        assertEquals(mensagemEsperada, thrown.getMessage());
     }
 }

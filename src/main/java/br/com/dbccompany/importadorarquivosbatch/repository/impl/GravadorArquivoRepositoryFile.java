@@ -3,6 +3,8 @@ package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -11,11 +13,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapperUtil.generateJson;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.text.MessageFormat.format;
 
+@Log4j2
 @Repository
+@AllArgsConstructor
 public class GravadorArquivoRepositoryFile implements GravadorArquivoRepository {
 
     private static final String SEPARADOR_NOME_EXTENSAO = "\\.";
@@ -25,17 +30,16 @@ public class GravadorArquivoRepositoryFile implements GravadorArquivoRepository 
 
     private final Properties importacaoArquivosProperties;
 
-    public GravadorArquivoRepositoryFile(Properties importacaoArquivosProperties) {
-        this.importacaoArquivosProperties = importacaoArquivosProperties;
-    }
-
     @Override
     public void gravar(DadosProcessamento dadosProcessamento) {
         try {
+            log.debug("Entrando em GravadorArquivoRepositoryFile: {}", generateJson(dadosProcessamento));
             final String nomeArquivoSaida = gerarNomeArquivoSaida(dadosProcessamento.getArquivoPath());
             final byte[] conteudo = gerarConteudo(dadosProcessamento);
             Files.write(Paths.get(nomeArquivoSaida), conteudo, CREATE, TRUNCATE_EXISTING);
+            log.debug("Saindo de GravadorArquivoRepositoryFile");
         } catch (IOException excecao) {
+            log.error("Ocorreu um erro durante gravação do arquivo: {}", excecao.getMessage(), excecao);
             throw new RepositorioException(excecao);
         }
     }

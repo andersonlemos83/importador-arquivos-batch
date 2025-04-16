@@ -1,5 +1,12 @@
 package br.com.dbccompany.importadorarquivosbatch.domain.registro;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
+@AllArgsConstructor
 public enum TipoRegistro {
 
     VENDEDOR("001"),
@@ -8,11 +15,4 @@ public enum TipoRegistro {
 
     private final String id;
 
-    TipoRegistro(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
 }

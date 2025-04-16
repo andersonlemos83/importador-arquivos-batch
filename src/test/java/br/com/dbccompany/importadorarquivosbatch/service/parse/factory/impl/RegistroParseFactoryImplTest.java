@@ -7,19 +7,22 @@ import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.Ite
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.VendaParse;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl.VendedorParse;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroSemLayoutDefinidoException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+@ExtendWith(SpringExtension.class)
 public class RegistroParseFactoryImplTest {
 
     private RegistroParseFactory registroParseFactory;
 
-    @Before
+    @BeforeEach
     public void inicializarContexto() {
         registroParseFactory = new RegistroParseFactoryImpl(new VendedorParse(), new ClienteParse(), new VendaParse(new ItemParse()));
     }
@@ -42,18 +45,15 @@ public class RegistroParseFactoryImplTest {
         assertTrue("Deveria retornar um VendaParse", registroParse instanceof VendaParse);
     }
 
-    @Test(expected = RegistroSemLayoutDefinidoException.class)
+    @Test
     public void aoObterDadoQueSejaInformadoUmRegistroComIdInvalidoDeveriaLancarUmaRegistroSemLayoutDefinidoException() {
-        registroParseFactory.obter(new String[]{});
+        final RegistroSemLayoutDefinidoException thrown = assertThrows(RegistroSemLayoutDefinidoException.class, () -> registroParseFactory.obter(new String[]{}));
+        assertEquals("O arquivo possui um registro sem layout definido: null", thrown.getMessage());
     }
 
     @Test
     public void aoObterDadoQueSejaInformadoUmRegistroComIdInvalidoDeveriaLancarUmaExcecaoComAhMensagemRegistroSemLayoutDefinido() {
-        try {
-            registroParseFactory.obter(new String[]{"004"});
-            fail("Deveria lançar uma exceção...");
-        } catch (RegistroSemLayoutDefinidoException excecao) {
-            assertEquals("O arquivo possui um registro sem layout definido: 004", excecao.getMessage());
-        }
+        final RegistroSemLayoutDefinidoException thrown = assertThrows(RegistroSemLayoutDefinidoException.class, () -> registroParseFactory.obter(new String[]{"004"}));
+        assertEquals("O arquivo possui um registro sem layout definido: 004", thrown.getMessage());
     }
 }

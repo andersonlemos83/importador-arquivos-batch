@@ -5,41 +5,37 @@ import br.com.dbccompany.importadorarquivosbatch.repository.MovedorArquivoReposi
 import br.com.dbccompany.importadorarquivosbatch.service.LeitorArquivoService;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.ArquivoInvalidoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.InformacaoException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.stereotype.Component;
 
-@Component
-public class ImportadorArquivosItemReader implements ItemReader<DadosLeitura> {
+import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapperUtil.generateJson;
 
-    private static final Logger LOG = LoggerFactory.getLogger(ImportadorArquivosItemReader.class);
+@Log4j2
+@Component
+@AllArgsConstructor
+public class ImportadorArquivosItemReader implements ItemReader<DadosLeitura> {
 
     private final LeitorArquivoService leitorArquivoService;
     private final MovedorArquivoRepository movedorArquivoRepository;
 
-    public ImportadorArquivosItemReader(LeitorArquivoService leitorArquivoService,
-                                        MovedorArquivoRepository movedorArquivoRepository) {
-        this.leitorArquivoService = leitorArquivoService;
-        this.movedorArquivoRepository = movedorArquivoRepository;
-    }
-
     @Override
     public DadosLeitura read() {
         try {
+            log.info("Entrando em ImportadorArquivosItemReader");
             final DadosLeitura dadosLeitura = leitorArquivoService.lerArquivoNaoImportado();
-            LOG.info("Arquivo lido: " + dadosLeitura.getArquivoPath());
+            log.info("Saindo de ImportadorArquivosItemReader: {}", generateJson(dadosLeitura));
             return dadosLeitura;
         } catch (InformacaoException excecao) {
-            LOG.info(excecao.getMessage());
+            log.info("Saindo de ImportadorArquivosItemReader: {}", excecao.getMessage());
             return null;
         } catch (ArquivoInvalidoException excecao) {
-            LOG.info(excecao.getMessage());
+            log.info("Saindo de ImportadorArquivosItemReader: {}", excecao.getMessage());
             movedorArquivoRepository.moverParaInvalido(excecao.getArquivoPath());
             return null;
         } catch (Exception excecao) {
-            LOG.error("Ocorreu um erro durante a leitura do arquivo de entrada", excecao);
-            excecao.printStackTrace();
+            log.error("Ocorreu um erro durante a leitura do arquivo de entrada: {}", excecao.getMessage(), excecao);
             return null;
         }
     }

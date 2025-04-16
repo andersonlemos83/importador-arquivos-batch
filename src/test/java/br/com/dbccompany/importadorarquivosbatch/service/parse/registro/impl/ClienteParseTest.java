@@ -3,22 +3,23 @@ package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Cliente;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RegistroComLayoutInvalidoException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static br.com.dbccompany.importadorarquivosbatch.fixture.RegistroFixture.umaRegistroArrayOi;
-import static br.com.dbccompany.importadorarquivosbatch.fixture.RegistroFixture.umaRegistroArrayOiComQuantidadeInvalida;
+import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.RegistroFixture.umaRegistroArrayOi;
+import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.RegistroFixture.umaRegistroArrayOiComQuantidadeInvalida;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+@ExtendWith(SpringExtension.class)
 public class ClienteParseTest {
 
     private RegistroParse registroParse;
 
-    @Before
+    @BeforeEach
     public void inicializarContexto() {
         registroParse = new ClienteParse();
     }
@@ -32,18 +33,10 @@ public class ClienteParseTest {
         assertEquals("Telefonia", cliente.getAreaNegocio());
     }
 
-    @Test(expected = RegistroComLayoutInvalidoException.class)
-    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaRegistroComLayoutInvalidoException() {
-        registroParse.parse(umaRegistroArrayOiComQuantidadeInvalida());
-    }
-
     @Test
-    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaExcecaoComAhMensagemRegistroIncompativelComLayout() {
-        try {
-            registroParse.parse(umaRegistroArrayOiComQuantidadeInvalida());
-            fail("Deveria lançar uma exceção...");
-        } catch (RegistroComLayoutInvalidoException excecao) {
-            assertEquals("O arquivo possui um registro, [002, 29013251000192, Oi], incompatível com o layout Cliente.", excecao.getMessage());
-        }
+    public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaRegistroComLayoutInvalidoException() {
+        RegistroComLayoutInvalidoException thrown = assertThrows(RegistroComLayoutInvalidoException.class,
+                () -> registroParse.parse(umaRegistroArrayOiComQuantidadeInvalida()));
+        assertEquals("O arquivo possui um registro, [002, 29013251000192, Oi], incompatível com o layout Cliente.", thrown.getMessage());
     }
 }

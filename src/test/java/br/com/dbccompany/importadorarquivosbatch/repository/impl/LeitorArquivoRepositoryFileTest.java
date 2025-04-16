@@ -1,29 +1,37 @@
 package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 
-import br.com.dbccompany.importadorarquivosbatch.ImportadorArquivosBatchApplication;
+import br.com.dbccompany.importadorarquivosbatch.config.ImportadorArquivosConfiguration;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArquivosContexto;
 import br.com.dbccompany.importadorarquivosbatch.domain.Arquivo;
 import br.com.dbccompany.importadorarquivosbatch.repository.LeitorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.NenhumArquivoImportacaoException;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import static br.com.dbccompany.importadorarquivosbatch.fixture.RegistroFixture.umaListaRegistrosArraySucessoDbc;
-import static br.com.dbccompany.importadorarquivosbatch.util.ConstanteTesteUtil.*;
+import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.RegistroFixture.umaListaRegistrosArraySucessoDbc;
+import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_TXT;
 import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ImportadorArquivosBatchApplication.class)
+@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+@ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = {ImportadorArquivosContexto.class, LeitorArquivoRepositoryFile.class, ImportadorArquivosConfiguration.class})
 public class LeitorArquivoRepositoryFileTest {
 
     @Autowired
@@ -32,7 +40,15 @@ public class LeitorArquivoRepositoryFileTest {
     @Autowired
     private LeitorArquivoRepository leitorArquivoRepository;
 
-    @After
+    @Value("${importador-arquivos.data.in}")
+    private String diretorioEntrada;
+
+    @BeforeEach
+    public void inicializarContexto() {
+        importadorArquivosContexto.excluirDiretorios();
+    }
+
+    @AfterEach
     public void finalizarContexto() {
         importadorArquivosContexto.excluirDiretorios();
     }
@@ -41,33 +57,28 @@ public class LeitorArquivoRepositoryFileTest {
     public void aoLerArquivoNaoImportadoDadoQueExistaArquivoDeEntradaDeveriaRetornarOsDadosEsperados() {
         importadorArquivosContexto.criarDiretorios();
         importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_DAT);
-        final Arquivo arquivo = leitorArquivoRepository.lerArquivoNaoImportado();
-        assertEquals(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT, arquivo.getArquivoPath());
-        assertRegistrosArrays(umaListaRegistrosArraySucessoDbc(), arquivo.getRegistrosArray());
-    }
-
-    @Test(expected = NenhumArquivoImportacaoException.class)
-    public void aoLerArquivoNaoImportadoDadoQueNaoExistaArquivoDeEntradaDeveriaLancarUmaNenhumArquivoImportacaoException() {
-        importadorArquivosContexto.criarDiretorios();
-        importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_TXT);
-        leitorArquivoRepository.lerArquivoNaoImportado();
+        Path arquivoPathExperado = Paths.get(diretorioEntrada + "/" + ARQUIVO_SUCESSO_DBC_DAT);
+        Arquivo arquivoRetornado = leitorArquivoRepository.lerArquivoNaoImportado();
+        assertEquals(arquivoPathExperado, arquivoRetornado.getArquivoPath());
+        assertRegistrosArrays(umaListaRegistrosArraySucessoDbc(), arquivoRetornado.getRegistrosArray());
     }
 
     @Test
-    public void aoLerArquivoNaoImportadoDadoQueNaoExistaArquivoDeEntradaDeveriaLancarUmaExcecaoComAhMensagemNaoExisteNenhumArquivoParaImportacao() {
-        try {
-            importadorArquivosContexto.criarDiretorios();
-            importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_TXT);
-            leitorArquivoRepository.lerArquivoNaoImportado();
-            fail("Deveria lançar uma exceção...");
-        } catch (NenhumArquivoImportacaoException excecao) {
-            assertEquals("Não existe nenhum arquivo para importação.", excecao.getMessage());
-        }
+    public void aoLerArquivoNaoImportadoDadoQueNaoExistaArquivoDeEntradaDeveriaLancarUmaNenhumArquivoImportacaoException() {
+        importadorArquivosContexto.criarDiretorios();
+        importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_TXT);
+
+        NenhumArquivoImportacaoException thrown = assertThrows(NenhumArquivoImportacaoException.class,
+                () -> leitorArquivoRepository.lerArquivoNaoImportado());
+
+        assertEquals("Não existe nenhum arquivo para importação.", thrown.getMessage());
     }
 
-    @Test(expected = RepositorioException.class)
+    @Test
     public void aoLerArquivoNaoImportadoDadoQueNaoExistaDiretorioDeEntradaDeveriaLancarUmaRepositorioException() {
-        leitorArquivoRepository.lerArquivoNaoImportado();
+        String mensagemEsperada = "java.nio.file.NoSuchFileException: " + Paths.get(diretorioEntrada);
+        RepositorioException thrown = assertThrows(RepositorioException.class, () -> leitorArquivoRepository.lerArquivoNaoImportado());
+        assertEquals(mensagemEsperada, thrown.getMessage());
     }
 
     private void assertRegistrosArrays(List<String[]> registrosArrayEsperado, List<String[]> registrosArrayRetornado) {

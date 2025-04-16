@@ -1,7 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Cliente;
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.ClienteBuilder;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +14,11 @@ public class ClienteParse extends AbstractRegistroParse<Cliente> implements Regi
 
     @Override
     protected Cliente gerarRegistro(String[] registro) {
-        return ClienteBuilder.umCliente()
-                .comId(registro[0])
-                .comCnpj(registro[1])
-                .comNome(registro[2])
-                .comAreaNegocio(registro[3])
+        return Cliente.builder()
+                .id(registro[0])
+                .cnpj(registro[1])
+                .nome(registro[2])
+                .areaNegocio(registro[3])
                 .build();
     }
 

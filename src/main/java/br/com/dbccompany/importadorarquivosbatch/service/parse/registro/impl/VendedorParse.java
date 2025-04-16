@@ -1,7 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.service.parse.registro.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Vendedor;
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendedorBuilder;
 import br.com.dbccompany.importadorarquivosbatch.service.parse.registro.RegistroParse;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +16,11 @@ public class VendedorParse extends AbstractRegistroParse<Vendedor> implements Re
 
     @Override
     protected Vendedor gerarRegistro(String[] registro) {
-        return VendedorBuilder.umVendedor()
-                .comId(registro[0])
-                .comCpf(registro[1])
-                .comNome(registro[2])
-                .comSalario(parseDouble(registro[3]))
+        return Vendedor.builder()
+                .id(registro[0])
+                .cpf(registro[1])
+                .nome(registro[2])
+                .salario(parseDouble(registro[3]))
                 .build();
     }
 

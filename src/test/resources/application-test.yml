@@ -1,0 +1,29 @@
+server:
+  port: 8585
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:h2:mem:importador-arquivos-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: sa
+  jpa:
+    properties:
+      hibernate:
+        generate_statistics: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+
+importador-arquivos:
+  cron: 0 0 0/1 1/1 * ?
+  data:
+    root: ${java.io.tmpdir}/data
+    in: ${java.io.tmpdir}/data/in
+    out: ${java.io.tmpdir}/data/out
+    invalid: ${java.io.tmpdir}/data/invalid

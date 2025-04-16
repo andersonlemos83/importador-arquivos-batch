@@ -1,0 +1,57 @@
+server:
+  compression:
+    enabled: true
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: servlet
+  datasource:
+    driver-class-name: org.h2.Driver
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 30
+    url: jdbc:h2:mem:importador-arquivos-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username:
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      base-path: /
+      path-mapping:
+        prometheus: /metrics
+      exposure:
+        include: '*'
+        exclude: metrics
+  metrics:
+    enabled: true
+    export:
+    prometheus:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      access: unrestricted
+
+importador-arquivos:
+  cron:
+  data:
+    in:
+    out:
+    invalid:
