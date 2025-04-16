@@ -2,7 +2,6 @@ package br.com.dbccompany.importadorarquivosbatch.service.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.Arquivo;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
-import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosLeituraBuilder;
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Registro;
 import br.com.dbccompany.importadorarquivosbatch.repository.LeitorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.service.LeitorArquivoService;
@@ -23,9 +22,9 @@ public class LeitorArquivoServiceImpl implements LeitorArquivoService {
     public DadosLeitura lerArquivoNaoImportado() {
         final Arquivo arquivo = leitorArquivoRepository.lerArquivoNaoImportado();
         final List<Registro> registros = arquivoParse.parse(arquivo);
-        return DadosLeituraBuilder.umDadosLeitura()
-                .comArquivoPath(arquivo.getArquivoPath())
-                .comRegistros(registros)
+        return DadosLeitura.builder()
+                .arquivoPath(arquivo.getArquivoPath())
+                .registros(registros)
                 .build();
     }
 }

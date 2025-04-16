@@ -2,7 +2,6 @@ package br.com.dbccompany.importadorarquivosbatch.service.impl;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
-import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosLeituraBuilder;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorPiorVendedor;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorQuantidadeClientes;
 import br.com.dbccompany.importadorarquivosbatch.service.consolidador.ConsolidadorQuantidadeVendedores;
@@ -38,7 +37,7 @@ public class ProcessadorArquivoServiceImplTest {
 
     @Test
     public void aoProcessarDeveriaRetonarOhDadosProcessamentoEsperado() {
-        DadosLeitura dadosLeitura = DadosLeituraBuilder.umDadosLeitura().comRegistros(emptyList()).build();
+        DadosLeitura dadosLeitura = DadosLeitura.builder().registros(emptyList()).build();
 
         Mockito.when(consolidadorQuantidadeClientesMock.consolidar(dadosLeitura.getRegistros())).thenReturn(1L);
         Mockito.when(consolidadorQuantidadeVendedoresMock.consolidar(dadosLeitura.getRegistros())).thenReturn(2L);

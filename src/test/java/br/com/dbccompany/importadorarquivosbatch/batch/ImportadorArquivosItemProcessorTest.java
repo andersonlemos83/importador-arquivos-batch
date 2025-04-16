@@ -2,7 +2,6 @@ package br.com.dbccompany.importadorarquivosbatch.batch;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
-import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosLeituraBuilder;
 import br.com.dbccompany.importadorarquivosbatch.helper.fixture.DadosProcessamentoFixture;
 import br.com.dbccompany.importadorarquivosbatch.service.ProcessadorArquivoService;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,7 @@ public class ImportadorArquivosItemProcessorTest {
 
     @Test
     public void aoChamarProcessDadoQueSejaComSucessoDeveriaRetonarOhDadosProcessamentoEsperado() {
-        DadosLeitura dadosLeitura = DadosLeituraBuilder.umDadosLeitura().build();
+        DadosLeitura dadosLeitura = DadosLeitura.builder().build();
         DadosProcessamento dadosProcessamentoEsperado = DadosProcessamentoFixture.umDadosProcessamentoQualquer();
         Mockito.when(processadorArquivoServiceMock.processar(dadosLeitura)).thenReturn(dadosProcessamentoEsperado);
         DadosProcessamento dadosProcessamentoRetornado = importadorArquivosItemProcessor.process(dadosLeitura);
@@ -36,7 +35,7 @@ public class ImportadorArquivosItemProcessorTest {
 
     @Test
     public void aoChamarProcessDadoQueSejaLancadoUmaRuntimeExceptionDeveriaRetonarNulo() {
-        DadosLeitura dadosLeitura = DadosLeituraBuilder.umDadosLeitura().build();
+        DadosLeitura dadosLeitura = DadosLeitura.builder().build();
         Mockito.when(processadorArquivoServiceMock.processar(dadosLeitura)).thenThrow(new RuntimeException(""));
         assertNull(importadorArquivosItemProcessor.process(dadosLeitura));
     }

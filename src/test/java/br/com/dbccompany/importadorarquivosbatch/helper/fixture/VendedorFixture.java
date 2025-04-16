@@ -1,7 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.helper.fixture;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Vendedor;
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendedorBuilder;
 
 public final class VendedorFixture {
 
@@ -13,92 +12,92 @@ public final class VendedorFixture {
     }
 
     public static Vendedor umVendedorMortenHarket() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("44934360000")
-                .comNome("Morten Harket")
-                .comSalario(10000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("44934360000")
+                .nome("Morten Harket")
+                .salario(10000d)
                 .build();
     }
 
     public static Vendedor umVendedorBryanAdams() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("89622735002")
-                .comNome("Bryan Adams")
-                .comSalario(9000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("89622735002")
+                .nome("Bryan Adams")
+                .salario(9000d)
                 .build();
     }
 
     public static Vendedor umVendedorAgnethaFaltskog() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("01387268090")
-                .comNome("Agnetha Fältskog")
-                .comSalario(8000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("01387268090")
+                .nome("Agnetha Fältskog")
+                .salario(8000d)
                 .build();
     }
 
     public static Vendedor umVendedorDoloresORiordan() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("64951402076")
-                .comNome("Dolores O'Riordan")
-                .comSalario(7000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("64951402076")
+                .nome("Dolores O'Riordan")
+                .salario(7000d)
                 .build();
     }
 
     public static Vendedor umVendedorSimonLeBon() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("35341411056")
-                .comNome("Simon Le Bon")
-                .comSalario(6000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("35341411056")
+                .nome("Simon Le Bon")
+                .salario(6000d)
                 .build();
     }
 
     public static Vendedor umVendedorJonBonJovi() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("37984192057")
-                .comNome("Jon Bon Jovi")
-                .comSalario(5000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("37984192057")
+                .nome("Jon Bon Jovi")
+                .salario(5000d)
                 .build();
     }
 
     public static Vendedor umVendedorRussellHitchcock() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("61022326074")
-                .comNome("Russell Hitchcock")
-                .comSalario(4000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("61022326074")
+                .nome("Russell Hitchcock")
+                .salario(4000d)
                 .build();
     }
 
     public static Vendedor umVendedorCyndiLauper() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("1220372609")
-                .comNome("Cyndi Lauper")
-                .comSalario(3000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("1220372609")
+                .nome("Cyndi Lauper")
+                .salario(3000d)
                 .build();
     }
 
     public static Vendedor umVendedorLauraPausini() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("08699056001")
-                .comNome("Laura Pausini")
-                .comSalario(2000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("08699056001")
+                .nome("Laura Pausini")
+                .salario(2000d)
                 .build();
     }
 
     public static Vendedor umVendedorKlausMeine() {
-        return VendedorBuilder.umVendedor()
-                .comId("001")
-                .comCpf("78186436057")
-                .comNome("Klaus Meine")
-                .comSalario(1000d)
+        return Vendedor.builder()
+                .id("001")
+                .cpf("78186436057")
+                .nome("Klaus Meine")
+                .salario(1000d)
                 .build();
     }
 }

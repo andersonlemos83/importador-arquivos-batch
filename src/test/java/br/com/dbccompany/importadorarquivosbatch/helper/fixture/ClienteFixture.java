@@ -1,7 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.helper.fixture;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.registro.Cliente;
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.ClienteBuilder;
 
 public final class ClienteFixture {
 
@@ -13,47 +12,47 @@ public final class ClienteFixture {
     }
 
     public static Cliente umClienteOi() {
-        return ClienteBuilder.umCliente()
-                .comId("002")
-                .comCnpj("29013251000192")
-                .comNome("Oi")
-                .comAreaNegocio("Telefonia")
+        return Cliente.builder()
+                .id("002")
+                .cnpj("29013251000192")
+                .nome("Oi")
+                .areaNegocio("Telefonia")
                 .build();
     }
 
     public static Cliente umClienteMaceioShopping() {
-        return ClienteBuilder.umCliente()
-                .comId("002")
-                .comCnpj("12190604000127")
-                .comNome("Maceió Shopping")
-                .comAreaNegocio("Shopping Centers")
+        return Cliente.builder()
+                .id("002")
+                .cnpj("12190604000127")
+                .nome("Maceió Shopping")
+                .areaNegocio("Shopping Centers")
                 .build();
     }
 
     public static Cliente umClienteLivrariaSaraiva() {
-        return ClienteBuilder.umCliente()
-                .comId("002")
-                .comCnpj("88728906000178")
-                .comNome("Livraria Saraiva")
-                .comAreaNegocio("Livros")
+        return Cliente.builder()
+                .id("002")
+                .cnpj("88728906000178")
+                .nome("Livraria Saraiva")
+                .areaNegocio("Livros")
                 .build();
     }
 
     public static Cliente umClienteMixpel() {
-        return ClienteBuilder.umCliente()
-                .comId("002")
-                .comCnpj("49633757000101")
-                .comNome("Mixpel")
-                .comAreaNegocio("Informática")
+        return Cliente.builder()
+                .id("002")
+                .cnpj("49633757000101")
+                .nome("Mixpel")
+                .areaNegocio("Informática")
                 .build();
     }
 
     public static Cliente umClienteIronStudio() {
-        return ClienteBuilder.umCliente()
-                .comId("002")
-                .comCnpj("91412787000154")
-                .comNome("Iron Studio")
-                .comAreaNegocio("Colecionáveis")
+        return Cliente.builder()
+                .id("002")
+                .cnpj("91412787000154")
+                .nome("Iron Studio")
+                .areaNegocio("Colecionáveis")
                 .build();
     }
 }

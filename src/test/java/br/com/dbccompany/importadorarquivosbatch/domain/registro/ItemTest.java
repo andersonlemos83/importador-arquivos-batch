@@ -1,6 +1,5 @@
 package br.com.dbccompany.importadorarquivosbatch.domain.registro;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.ItemBuilder;
 import br.com.dbccompany.importadorarquivosbatch.helper.fixture.ItemFixture;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,13 +25,13 @@ public class ItemTest {
 
     @Test
     public void aoObterTotalDadoQueQuantidadeSejaNulaIhPrecoSeja100DeveriaRetornarZero() {
-        final Item item = ItemBuilder.umItem().comQuantidade(null).comPreco(100d).build();
+        final Item item = Item.builder().preco(100d).build();
         assertEquals(0d, item.obterTotal());
     }
 
     @Test
     public void aoObterTotalDadoQueQuantidadeSeja10IhPrecoSejaNulaDeveriaRetornarZero() {
-        final Item item = ItemBuilder.umItem().comQuantidade(10).comPreco(null).build();
+        final Item item = Item.builder().quantidade(10).build();
         assertEquals(0d, item.obterTotal());
     }
 }

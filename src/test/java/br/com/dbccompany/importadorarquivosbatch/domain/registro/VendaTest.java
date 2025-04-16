@@ -1,6 +1,5 @@
 package br.com.dbccompany.importadorarquivosbatch.domain.registro;
 
-import br.com.dbccompany.importadorarquivosbatch.domain.registro.builder.VendaBuilder;
 import br.com.dbccompany.importadorarquivosbatch.helper.fixture.VendaFixture;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +26,7 @@ public class VendaTest {
 
     @Test
     public void aoChamarObterTotalDadoQueNaoPossuNenhumItemDeveriaRetornarZero() {
-        final Venda venda = VendaBuilder.umaVenda().comItens(emptyList()).build();
+        final Venda venda = Venda.builder().itens(emptyList()).build();
         assertEquals(0d, venda.obterTotal());
     }
 }

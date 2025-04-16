@@ -1,7 +1,6 @@
 package br.com.dbccompany.importadorarquivosbatch.batch;
 
 import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosLeitura;
-import br.com.dbccompany.importadorarquivosbatch.domain.dados.builder.DadosLeituraBuilder;
 import br.com.dbccompany.importadorarquivosbatch.repository.MovedorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.service.LeitorArquivoService;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.ArquivoInvalidoException;
@@ -32,7 +31,7 @@ public class ImportadorArquivosItemReaderTest {
 
     @Test
     public void aoChamarReadDadoQueSejaComSucessoDeveriaRetonarOhDadosLeituraEsperado() {
-        DadosLeitura dadosLeituraEsperado = DadosLeituraBuilder.umDadosLeitura().build();
+        DadosLeitura dadosLeituraEsperado = DadosLeitura.builder().build();
         Mockito.when(leitorArquivoServiceMock.lerArquivoNaoImportado()).thenReturn(dadosLeituraEsperado);
         DadosLeitura dadosLeituraRetornado = importadorArquivosItemReader.read();
         assertSame(dadosLeituraEsperado, dadosLeituraRetornado);
