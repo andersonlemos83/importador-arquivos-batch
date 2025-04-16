@@ -11,15 +11,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
 import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.RegistroFixture.umaListaRegistrosArraySucessoDbc;
-import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.*;
+import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_DAT;
+import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_TXT;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,6 +40,9 @@ public class LeitorArquivoRepositoryFileTest {
     @Autowired
     private LeitorArquivoRepository leitorArquivoRepository;
 
+    @Value("${importador-arquivos.data.in}")
+    private String diretorioEntrada;
+
     @BeforeEach
     public void inicializarContexto() {
         importadorArquivosContexto.excluirDiretorios();
@@ -50,9 +57,10 @@ public class LeitorArquivoRepositoryFileTest {
     public void aoLerArquivoNaoImportadoDadoQueExistaArquivoDeEntradaDeveriaRetornarOsDadosEsperados() {
         importadorArquivosContexto.criarDiretorios();
         importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_DAT);
-        Arquivo arquivo = leitorArquivoRepository.lerArquivoNaoImportado();
-        assertEquals(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT, arquivo.getArquivoPath());
-        assertRegistrosArrays(umaListaRegistrosArraySucessoDbc(), arquivo.getRegistrosArray());
+        Path arquivoPathExperado = Paths.get(diretorioEntrada + "/" + ARQUIVO_SUCESSO_DBC_DAT);
+        Arquivo arquivoRetornado = leitorArquivoRepository.lerArquivoNaoImportado();
+        assertEquals(arquivoPathExperado, arquivoRetornado.getArquivoPath());
+        assertRegistrosArrays(umaListaRegistrosArraySucessoDbc(), arquivoRetornado.getRegistrosArray());
     }
 
     @Test
@@ -68,8 +76,9 @@ public class LeitorArquivoRepositoryFileTest {
 
     @Test
     public void aoLerArquivoNaoImportadoDadoQueNaoExistaDiretorioDeEntradaDeveriaLancarUmaRepositorioException() {
+        String mensagemEsperada = "java.nio.file.NoSuchFileException: " + Paths.get(diretorioEntrada);
         RepositorioException thrown = assertThrows(RepositorioException.class, () -> leitorArquivoRepository.lerArquivoNaoImportado());
-        assertEquals("java.nio.file.NoSuchFileException: .\\data\\in", thrown.getMessage());
+        assertEquals(mensagemEsperada, thrown.getMessage());
     }
 
     private void assertRegistrosArrays(List<String[]> registrosArrayEsperado, List<String[]> registrosArrayRetornado) {

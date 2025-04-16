@@ -10,9 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.nio.file.Paths;
 
 import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.DadosProcessamentoFixture.umDadosProcessamentoSucessoDbc;
 import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_DONE_DAT;
@@ -35,6 +38,9 @@ public class GravadorArquivoRepositoryFileTest {
     @Autowired
     private ImportadorArquivosVerificador importadorArquivosVerificador;
 
+    @Value("${importador-arquivos.data.out}")
+    private String diretorioSaida;
+
     @BeforeEach
     public void inicializarContexto() {
         importadorArquivosContexto.excluirDiretorios();
@@ -55,7 +61,8 @@ public class GravadorArquivoRepositoryFileTest {
 
     @Test
     public void aoGravarDadoQueNaoExistaDiretorioDeSaidaDeveriaLancarUmaRepositorioException() {
+        String mensagemEsperada = "java.nio.file.NoSuchFileException: " + Paths.get(diretorioSaida) + "\\" + ARQUIVO_SUCESSO_DBC_DONE_DAT;
         RepositorioException thrown = assertThrows(RepositorioException.class, () -> gravadorArquivoRepository.gravar(umDadosProcessamentoSucessoDbc()));
-        assertEquals("java.nio.file.NoSuchFileException: .\\data\\out\\sucesso-dbc.done.dat", thrown.getMessage());
+        assertEquals(mensagemEsperada, thrown.getMessage());
     }
 }

@@ -10,11 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_DAT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,6 +37,9 @@ public class MovedorArquivoRepositoryFileTest {
     @Autowired
     private ImportadorArquivosVerificador importadorArquivosVerificador;
 
+    @Value("${importador-arquivos.data.in}")
+    private String diretorioEntrada;
+
     @BeforeEach
     public void inicializarContexto() {
         importadorArquivosContexto.excluirDiretorios();
@@ -48,13 +54,16 @@ public class MovedorArquivoRepositoryFileTest {
     public void aoMoverParaInvalidoDadoQueExistaArquivoDeEntradaDeveriaMoverOhArquivoDeEntradaParaInvalido() {
         importadorArquivosContexto.criarDiretorios();
         importadorArquivosContexto.criarArquivoNoDiretorioDeEntrada(ARQUIVO_SUCESSO_DBC_DAT);
-        movedorArquivoRepository.moverParaInvalido(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT);
+        Path arquivo = Paths.get(diretorioEntrada + "/" + ARQUIVO_SUCESSO_DBC_DAT);
+        movedorArquivoRepository.moverParaInvalido(arquivo);
         importadorArquivosVerificador.verificarSeExisteArquivoInvalido(ARQUIVO_SUCESSO_DBC_DAT);
     }
 
     @Test
     public void aoMoverParaInvalidoDadoQueNaoExistaArquivoDeEntradaDeveriaLancarUmaRepositorioException() {
-        RepositorioException thrown = assertThrows(RepositorioException.class, () -> movedorArquivoRepository.moverParaInvalido(ARQUIVO_ENTRADA_PATH_SUCESSO_DBC_DAT));
-        assertEquals("java.nio.file.NoSuchFileException: .\\data\\in\\sucesso-dbc.dat", thrown.getMessage());
+        Path arquivo = Paths.get(diretorioEntrada + "/" + ARQUIVO_SUCESSO_DBC_DAT);
+        String mensagemEsperada = "java.nio.file.NoSuchFileException: " + arquivo;
+        RepositorioException thrown = assertThrows(RepositorioException.class, () -> movedorArquivoRepository.moverParaInvalido(arquivo));
+        assertEquals(mensagemEsperada, thrown.getMessage());
     }
 }
