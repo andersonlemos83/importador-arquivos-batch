@@ -26,4 +26,9 @@ public class ClienteParse extends AbstractRegistroParse<Cliente> implements Regi
     protected String obterNome() {
         return Cliente.class.getSimpleName();
     }
+
+    @Override
+    public String toString() {
+        return "ClienteParse";
+    }
 }

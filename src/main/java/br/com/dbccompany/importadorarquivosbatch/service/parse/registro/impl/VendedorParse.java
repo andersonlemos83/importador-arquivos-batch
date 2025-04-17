@@ -28,4 +28,9 @@ public class VendedorParse extends AbstractRegistroParse<Vendedor> implements Re
     protected String obterNome() {
         return Vendedor.class.getSimpleName();
     }
+
+    @Override
+    public String toString() {
+        return "VendedorParse";
+    }
 }

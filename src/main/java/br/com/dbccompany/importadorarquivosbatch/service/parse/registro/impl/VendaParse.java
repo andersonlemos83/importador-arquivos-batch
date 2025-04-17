@@ -41,6 +41,11 @@ public class VendaParse extends AbstractRegistroParse<Venda> implements Registro
         return Venda.class.getSimpleName();
     }
 
+    @Override
+    public String toString() {
+        return "VendaParse";
+    }
+
     private List<Item> gerarItens(String token) {
         return obterItensToken(token)
                 .stream()
