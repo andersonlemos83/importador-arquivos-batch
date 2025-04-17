@@ -19,7 +19,7 @@ import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapper
 @AllArgsConstructor
 public class ArquivoParseImpl implements ArquivoParse {
 
-    private final RegistroParseFactory registroParseFactory;
+    private final RegistroParseFactory<Registro> registroParseFactory;
 
     @Override
     public List<Registro> parse(Arquivo arquivo) {
