@@ -43,6 +43,6 @@ public class MovedorArquivoRepositoryFile implements MovedorArquivoRepository {
 
     private String gerarCaminhoDestino(Path arquivoOrigem) {
         final String diretorioInvalido = importacaoArquivosProperties.getProperty("diretorioInvalido");
-        return MessageFormat.format("{0}/{1}", diretorioInvalido, arquivoOrigem.getFileName().toString());
+        return MessageFormat.format("{0}/{1}", diretorioInvalido, arquivoOrigem.getFileName());
     }
 }

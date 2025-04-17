@@ -22,7 +22,9 @@ import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUti
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SuppressWarnings("java:S5786") // Public required for JUnit test suite
+// Public required for JUnit test suite
+// Add at least one assertion to this test case.
+@SuppressWarnings({"java:S5786", "java:S2699"})
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {ImportadorArquivosContexto.class, ExcluidorArquivoRepositoryFile.class, ImportadorArquivosVerificador.class, ImportadorArquivosConfiguration.class})

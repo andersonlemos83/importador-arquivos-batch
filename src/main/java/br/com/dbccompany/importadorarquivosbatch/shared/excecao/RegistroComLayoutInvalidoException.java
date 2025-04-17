@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import static java.text.MessageFormat.format;
 
-public class RegistroComLayoutInvalidoException extends ArquivoInvalidoException {
+public final class RegistroComLayoutInvalidoException extends ArquivoInvalidoException {
 
     private static final String PADRAO_MENSAGEM = "O arquivo possui um registro, {0}, incompatível com o layout {1}.";
 

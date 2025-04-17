@@ -39,7 +39,7 @@ public class ArquivoParseImpl implements ArquivoParse {
     }
 
     private Registro gerarRegistroParse(String[] registro) {
-        final RegistroParse registroParse = registroParseFactory.obter(registro);
-        return (Registro) registroParse.parse(registro);
+        final RegistroParse<Registro> registroParse = registroParseFactory.obter(registro);
+        return registroParse.parse(registro);
     }
 }

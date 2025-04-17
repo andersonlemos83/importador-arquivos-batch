@@ -15,7 +15,8 @@ import java.util.stream.Collector;
 import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapperUtil.generateJson;
 import static java.util.Comparator.comparingDouble;
 import static java.util.Comparator.naturalOrder;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingDouble;
 
 @Log4j2
 @Component
@@ -63,7 +64,7 @@ public class ConsolidadorPiorVendedorImpl implements ConsolidadorPiorVendedor {
     private boolean verificarQuemNaoVendeu(List<Venda> vendas, Vendedor vendedor) {
         return vendas.stream()
                 .filter(venda -> venda.getNomeVendedor().equalsIgnoreCase(vendedor.getNome()))
-                .collect(toList())
+                .toList()
                 .isEmpty();
     }
 
