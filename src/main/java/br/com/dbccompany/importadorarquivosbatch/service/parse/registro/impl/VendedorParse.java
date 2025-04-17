@@ -17,7 +17,7 @@ public class VendedorParse extends AbstractRegistroParse<Vendedor> implements Re
     @Override
     protected Vendedor gerarRegistro(String[] registro) {
         return Vendedor.builder()
-                .id(registro[0])
+                .idLayout(registro[0])
                 .cpf(registro[1])
                 .nome(registro[2])
                 .salario(parseDouble(registro[3]))

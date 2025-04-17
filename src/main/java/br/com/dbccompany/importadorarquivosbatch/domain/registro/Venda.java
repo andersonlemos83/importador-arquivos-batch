@@ -15,7 +15,7 @@ import static java.math.BigDecimal.ZERO;
 @AllArgsConstructor
 public class Venda implements Registro, Serializable {
 
-    private String id;
+    private String idLayout;
     private String idVenda;
     private List<Item> itens;
     private String nomeVendedor;

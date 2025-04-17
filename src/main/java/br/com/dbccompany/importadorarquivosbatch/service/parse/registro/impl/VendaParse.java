@@ -29,7 +29,7 @@ public class VendaParse extends AbstractRegistroParse<Venda> implements Registro
     @Override
     protected Venda gerarRegistro(String[] registro) {
         return Venda.builder()
-                .id(registro[0])
+                .idLayout(registro[0])
                 .idVenda(registro[1])
                 .itens(gerarItens(registro[2]))
                 .nomeVendedor(registro[3])

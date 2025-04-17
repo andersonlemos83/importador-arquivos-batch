@@ -27,7 +27,7 @@ public class ClienteParseTest {
     @Test
     public void aoFazerParseDadoQueRegistroSejaValidoDeveriaRetornarOhClienteEsperado() {
         final Cliente cliente = (Cliente) registroParse.parse(umaRegistroArrayOi());
-        assertEquals("002", cliente.getId());
+        assertEquals("002", cliente.getIdLayout());
         assertEquals("29013251000192", cliente.getCnpj());
         assertEquals("Oi", cliente.getNome());
         assertEquals("Telefonia", cliente.getAreaNegocio());

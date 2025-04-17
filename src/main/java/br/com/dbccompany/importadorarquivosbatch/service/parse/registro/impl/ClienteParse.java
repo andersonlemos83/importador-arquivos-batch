@@ -15,7 +15,7 @@ public class ClienteParse extends AbstractRegistroParse<Cliente> implements Regi
     @Override
     protected Cliente gerarRegistro(String[] registro) {
         return Cliente.builder()
-                .id(registro[0])
+                .idLayout(registro[0])
                 .cnpj(registro[1])
                 .nome(registro[2])
                 .areaNegocio(registro[3])

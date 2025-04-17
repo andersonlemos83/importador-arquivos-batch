@@ -25,6 +25,6 @@ spring:
 importador-arquivos:
   cron: 0 * * * * ?
   data:
-    in: /data/in
-    out: /data/out
-    invalid: /data/invalid
+    in: C:/Users/DEV/data/in
+    out: C:/Users/DEV/data/out
+    invalid: C:/Users/DEV/data/invalid

@@ -13,7 +13,7 @@ import static java.lang.Boolean.TRUE;
 @AllArgsConstructor
 public class Vendedor implements Registro, Serializable {
 
-    private String id;
+    private String idLayout;
     private String cpf;
     private String nome;
     private Double salario;

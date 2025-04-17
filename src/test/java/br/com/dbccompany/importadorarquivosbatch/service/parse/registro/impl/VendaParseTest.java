@@ -28,7 +28,7 @@ public class VendaParseTest {
     @Test
     public void aoFazerParseDadoQueRegistroSejaValidoDeveriaRetornarOhVendaEsperado() {
         final Venda venda = (Venda) registroParse.parse(umaRegistroArrayVenda10());
-        assertEquals("003", venda.getId());
+        assertEquals("003", venda.getIdLayout());
         assertEquals("10", venda.getIdVenda());
         assertEquals(umaVenda10Pedro().getItens().toString(), venda.getItens().toString());
         assertEquals("Pedro", venda.getNomeVendedor());
