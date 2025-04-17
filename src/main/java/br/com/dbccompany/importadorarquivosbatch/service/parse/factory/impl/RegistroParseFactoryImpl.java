@@ -23,7 +23,7 @@ import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapper
 @Component
 public class RegistroParseFactoryImpl implements RegistroParseFactory<Registro> {
 
-    private final Map<String, RegistroParse> parses;
+    private final Map<String, RegistroParse<? extends Registro>> parses;
 
     public RegistroParseFactoryImpl(@Qualifier("vendedorParse") RegistroParse<Vendedor> vendedorParse,
                                     @Qualifier("clienteParse") RegistroParse<Cliente> clienteParse,
@@ -38,9 +38,9 @@ public class RegistroParseFactoryImpl implements RegistroParseFactory<Registro> 
     public RegistroParse<Registro> obter(String[] registro) {
         log.debug("Entrando em RegistroParseFactoryImpl: {}", generateJson(registro));
         final String id = ArrayUtil.obterString(registro, 0);
-        final RegistroParse registroParse = Optional.ofNullable(parses.get(id))
+        final RegistroParse<? extends Registro> registroParse = Optional.ofNullable(parses.get(id))
                 .orElseThrow(() -> new RegistroSemLayoutDefinidoException(id));
         log.debug("Saindo de RegistroParseFactoryImpl: {}", registroParse.toString());
-        return registroParse;
+        return (RegistroParse<Registro>) registroParse;
     }
 }
