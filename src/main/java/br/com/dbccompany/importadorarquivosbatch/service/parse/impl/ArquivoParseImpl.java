@@ -19,7 +19,7 @@ import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapper
 @AllArgsConstructor
 public class ArquivoParseImpl implements ArquivoParse {
 
-    private final RegistroParseFactory registroParseFactory;
+    private final RegistroParseFactory<Registro> registroParseFactory;
 
     @Override
     public List<Registro> parse(Arquivo arquivo) {
@@ -39,7 +39,7 @@ public class ArquivoParseImpl implements ArquivoParse {
     }
 
     private Registro gerarRegistroParse(String[] registro) {
-        final RegistroParse registroParse = registroParseFactory.obter(registro);
-        return (Registro) registroParse.parse(registro);
+        final RegistroParse<Registro> registroParse = registroParseFactory.obter(registro);
+        return registroParse.parse(registro);
     }
 }

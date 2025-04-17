@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 public class ArquivoInvalidoException extends RuntimeException {
 
-    private Path arquivoPath;
+    private transient Path arquivoPath;
 
     public ArquivoInvalidoException(String mensagem) {
         super(mensagem);

@@ -15,9 +15,9 @@ public class VendaParse extends AbstractRegistroParse<Venda> implements Registro
     private static final String SEPARADOR_ITENS = ",";
     private static final String SEPARADOR_CAMPOS_ITEM = "-";
 
-    private final RegistroParse itemParse;
+    private final RegistroParse<Item> itemParse;
 
-    public VendaParse(@Qualifier("itemParse") RegistroParse itemParse) {
+    public VendaParse(@Qualifier("itemParse") RegistroParse<Item> itemParse) {
         this.itemParse = itemParse;
     }
 
@@ -50,7 +50,7 @@ public class VendaParse extends AbstractRegistroParse<Venda> implements Registro
         return obterItensToken(token)
                 .stream()
                 .map(itemToken -> itemToken.split(SEPARADOR_CAMPOS_ITEM))
-                .map(itemRegistro -> (Item) itemParse.parse(itemRegistro))
+                .map(itemParse::parse)
                 .toList();
     }
 
