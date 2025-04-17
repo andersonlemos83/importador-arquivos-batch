@@ -36,7 +36,7 @@ public class RegistroParseFactoryImpl implements RegistroParseFactory {
         final String id = ArrayUtil.obterString(registro, 0);
         final RegistroParse registroParse = Optional.ofNullable(parses.get(id))
                 .orElseThrow(() -> new RegistroSemLayoutDefinidoException(id));
-        log.debug("Saindo de RegistroParseFactoryImpl: {}", registroParse);
+        log.debug("Saindo de RegistroParseFactoryImpl: {}", registroParse.toString());
         return registroParse;
     }
 }
