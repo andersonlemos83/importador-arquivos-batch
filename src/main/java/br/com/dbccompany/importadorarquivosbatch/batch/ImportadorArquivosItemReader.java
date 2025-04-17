@@ -17,6 +17,8 @@ import static br.com.dbccompany.importadorarquivosbatch.shared.util.ObjectMapper
 @AllArgsConstructor
 public class ImportadorArquivosItemReader implements ItemReader<DadosLeitura> {
 
+    private static final String SAINDO_DE_IMPORTADOR_ARQUIVOS_ITEM_READER = "Saindo de ImportadorArquivosItemReader: {}";
+
     private final LeitorArquivoService leitorArquivoService;
     private final MovedorArquivoRepository movedorArquivoRepository;
 
@@ -25,13 +27,13 @@ public class ImportadorArquivosItemReader implements ItemReader<DadosLeitura> {
         try {
             log.info("Entrando em ImportadorArquivosItemReader");
             final DadosLeitura dadosLeitura = leitorArquivoService.lerArquivoNaoImportado();
-            log.info("Saindo de ImportadorArquivosItemReader: {}", generateJson(dadosLeitura));
+            log.info(SAINDO_DE_IMPORTADOR_ARQUIVOS_ITEM_READER, generateJson(dadosLeitura));
             return dadosLeitura;
         } catch (InformacaoException excecao) {
-            log.info("Saindo de ImportadorArquivosItemReader: {}", excecao.getMessage());
+            log.info(SAINDO_DE_IMPORTADOR_ARQUIVOS_ITEM_READER, excecao.getMessage());
             return null;
         } catch (ArquivoInvalidoException excecao) {
-            log.info("Saindo de ImportadorArquivosItemReader: {}", excecao.getMessage());
+            log.info(SAINDO_DE_IMPORTADOR_ARQUIVOS_ITEM_READER, excecao.getMessage());
             movedorArquivoRepository.moverParaInvalido(excecao.getArquivoPath());
             return null;
         } catch (Exception excecao) {

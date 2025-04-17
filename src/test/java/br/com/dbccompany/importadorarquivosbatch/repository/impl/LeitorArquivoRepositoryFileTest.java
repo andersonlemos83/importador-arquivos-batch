@@ -24,7 +24,6 @@ import java.util.List;
 import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.RegistroFixture.umaListaRegistrosArraySucessoDbc;
 import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_DAT;
 import static br.com.dbccompany.importadorarquivosbatch.helper.util.ConstanteUtil.ARQUIVO_SUCESSO_DBC_TXT;
-import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -82,8 +81,8 @@ public class LeitorArquivoRepositoryFileTest {
     }
 
     private void assertRegistrosArrays(List<String[]> registrosArrayEsperado, List<String[]> registrosArrayRetornado) {
-        List<List<String>> registrosEsperados = registrosArrayEsperado.stream().map(Arrays::asList).collect(toList());
-        List<List<String>> registrosRetornados = registrosArrayRetornado.stream().map(Arrays::asList).collect(toList());
+        List<List<String>> registrosEsperados = registrosArrayEsperado.stream().map(Arrays::asList).toList();
+        List<List<String>> registrosRetornados = registrosArrayRetornado.stream().map(Arrays::asList).toList();
         assertEquals(registrosEsperados, registrosRetornados);
     }
 }

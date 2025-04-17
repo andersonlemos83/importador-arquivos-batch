@@ -16,7 +16,7 @@ public class ObjectMapperUtilTest {
     void givenAnSerializableObjectWhenExecutingTheGenerateJsonMethodThenShouldReturnAnSerializedObject() {
         Vendedor vendedor = VendedorFixture.umVendedorMortenHarket();
         String jsonReturned = ObjectMapperUtil.generateJson(vendedor);
-        assertEquals("{\"id\":\"001\",\"cpf\":\"44934360000\",\"nome\":\"Morten Harket\",\"salario\":10000.0}", jsonReturned);
+        assertEquals("{\"idLayout\":\"001\",\"cpf\":\"44934360000\",\"nome\":\"Morten Harket\",\"salario\":10000.0}", jsonReturned);
     }
 
     @Test

@@ -2,7 +2,6 @@ package br.com.dbccompany.importadorarquivosbatch.domain.dados;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.nio.file.Path;
 
 @Data
@@ -10,7 +9,7 @@ import java.nio.file.Path;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class DadosProcessamento implements Serializable {
+public class DadosProcessamento {
 
     private Path arquivoPath;
     private Long quantidadeClientes;

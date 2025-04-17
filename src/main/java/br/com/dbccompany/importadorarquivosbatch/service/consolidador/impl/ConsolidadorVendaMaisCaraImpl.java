@@ -21,7 +21,7 @@ public class ConsolidadorVendaMaisCaraImpl implements ConsolidadorVendaMaisCara 
         final String vendaMaisCara = registros
                 .stream()
                 .filter(Registro::ehVenda)
-                .map(registro -> (Venda) registro)
+                .map(Venda.class::cast)
                 .max(comparingDouble(Venda::obterTotal))
                 .map(Venda::getIdVenda)
                 .orElse("");

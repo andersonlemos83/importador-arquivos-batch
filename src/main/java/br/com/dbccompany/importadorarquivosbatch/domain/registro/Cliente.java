@@ -13,7 +13,7 @@ import static java.lang.Boolean.TRUE;
 @AllArgsConstructor
 public class Cliente implements Registro, Serializable {
 
-    private String id;
+    private String idLayout;
     private String cnpj;
     private String nome;
     private String areaNegocio;

@@ -28,7 +28,7 @@ public class VendaParseTest {
     @Test
     public void aoFazerParseDadoQueRegistroSejaValidoDeveriaRetornarOhVendaEsperado() {
         final Venda venda = (Venda) registroParse.parse(umaRegistroArrayVenda10());
-        assertEquals("003", venda.getId());
+        assertEquals("003", venda.getIdLayout());
         assertEquals("10", venda.getIdVenda());
         assertEquals(umaVenda10Pedro().getItens().toString(), venda.getItens().toString());
         assertEquals("Pedro", venda.getNomeVendedor());
@@ -36,15 +36,15 @@ public class VendaParseTest {
 
     @Test
     public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaRegistroComLayoutInvalidoException() {
-        RegistroComLayoutInvalidoException thrown = assertThrows(RegistroComLayoutInvalidoException.class,
-                () -> registroParse.parse(umaRegistroArrayVenda10ComQuantidadeInvalida()));
+        String[] registro = umaRegistroArrayVenda10ComQuantidadeInvalida();
+        RegistroComLayoutInvalidoException thrown = assertThrows(RegistroComLayoutInvalidoException.class, () -> registroParse.parse(registro));
         assertEquals("O arquivo possui um registro, [003, 10, [1-10-100,2-30-2.50,3-40-3.10]], incompatível com o layout Venda.", thrown.getMessage());
     }
 
     @Test
     public void aoFazerParseDadoQueRegistroTenhaDadosInvalidosDeveriaRetornarLancarUmaRegistroComTipoDadoInvalidoException() {
-        RegistroComTipoDadoInvalidoException thrown = assertThrows(RegistroComTipoDadoInvalidoException.class,
-                () -> registroParse.parse(umaRegistroArrayVenda10ComDadosInvalidos()));
+        String[] registro = umaRegistroArrayVenda10ComDadosInvalidos();
+        RegistroComTipoDadoInvalidoException thrown = assertThrows(RegistroComTipoDadoInvalidoException.class, () -> registroParse.parse(registro));
         assertEquals("O arquivo possui um registro, [003, 10, [1-10-100,2-30-2.50,3-40-Inválido], Pedro], com dados incompatíveis com o layout Venda.", thrown.getMessage());
     }
 }

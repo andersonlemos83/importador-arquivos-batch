@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @Component
 public class VendaParse extends AbstractRegistroParse<Venda> implements RegistroParse<Venda> {
 
@@ -31,7 +29,7 @@ public class VendaParse extends AbstractRegistroParse<Venda> implements Registro
     @Override
     protected Venda gerarRegistro(String[] registro) {
         return Venda.builder()
-                .id(registro[0])
+                .idLayout(registro[0])
                 .idVenda(registro[1])
                 .itens(gerarItens(registro[2]))
                 .nomeVendedor(registro[3])
@@ -43,12 +41,17 @@ public class VendaParse extends AbstractRegistroParse<Venda> implements Registro
         return Venda.class.getSimpleName();
     }
 
+    @Override
+    public String toString() {
+        return "VendaParse";
+    }
+
     private List<Item> gerarItens(String token) {
         return obterItensToken(token)
                 .stream()
                 .map(itemToken -> itemToken.split(SEPARADOR_CAMPOS_ITEM))
                 .map(itemRegistro -> (Item) itemParse.parse(itemRegistro))
-                .collect(toList());
+                .toList();
     }
 
     private List<String> obterItensToken(String tokenItem) {

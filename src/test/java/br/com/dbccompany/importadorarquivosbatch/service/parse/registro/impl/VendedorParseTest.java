@@ -27,7 +27,7 @@ public class VendedorParseTest {
     @Test
     public void aoFazerParseDadoQueRegistroSejaValidoDeveriaRetornarOhVendedorEsperado() {
         final Vendedor vendedor = (Vendedor) registroParse.parse(umaRegistroArrayPedro());
-        assertEquals("001", vendedor.getId());
+        assertEquals("001", vendedor.getIdLayout());
         assertEquals("1234567891234", vendedor.getCpf());
         assertEquals("Pedro", vendedor.getNome());
         assertEquals(Double.valueOf("50000"), vendedor.getSalario());
@@ -35,15 +35,15 @@ public class VendedorParseTest {
 
     @Test
     public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaRegistroComLayoutInvalidoException() {
-        RegistroComLayoutInvalidoException thrown = assertThrows(RegistroComLayoutInvalidoException.class,
-                () -> registroParse.parse(umaRegistroArrayPedroComQuantidadeInvalida()));
+        String[] registro = umaRegistroArrayPedroComQuantidadeInvalida();
+        RegistroComLayoutInvalidoException thrown = assertThrows(RegistroComLayoutInvalidoException.class, () -> registroParse.parse(registro));
         assertEquals("O arquivo possui um registro, [001, 1234567891234, Pedro], incompatível com o layout Vendedor.", thrown.getMessage());
     }
 
     @Test
     public void aoFazerParseDadoQueRegistroTenhaDadosInvalidosDeveriaRetornarLancarUmaRegistroComTipoDadoInvalidoException() {
-        RegistroComTipoDadoInvalidoException thrown = assertThrows(RegistroComTipoDadoInvalidoException.class,
-                () -> registroParse.parse(umaRegistroArrayPedroComDadosInvalidos()));
+        String[] registro = umaRegistroArrayPedroComDadosInvalidos();
+        RegistroComTipoDadoInvalidoException thrown = assertThrows(RegistroComTipoDadoInvalidoException.class, () -> registroParse.parse(registro));
         assertEquals("O arquivo possui um registro, [001, 1234567891234, Pedro, Inválido], com dados incompatíveis com o layout Vendedor.", thrown.getMessage());
     }
 }

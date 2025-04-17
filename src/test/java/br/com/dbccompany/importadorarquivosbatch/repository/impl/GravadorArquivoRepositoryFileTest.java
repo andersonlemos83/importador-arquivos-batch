@@ -3,6 +3,7 @@ package br.com.dbccompany.importadorarquivosbatch.repository.impl;
 import br.com.dbccompany.importadorarquivosbatch.config.ImportadorArquivosConfiguration;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArquivosContexto;
 import br.com.dbccompany.importadorarquivosbatch.cucumber.verificador.ImportadorArquivosVerificador;
+import br.com.dbccompany.importadorarquivosbatch.domain.dados.DadosProcessamento;
 import br.com.dbccompany.importadorarquivosbatch.repository.GravadorArquivoRepository;
 import br.com.dbccompany.importadorarquivosbatch.shared.excecao.RepositorioException;
 import org.junit.jupiter.api.AfterEach;
@@ -63,7 +64,8 @@ public class GravadorArquivoRepositoryFileTest {
     @Test
     public void aoGravarDadoQueNaoExistaDiretorioDeSaidaDeveriaLancarUmaRepositorioException() {
         String mensagemEsperada = "java.nio.file.NoSuchFileException: " + Paths.get(diretorioSaida) + separator + ARQUIVO_SUCESSO_DBC_DONE_DAT;
-        RepositorioException thrown = assertThrows(RepositorioException.class, () -> gravadorArquivoRepository.gravar(umDadosProcessamentoSucessoDbc()));
+        DadosProcessamento dadosProcessamento = umDadosProcessamentoSucessoDbc();
+        RepositorioException thrown = assertThrows(RepositorioException.class, () -> gravadorArquivoRepository.gravar(dadosProcessamento));
         assertEquals(mensagemEsperada, thrown.getMessage());
     }
 }

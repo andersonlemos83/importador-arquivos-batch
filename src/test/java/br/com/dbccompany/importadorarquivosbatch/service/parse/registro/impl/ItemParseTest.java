@@ -34,15 +34,15 @@ public class ItemParseTest {
 
     @Test
     public void aoFazerParseDadoQueRegistroTenhaQuantidadeAtributosInvalidoDeveriaRetornarLancarUmaRegistroComLayoutInvalidoException() {
-        RegistroComLayoutInvalidoException thrown = assertThrows(RegistroComLayoutInvalidoException.class,
-                () -> registroParse.parse(umaRegistroArrayItensVenda10ComQuantidadeInvalida()));
+        String[] registro = umaRegistroArrayItensVenda10ComQuantidadeInvalida();
+        RegistroComLayoutInvalidoException thrown = assertThrows(RegistroComLayoutInvalidoException.class, () -> registroParse.parse(registro));
         assertEquals("O arquivo possui um registro, [1, 10], incompatível com o layout Item.", thrown.getMessage());
     }
 
     @Test
     public void aoFazerParseDadoQueRegistroTenhaDadosInvalidosDeveriaRetornarLancarUmaRegistroComTipoDadoInvalidoException() {
-        RegistroComTipoDadoInvalidoException thrown = assertThrows(RegistroComTipoDadoInvalidoException.class,
-                () -> registroParse.parse(umaRegistroArrayItensVenda10ComDadosInvalidos()));
+        String[] registro = umaRegistroArrayItensVenda10ComDadosInvalidos();
+        RegistroComTipoDadoInvalidoException thrown = assertThrows(RegistroComTipoDadoInvalidoException.class, () -> registroParse.parse(registro));
         assertEquals("O arquivo possui um registro, [1, 10, Inválido], com dados incompatíveis com o layout Item.", thrown.getMessage());
     }
 }

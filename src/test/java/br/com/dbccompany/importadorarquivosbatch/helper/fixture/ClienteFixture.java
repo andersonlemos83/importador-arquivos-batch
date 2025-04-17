@@ -13,7 +13,7 @@ public final class ClienteFixture {
 
     public static Cliente umClienteOi() {
         return Cliente.builder()
-                .id("002")
+                .idLayout("002")
                 .cnpj("29013251000192")
                 .nome("Oi")
                 .areaNegocio("Telefonia")
@@ -22,7 +22,7 @@ public final class ClienteFixture {
 
     public static Cliente umClienteMaceioShopping() {
         return Cliente.builder()
-                .id("002")
+                .idLayout("002")
                 .cnpj("12190604000127")
                 .nome("Maceió Shopping")
                 .areaNegocio("Shopping Centers")
@@ -31,7 +31,7 @@ public final class ClienteFixture {
 
     public static Cliente umClienteLivrariaSaraiva() {
         return Cliente.builder()
-                .id("002")
+                .idLayout("002")
                 .cnpj("88728906000178")
                 .nome("Livraria Saraiva")
                 .areaNegocio("Livros")
@@ -40,7 +40,7 @@ public final class ClienteFixture {
 
     public static Cliente umClienteMixpel() {
         return Cliente.builder()
-                .id("002")
+                .idLayout("002")
                 .cnpj("49633757000101")
                 .nome("Mixpel")
                 .areaNegocio("Informática")
@@ -49,7 +49,7 @@ public final class ClienteFixture {
 
     public static Cliente umClienteIronStudio() {
         return Cliente.builder()
-                .id("002")
+                .idLayout("002")
                 .cnpj("91412787000154")
                 .nome("Iron Studio")
                 .areaNegocio("Colecionáveis")
