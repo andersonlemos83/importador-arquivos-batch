@@ -4,9 +4,9 @@ import br.com.dbccompany.importadorarquivosbatch.cucumber.contexto.ImportadorArq
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.util.AssertionErrors.assertFalse;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @Component
 @AllArgsConstructor

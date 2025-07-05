@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.RegistroFixture.umaRegistroArrayOi;
 import static br.com.dbccompany.importadorarquivosbatch.helper.fixture.RegistroFixture.umaRegistroArrayOiComQuantidadeInvalida;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("java:S5786") // Public required for JUnit test suite
